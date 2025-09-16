@@ -1,0 +1,439 @@
+.iPhone16AdNew {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  min-height: 700px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e40af 25%, #3b82f6 50%, #1e40af 75%, #0f172a 100%);
+  padding: 3rem 0;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.4) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.4) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='stars' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Ccircle cx='10' cy='10' r='1' fill='rgba(255,255,255,0.1)'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23stars)'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}
+
+.adContainerNew {
+  display: flex;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 3rem;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  padding: 0 2rem;
+}
+
+// Left Side Styles
+.leftSideNew {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.countdownSectionNew {
+  text-align: center;
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.countdownTimerNew {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  justify-content: center;
+}
+
+.timeUnitNew {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timeValueNew {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(16, 185, 129, 0.3));
+  border: 3px solid rgba(59, 130, 246, 0.6);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(59, 130, 246, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  &:hover {
+    transform: scale(1.1) rotateY(10deg);
+    border-color: rgba(59, 130, 246, 0.8);
+    box-shadow: 
+      0 20px 50px rgba(59, 130, 246, 0.5),
+      0 0 0 2px rgba(59, 130, 246, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+.timeLabelNew {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.buyNowButtonNew {
+  background: linear-gradient(45deg, #3b82f6, #10b981, #3b82f6);
+  background-size: 200% 200%;
+  color: white;
+  border: none;
+  padding: 1.2rem 4rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 10px 30px rgba(59, 130, 246, 0.5),
+    0 0 0 2px rgba(59, 130, 246, 0.4);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s;
+  }
+
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    background-position: right center;
+    box-shadow: 
+      0 20px 40px rgba(59, 130, 246, 0.7),
+      0 0 0 3px rgba(59, 130, 246, 0.6);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(1.02);
+  }
+}
+
+// Right Side Styles
+.rightSide {
+  flex: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.phoneDisplay {
+  text-align: center;
+  color: white;
+}
+
+.phoneTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(45deg, #ffffff, #e0e7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.phoneSubtitle {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 3rem;
+  font-weight: 300;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.phoneModels {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.pinkPhone {
+  position: relative;
+  transform: rotateY(-15deg) rotateX(10deg);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: rotateY(-10deg) rotateX(5deg) scale(1.05);
+  }
+}
+
+.phoneBody {
+  width: 120px;
+  height: 240px;
+  background: linear-gradient(135deg, #ec4899, #be185d);
+  border-radius: 25px;
+  position: relative;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(236, 72, 153, 0.3);
+}
+
+.cameraSystem {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cameraLens {
+  width: 25px;
+  height: 25px;
+  background: #1f2937;
+  border-radius: 50%;
+  border: 2px solid #374151;
+}
+
+.appleLogo {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+}
+
+.phoneScreen {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  background: linear-gradient(135deg, #1f2937, #111827);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.widgets {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.widget {
+  width: 60px;
+  height: 20px;
+  background: linear-gradient(45deg, #ec4899, #be185d);
+  border-radius: 10px;
+}
+
+.purplePhones {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.phoneStack {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.phoneProfile {
+  width: 80px;
+  height: 160px;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  border-radius: 20px;
+  box-shadow: 
+    0 15px 30px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(139, 92, 246, 0.3);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.promotionalInfo {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.promoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.promoLabel {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.promoValue {
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: linear-gradient(45deg, #ec4899, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+}
+
+.promoSubtext {
+  font-size: 0.8rem;
+  color: #ef4444;
+  font-weight: 600;
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .adContainer {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .leftSide, .rightSide {
+    flex: 1;
+  }
+  
+  .countdownTimer {
+    gap: 1rem;
+  }
+  
+  .timeValue {
+    width: 70px;
+    height: 70px;
+    font-size: 1.5rem;
+  }
+  
+  .phoneModels {
+    gap: 2rem;
+  }
+  
+  .phoneBody {
+    width: 100px;
+    height: 200px;
+  }
+  
+  .phoneProfile {
+    width: 70px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .iPhone16Ad {
+    padding: 1rem 0;
+  }
+  
+  .adContainer {
+    padding: 0 1rem;
+  }
+  
+  .countdownTimer {
+    gap: 0.8rem;
+  }
+  
+  .timeValue {
+    width: 60px;
+    height: 60px;
+    font-size: 1.2rem;
+  }
+  
+  .phoneTitle {
+    font-size: 2.5rem;
+  }
+  
+  .phoneSubtitle {
+    font-size: 1.2rem;
+  }
+  
+  .promotionalInfo {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .countdownTimer {
+    gap: 0.5rem;
+  }
+  
+  .timeValue {
+    width: 50px;
+    height: 50px;
+    font-size: 1rem;
+  }
+  
+  .phoneModels {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .phoneBody {
+    width: 80px;
+    height: 160px;
+  }
+  
+  .phoneProfile {
+    width: 60px;
+    height: 120px;
+  }
+}

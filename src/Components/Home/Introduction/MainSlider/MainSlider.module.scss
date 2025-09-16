@@ -1,0 +1,441 @@
+@use "src/Styles/mixins" as m;
+
+.mainSlider {
+  width: 82%;
+  height: 344px;
+  user-select: none;
+}
+
+@include m.large {
+  .mainSlider {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+}
+
+@include m.medium {
+  .mainSlider {
+    height: 300px;
+  }
+}
+
+.heroBanner {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  padding: 4rem 0;
+  overflow: hidden;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: var(--gradient-blue);
+    border-radius: 50%;
+    opacity: 0.1;
+    transform: translate(150px, -150px);
+  }
+}
+
+.heroContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  min-height: 600px;
+}
+
+// Left Side - Content
+.heroContent {
+  z-index: 2;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gradient-orange);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+  
+  .badgeIcon {
+    font-size: 1rem;
+  }
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  max-width: 450px; // Giới hạn chiều rộng để không che khuất floating card
+  
+  .highlightText {
+    background: var(--gradient-blue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.heroDescription {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  max-width: 450px; // Giới hạn chiều rộng để không che khuất floating card
+}
+
+.heroActions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--gradient-orange);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-lg);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+    background: var(--neon-orange-hover);
+  }
+  
+  .buttonIcon {
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover .buttonIcon {
+    transform: translateX(4px);
+  }
+}
+
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  color: var(--text-primary);
+  padding: 1rem 2rem;
+  border: 2px solid var(--bg-light-gray);
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: var(--bg-light-gray);
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+  }
+}
+
+.heroStats {
+  display: flex;
+  gap: 2rem;
+  
+  .statItem {
+    text-align: center;
+    
+    .statNumber {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      margin-bottom: 0.25rem;
+    }
+    
+    .statLabel {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+  }
+}
+
+// Right Side - Visual
+.heroVisual {
+  position: relative;
+  z-index: 1;
+}
+
+.productShowcase {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainProduct {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px; // Tăng kích thước container để ảnh có không gian đầy đủ
+  height: 500px;
+  
+  .productImage {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto; // Để ảnh tự động điều chỉnh kích thước
+    height: auto; // Để ảnh tự động điều chỉnh kích thước
+    object-fit: contain; // Đảm bảo ảnh hiển thị đầy đủ
+    border-radius: 20px;
+    box-shadow: var(--shadow-xl);
+    transition: transform 0.3s ease;
+    background: white; // Thêm nền trắng để ảnh dễ nhìn
+    padding: 25px; // Tăng padding để ảnh không sát viền
+    
+    &:hover {
+      transform: scale(1.05) rotate(2deg);
+    }
+  }
+}
+
+.floatingBadge {
+  position: absolute;
+  top: 40px; // Di chuyển badge ra xa hơn để không che khuất ảnh
+  right: 40px;
+  background: var(--gradient-orange);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.125rem;
+  box-shadow: var(--shadow-lg);
+  animation: pulse 2s infinite;
+  z-index: 10; // Đảm bảo badge hiển thị trên cùng
+}
+
+.floatingElements {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.floatingCard {
+  position: absolute;
+  background: white;
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: float 6s ease-in-out infinite;
+  z-index: 5; // Đảm bảo các card hiển thị trên ảnh
+  
+  .cardIcon {
+    font-size: 1.5rem;
+  }
+  
+  .cardText {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+  }
+  
+}
+
+.floatingCard1 {
+  position: absolute;
+  top: 15%; // Điều chỉnh vị trí để không che khuất ảnh
+  left: -40%; // Di chuyển ra xa hơn để không che khuất
+  animation-delay: 0s;
+}
+
+.floatingCard2 {
+  position: absolute;
+  top: 50%; // Điều chỉnh vị trí để không che khuất ảnh
+  right: -35%; // Di chuyển ra xa hơn để không che khuất
+  animation-delay: 2s;
+}
+
+.floatingCard3 {
+  position: absolute;
+  bottom: 15%; // Điều chỉnh vị trí để không che khuất ảnh
+  left: 35%; // Di chuyển ra xa hơn để không bị che khuất bởi text
+  animation-delay: 4s;
+}
+
+// Animations
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .heroContainer {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+  
+  .heroTitle {
+    font-size: 3rem;
+    max-width: 100%; // Cho phép text sử dụng toàn bộ chiều rộng trên tablet
+  }
+  
+  .heroDescription {
+    max-width: 100%; // Cho phép description sử dụng toàn bộ chiều rộng trên tablet
+  }
+  
+  .heroActions {
+    justify-content: center;
+  }
+  
+  .heroStats {
+    justify-content: center;
+  }
+  
+  .mainProduct {
+    width: 450px; // Tăng kích thước cho tablet để ảnh không bị che
+    height: 450px;
+    
+    .productImage {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      padding: 20px; // Tăng padding cho tablet
+    }
+  }
+  
+  .floatingCard1 {
+    left: -45%; // Di chuyển ra xa hơn cho tablet
+  }
+  
+  .floatingCard2 {
+    right: -40%; // Di chuyển ra xa hơn cho tablet
+  }
+  
+  .floatingCard3 {
+    left: 40%; // Di chuyển ra xa hơn cho tablet để không bị che khuất
+  }
+  
+  .floatingBadge {
+    top: 35px; // Điều chỉnh vị trí badge cho tablet
+    right: 35px;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroBanner {
+    padding: 2rem 0;
+  }
+  
+  .heroContainer {
+    padding: 0 1rem;
+  }
+  
+  .heroTitle {
+    font-size: 2.5rem;
+    max-width: 100%; // Cho phép text sử dụng toàn bộ chiều rộng trên mobile
+  }
+  
+  .heroDescription {
+    font-size: 1rem;
+    max-width: 100%; // Cho phép description sử dụng toàn bộ chiều rộng trên mobile
+  }
+  
+  .heroActions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .ctaButton,
+  .secondaryButton {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+  
+  .heroStats {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .mainProduct {
+    width: 350px; // Tăng kích thước cho mobile để ảnh không bị che
+    height: 350px;
+    
+    .productImage {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      padding: 15px; // Tăng padding cho mobile
+    }
+  }
+  
+  .floatingCard {
+    display: none; // Ẩn các floating card trên mobile để không che khuất ảnh
+  }
+  
+  .floatingBadge {
+    top: 25px; // Điều chỉnh vị trí badge trên mobile
+    right: 25px;
+    font-size: 1rem; // Giảm kích thước font
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainProduct {
+    width: 300px; // Tăng kích thước cho mobile nhỏ để ảnh không bị che
+    height: 300px;
+    
+    .productImage {
+      padding: 12px; // Tăng padding cho mobile nhỏ
+    }
+  }
+  
+  .floatingBadge {
+    top: 20px;
+    right: 20px;
+    font-size: 0.875rem;
+    padding: 0.4rem 0.6rem;
+  }
+}

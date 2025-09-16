@@ -1,0 +1,75 @@
+.errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  padding: 2rem;
+}
+
+.errorContent {
+  text-align: center;
+  max-width: 600px;
+  background: white;
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+}
+
+.errorTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.errorMessage {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.retryButton {
+  background: var(--gradient-orange);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+.errorDetails {
+  margin-top: 2rem;
+  text-align: left;
+  
+  summary {
+    cursor: pointer;
+    color: var(--primary-blue);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    
+    &:hover {
+      color: var(--primary-blue-dark);
+    }
+  }
+}
+
+.errorStack {
+  background: var(--bg-light-gray);
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}

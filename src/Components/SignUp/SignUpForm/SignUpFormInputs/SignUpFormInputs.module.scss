@@ -1,0 +1,116 @@
+@use "src/Styles/mixins" as m;
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.input {
+  position: relative;
+}
+
+.inputs input {
+  border: 2px solid #e2e8f0;
+  outline: none;
+  border-radius: 12px;
+  padding: 16px 20px;
+  color: #2d3748;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  background: #f7fafc;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: translateY(-1px);
+  }
+
+  &::placeholder {
+    color: #a0aec0;
+    transition: all 0.3s ease;
+    font-weight: 400;
+  }
+
+  &:focus::placeholder {
+    color: #cbd5e0;
+    transform: translateY(-2px);
+  }
+
+  &[class=invalid] {
+    border-color: #e53e3e;
+    background: #fed7d7;
+    box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+    color: #e53e3e;
+
+    &::placeholder {
+      color: #e53e3e;
+    }
+  }
+
+  &:not(:placeholder-shown) {
+    background: white;
+    border-color: #cbd5e0;
+  }
+
+  &:hover:not(:focus) {
+    border-color: #cbd5e0;
+    background: white;
+  }
+
+  // Password input specific styles
+  &[type="password"] {
+    padding-right: 50px;
+  }
+}
+
+// Enhanced focus states for accessibility
+.inputs input:focus-visible {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+// Improved invalid state animation
+.inputs input[class=invalid] {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+// Success state for valid inputs
+.inputs input:valid:not(:placeholder-shown) {
+  border-color: #38a169;
+  background: #f0fff4;
+  color: #2d3748; // Explicitly set text color for visibility
+}
+
+// Dark mode support (optional)
+@media (prefers-color-scheme: dark) {
+  .inputs input {
+    background: #2d3748;
+    border-color: #4a5568;
+    color: #e2e8f0;
+    
+    &:focus {
+      background: #1a202c;
+      border-color: #667eea;
+    }
+    
+    &::placeholder {
+      color: #718096;
+    }
+    
+    &:not(:placeholder-shown) {
+      background: #1a202c;
+      border-color: #4a5568;
+    }
+  }
+}

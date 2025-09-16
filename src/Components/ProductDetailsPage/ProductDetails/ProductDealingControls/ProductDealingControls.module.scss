@@ -1,0 +1,243 @@
+.dealing {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem; /* Giảm từ 1rem xuống 0.8rem */
+  padding: 1.2rem; /* Giảm từ 1.5rem xuống 1.2rem */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.primaryActions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.messageSellerButton,
+.callSellerButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.messageSellerButton {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  
+  &:hover {
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+  }
+}
+
+.callSellerButton {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  color: #667eea;
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+  
+  &:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+    border-color: rgba(102, 126, 234, 0.5);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+  }
+}
+
+.secondaryActions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.shareButton,
+.reportButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.shareButton {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border: 1px solid rgba(102, 126, 234, 0.15);
+  color: #667eea;
+  
+  &:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border-color: rgba(102, 126, 234, 0.25);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+  }
+}
+
+.reportButton {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  
+  &:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
+    border-color: rgba(239, 68, 68, 0.25);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.1);
+  }
+}
+
+.buttonIcon {
+  font-size: 1.1rem; /* Tăng kích thước icon */
+}
+
+.buttonText {
+  font-weight: inherit;
+}
+
+// Seller Info Section
+.sellerInfo {
+  padding: 1rem; /* Giảm từ 1.25rem xuống 1rem */
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(118, 75, 162, 0.03) 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.05);
+}
+
+.sellerHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  
+  h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.sellerIcon {
+  font-size: 1rem; /* Giảm kích thước icon */
+}
+
+.sellerDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Tăng khoảng cách */
+}
+
+.sellerItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0; /* Tăng padding */
+  border-bottom: 1px solid #cbd5e1;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.sellerLabel {
+  font-size: 0.8rem; /* Tăng kích thước chữ */
+  color: #64748b;
+  font-weight: 500;
+}
+
+.sellerValue {
+  font-size: 0.8rem; /* Tăng kích thước chữ */
+  color: #1e293b;
+  font-weight: 600;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .dealing {
+    padding: 0.6rem; /* Giảm padding */
+    gap: 0.6rem; /* Giảm khoảng cách */
+  }
+  
+  .primaryActions {
+    flex-direction: column;
+    gap: 0.4rem; /* Giảm khoảng cách */
+  }
+  
+  .messageSellerButton,
+  .callSellerButton {
+    padding: 0.7rem; /* Tăng padding */
+  }
+  
+  .secondaryActions {
+    flex-direction: column;
+    gap: 0.4rem; /* Giảm khoảng cách */
+  }
+  
+  .sellerInfo {
+    padding: 0.8rem; /* Tăng padding */
+  }
+  
+  .sellerItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem; /* Giảm khoảng cách */
+  }
+}
+
+@media (max-width: 480px) {
+  .dealing {
+    padding: 0.5rem; /* Giảm padding */
+  }
+  
+  .buttonText {
+    font-size: 0.75rem; /* Tăng kích thước chữ */
+  }
+  
+  .buttonIcon {
+    font-size: 0.9rem; /* Tăng kích thước icon */
+  }
+}

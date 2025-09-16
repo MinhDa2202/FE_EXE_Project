@@ -1,0 +1,492 @@
+@use "src/Styles/mixins" as m;
+
+.aboutPage {
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  min-height: 100vh;
+  padding: 40px 0;
+  position: relative;
+  overflow: hidden;
+  
+  // Animated background elements
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(49, 130, 206, 0.03) 0%, transparent 50%);
+    animation: rotate 20s linear infinite;
+    z-index: 0;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(56, 161, 105, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(49, 130, 206, 0.05) 0%, transparent 50%);
+    animation: float 15s ease-in-out infinite;
+    z-index: 0;
+  }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) scale(1); opacity: 0.5; }
+  50% { transform: translateY(-20px) scale(1.1); opacity: 0.8; }
+}
+
+// About Us Section
+.aboutUsSection {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 40px 0;
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 0.8s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mainHeading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.description {
+  font-size: 1.125rem;
+  color: #4a5568;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+// Statistics Section
+.statsSection {
+  margin-bottom: 80px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 0.8s ease-out 0.6s both;
+}
+
+.statsHeading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.statCard {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  animation: fadeInUp 0.8s ease-out 0.8s both;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #3182ce, #38a169);
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0.1;
+    animation: borderGlow 3s ease-in-out infinite alternate;
+  }
+  
+  &:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 
+      0 40px 80px rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.3);
+  }
+  
+  &:nth-child(2) { animation-delay: 1s; }
+  &:nth-child(3) { animation-delay: 1.2s; }
+  &:nth-child(4) { animation-delay: 1.4s; }
+}
+
+@keyframes borderGlow {
+  from { opacity: 0.1; }
+  to { opacity: 0.2; }
+}
+
+.statIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  animation: iconFloat 3s ease-in-out infinite;
+  display: inline-block;
+  
+  &:hover {
+    transform: scale(1.1) rotate(5deg);
+    transition: all 0.3s ease;
+  }
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+.statNumber {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.statText {
+  font-size: 0.9rem;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+// Mission Section
+.missionSection {
+  margin-bottom: 80px;
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 0.8s ease-out 1s both;
+}
+
+.missionCard {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 3rem;
+  border-radius: 24px;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 26px;
+    z-index: -1;
+    opacity: 0.1;
+    animation: borderGlow 3s ease-in-out infinite alternate;
+  }
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+      0 40px 80px rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+}
+
+.missionHeading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.missionDescription {
+  font-size: 1.125rem;
+  color: #4a5568;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.serviceItem {
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.serviceIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: iconFloat 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+.serviceTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.75rem;
+}
+
+.serviceDescription {
+  font-size: 0.9rem;
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+// Leadership Team Section
+.leadershipSection {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 0.8s ease-out 1.2s both;
+}
+
+.leadershipHeading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.teamCard {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  text-align: center;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: fadeInUp 0.8s ease-out 1.4s both;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #3182ce, #38a169);
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0.1;
+    animation: borderGlow 3s ease-in-out infinite alternate;
+  }
+  
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+      0 30px 60px rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.3);
+  }
+  
+  &:nth-child(2) { animation-delay: 1.6s; }
+  &:nth-child(3) { animation-delay: 1.8s; }
+}
+
+.nameBadge {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #63b3ed 0%, #3182ce 100%);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 12px rgba(99, 179, 237, 0.3);
+}
+
+.memberName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.memberTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e53e3e;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.memberDescription {
+  font-size: 0.9rem;
+  color: #4a5568;
+  line-height: 1.6;
+  text-align: left;
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .teamGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .aboutPage {
+    padding: 30px 0;
+  }
+  
+  .mainHeading {
+    font-size: 2rem;
+  }
+  
+  .description {
+    font-size: 1rem;
+  }
+  
+  .statsHeading,
+  .missionHeading,
+  .leadershipHeading {
+    font-size: 1.75rem;
+  }
+  
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .servicesGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .teamGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .missionCard {
+    padding: 2rem 1.5rem;
+  }
+  
+  .statCard,
+  .teamCard {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainHeading {
+    font-size: 1.75rem;
+  }
+  
+  .statsHeading,
+  .missionHeading,
+  .leadershipHeading {
+    font-size: 1.5rem;
+  }
+  
+  .statNumber {
+    font-size: 2rem;
+  }
+  
+  .serviceIcon {
+    font-size: 2.5rem;
+  }
+  
+  .memberName {
+    font-size: 1.25rem;
+  }
+}

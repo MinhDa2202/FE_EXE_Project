@@ -1,0 +1,94 @@
+@use "src/Styles/mixins" as m;
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input > label {
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--dark-gray);
+  font-size: 0.9rem;
+  position: relative;
+  padding-left: 4px;
+  transition: all 0.3s ease;
+}
+
+.input > label::before {
+  content: "•";
+  color: var(--primary-purple);
+  margin-right: 6px;
+  font-weight: bold;
+}
+
+.input > input {
+  border: none;
+  outline: none;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid rgba(102, 126, 234, 0.1);
+  border-radius: 12px;
+  padding: 16px 20px;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  position: relative;
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    border-color: rgba(102, 126, 234, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+  }
+
+  &:focus {
+    border-color: var(--primary-purple);
+    background: linear-gradient(135deg, #fff 0%, #f0f2ff 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2);
+  }
+
+  &[class=invalid] {
+    background: linear-gradient(135deg, #f0f2ff 0%, #e8ebff 100%);
+    border-color: var(--primary-purple);
+    animation: shake 0.5s ease-in-out;
+
+    &::placeholder {
+      color: var(--primary-purple);
+    }
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.input > input::placeholder {
+  color: var(--dark-gray);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.input > input:focus::placeholder {
+  opacity: 0.5;
+  transform: translateY(-2px);
+}
+
+.input:focus-within > label {
+  color: var(--primary-purple);
+  transform: translateY(-2px);
+}
+
+.input:focus-within > label::before {
+  color: var(--secondary-purple);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}

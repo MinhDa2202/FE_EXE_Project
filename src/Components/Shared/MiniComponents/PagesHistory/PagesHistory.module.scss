@@ -1,0 +1,62 @@
+.pageHistory {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 3px;
+  padding-top: 2rem; /* Add padding top */
+  padding-bottom: 0.5px; /* Reduce padding bottom */
+}
+
+.page {
+  font-size: .875rem;
+  color: var(--dark-gray);
+}
+
+.page>a {
+  outline: none;
+  user-select: none;
+  color: var(--dark-gray);
+  transition: color .1s;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 2px 4px;
+  border-radius: 4px;
+
+  &:hover {
+    color: var(--black);
+    background-color: rgba(0, 0, 0, 0.05);
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    color: var(--orange-degree2);
+    text-decoration: underline;
+    background-color: rgba(255, 165, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.clickableLink {
+  cursor: pointer !important;
+  color: #007bff !important;
+  text-decoration: underline !important;
+  
+  &:hover {
+    color: #0056b3 !important;
+    background-color: rgba(0, 123, 255, 0.1) !important;
+  }
+}
+
+.page>span {
+  margin: 0 8px;
+  user-select: none;
+}
+
+.currentPage {
+  font-size: .875rem;
+  color: var(--black);
+  font-weight: 500;
+}

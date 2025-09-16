@@ -1,0 +1,141 @@
+.legalPage {
+  padding: 2rem 0 3rem;
+  scroll-behavior: smooth;
+}
+
+.hero {
+  padding: 2rem 1.25rem;
+  background: linear-gradient(135deg, rgba(102,126,234,.1) 0%, rgba(118,75,162,.1) 100%);
+  border: 1px solid rgba(102,126,234,.15);
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 30px rgba(102,126,234,.08);
+}
+
+.meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: var(--text-secondary);
+  font-size: .95rem;
+}
+
+.lead {
+  color: var(--text-secondary);
+  margin-bottom: .75rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  overflow: visible;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tocCard {
+  position: sticky;
+  top: 80px;
+  align-self: start;
+  padding: 1rem;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 24px rgba(0,0,0,.05);
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  z-index: 2;
+  will-change: transform;
+}
+
+.tocTitle {
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+
+.tocList {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+.tocList a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+.tocList a:hover {
+  color: var(--primary-blue);
+  background: rgba(102,126,234,.08);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.content section {
+  margin: .25rem 0 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,.04);
+  scroll-margin-top: 96px;
+}
+
+.legalPage h1 {
+  font-size: 1.9rem;
+  margin-bottom: .25rem;
+  background: linear-gradient(135deg,#1f2937 0%,#4f46e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.legalPage h2 {
+  font-size: 1.2rem;
+  margin: 0 0 .5rem;
+  padding-left: .5rem;
+  border-left: 4px solid #667eea;
+}
+
+.content ul, .content ol {
+  padding-left: 1.25rem;
+}
+
+.note {
+  padding: .75rem 1rem;
+  border-left: 4px solid #f59e0b;
+  background: #fff7ed;
+  border-radius: 8px;
+  color: #7c2d12;
+}
+
+.cta {
+  margin-top: .5rem;
+  padding: 1rem 1.25rem;
+  border: 1px dashed rgba(102,126,234,.4);
+  background: rgba(102,126,234,.06);
+  border-radius: 12px;
+}
+
+.cta a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.updatedAt {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+
+

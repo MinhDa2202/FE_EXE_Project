@@ -1,0 +1,98 @@
+.imgHolder {
+  -webkit-tap-highlight-color: transparent;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px; /* Kích thước cố định nhỏ hơn */
+  height: 60px; /* Chiều cao cố định */
+  min-width: 60px; /* Đảm bảo không bị co lại */
+  min-height: 60px;
+  max-width: 60px; /* Đảm bảo không bị giãn ra */
+  max-height: 60px;
+  cursor: pointer;
+  border: 2px solid rgba(102, 126, 234, 0.1);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.05);
+  flex-shrink: 0; /* Không cho phép co lại */
+
+  &:hover {
+    border-color: rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+  }
+
+  &.active {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border: 2px solid #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+  }
+
+  &.active:focus-visible {
+    border: 2px solid #764ba2;
+    box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.3);
+  }
+  
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    min-height: 45px;
+    max-width: 45px;
+    max-height: 45px;
+  }
+}
+
+
+.imgHolder img {
+  width: 80%;
+  height: 80%;
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  filter: brightness(1);
+}
+
+.imgHolder:hover img,
+.imgHolder.active img {
+  filter: brightness(1.1) contrast(1.05);
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .imgHolder img {
+    width: 75%;
+    height: 75%;
+    max-width: 75%;
+    max-height: 75%;
+  }
+}
+
+@media (max-width: 480px) {
+  .imgHolder img {
+    width: 70%;
+    height: 70%;
+    max-width: 70%;
+    max-height: 70%;
+  }
+}

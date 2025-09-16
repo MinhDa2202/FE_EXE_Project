@@ -1,0 +1,168 @@
+@use "src/Styles/mixins" as m;
+
+.images {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 20px;
+  user-select: none;
+  height: 100%; /* Chiếm toàn bộ chiều cao của container */
+  max-height: 550px; /* Giới hạn chiều cao tối đa */
+}
+
+.previewImgHolder {
+  width: 100%;
+  height: 450px; /* Chiều cao cố định thay vì padding-top */
+  max-height: 450px; /* Giới hạn chiều cao tối đa */
+  position: relative;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border: 2px solid rgba(102, 126, 234, 0.1);
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.08);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    border-color: rgba(102, 126, 234, 0.3);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.15);
+    transform: translateY(-2px);
+    
+    .navButton {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    height: 400px;
+    max-height: 400px;
+  }
+  
+  @media (max-width: 768px) {
+    height: 350px;
+    max-height: 350px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 280px;
+    max-height: 280px;
+  }
+}
+
+/* Navigation Buttons cho ảnh chính */
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 5;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  
+  &:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  }
+  
+  &:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  
+  &.prevButton {
+    left: 15px;
+  }
+  
+  &.nextButton {
+    right: 15px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+    
+    &.prevButton {
+      left: 10px;
+    }
+    
+    &.nextButton {
+      right: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    opacity: 0.8;
+    pointer-events: all;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+    
+    &.prevButton {
+      left: 8px;
+    }
+    
+    &.nextButton {
+      right: 8px;
+    }
+  }
+}
+
+@include m.large {
+}
+
+@include m.small {
+  .previewImgHolder {
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 480px) {
+}
+
+.previewImgHolder>img {
+  max-width: 90%;
+  max-height: 90%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  
+  /* Đảm bảo hình ảnh luôn được căn giữa */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  &:hover {
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+}
+
+// Arabic styles
+[dir=rtl] .images {
+  flex-direction: row-reverse;
+}
+
+@media (max-width: 1400px) {
+  [dir=rtl] .images {
+    flex-direction: column-reverse;
+  }
+}

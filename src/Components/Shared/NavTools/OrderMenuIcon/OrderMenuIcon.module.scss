@@ -1,0 +1,48 @@
+.orderContainer {
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  padding: 6px;
+  cursor: pointer;
+  outline-offset: 0;
+  display: flex; /* Sử dụng flex để căn giữa */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  margin: 0 4px;
+
+
+
+  &:focus-visible {
+    transition: opacity .3s, var(--outline-transition);
+    outline: 2px dashed var(--very-dark-gray);
+    outline-offset: 3px;
+    color: var(--very-dark-gray);
+  }
+
+  &.active {
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--secondary-purple) 100%);
+    fill: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  }
+}
+
+.orderContainer > svg {
+  width: 20px;
+  height: 20px;
+  transition: fill .2s;
+  stroke: #000; 
+  stroke-width: 0.25; 
+  display: block;
+  margin: auto;
+}
+
+.orderContainer:not(.active):hover>svg {
+  fill: #6f6f6f;
+}
+
+.orderContainer.active>svg {
+  scale: .7;
+}

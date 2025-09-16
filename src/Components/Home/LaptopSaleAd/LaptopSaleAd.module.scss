@@ -1,0 +1,479 @@
+.laptopSaleAd {
+  width: 100%;
+  background: #ffffff;
+  font-family: 'Inter', sans-serif;
+  margin: 2rem 0;
+}
+
+// Header Banner
+.headerBanner {
+  background: linear-gradient(135deg, #dc2626 0%, #be185d 100%);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px 15px 0 0;
+}
+
+.waveEffect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%23ffffff'/%3E%3C/svg%3E");
+  background-size: cover;
+  opacity: 0.1;
+}
+
+.headerTitle {
+  color: white;
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+// Main Frame
+.mainFrame {
+  background: linear-gradient(180deg, #dc2626 0%, #be185d 100%);
+  padding: 2rem;
+  border-radius: 0 0 15px 15px;
+  position: relative;
+  min-height: 600px;
+}
+
+.giftBoxTopLeft,
+.giftBoxTopRight {
+  position: absolute;
+  top: 1rem;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(45deg, #fbbf24, #f59e0b);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 4px;
+    background: #92400e;
+    border-radius: 2px;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 4px;
+    background: #92400e;
+    border-radius: 2px;
+  }
+}
+
+.giftBoxTopLeft {
+  left: 1rem;
+}
+
+.giftBoxTopRight {
+  right: 1rem;
+}
+
+// Sale Schedule Tabs
+.saleSchedule {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.saleTab {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  min-width: 120px;
+  text-align: center;
+  border: 2px solid transparent;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+  }
+}
+
+.activeTab {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: #fbbf24;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+}
+
+.tabTime {
+  display: block;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.tabDate {
+  display: block;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+}
+
+.giftIcon {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  background: #fbbf24;
+  border-radius: 50%;
+  
+  &::before {
+    content: '🎁';
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// Countdown Section
+.countdownSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.countdownLabel {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.countdownTimer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timeSegment {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  min-width: 60px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.timeValue {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+.timeSeparator {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+// Product Section
+.productSection {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.scrollArrow {
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 15px solid rgba(255, 255, 255, 0.3);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  cursor: pointer;
+  z-index: 2;
+  
+  &:hover {
+    border-left-color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.productCard {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.laptopImage {
+  position: relative;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.screenContent {
+  width: 200px;
+  height: 120px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 4px;
+  }
+}
+
+.softwareIcons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.softwareIcon {
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+  color: white;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.productInfo {
+  text-align: left;
+}
+
+.specs {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.productName {
+  color: #1f2937;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.pricing {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.currentPrice {
+  color: #dc2626;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.originalPrice {
+  color: #9ca3af;
+  font-size: 1rem;
+  text-decoration: line-through;
+}
+
+.salesProgress {
+  margin-top: 1rem;
+}
+
+.progressBar {
+  background: #f3f4f6;
+  height: 8px;
+  border-radius: 4px;
+  position: relative;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.progressFill {
+  background: linear-gradient(90deg, #ec4899, #be185d);
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.runningMascot {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background: #fbbf24;
+  border-radius: 50%;
+  animation: running 2s infinite;
+  
+  &::before {
+    content: '🏃';
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes running {
+  0%, 100% { transform: translateY(-50%) scale(1); }
+  50% { transform: translateY(-50%) scale(1.1); }
+}
+
+.progressText {
+  color: #6b7280;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+// Footer Disclaimer
+.footerDisclaimer {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .productGrid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .saleSchedule {
+    gap: 0.8rem;
+  }
+  
+  .saleTab {
+    min-width: 100px;
+    padding: 0.8rem 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .headerTitle {
+    font-size: 1.5rem;
+  }
+  
+  .mainFrame {
+    padding: 1.5rem;
+  }
+  
+  .saleSchedule {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .saleTab {
+    min-width: 200px;
+  }
+  
+  .countdownSection {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .productGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .laptopImage {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .screenContent {
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  .softwareIcons {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .headerBanner {
+    padding: 1rem;
+  }
+  
+  .mainFrame {
+    padding: 1rem;
+  }
+  
+  .saleTab {
+    min-width: 180px;
+    padding: 0.8rem;
+  }
+  
+  .timeSegment {
+    min-width: 50px;
+    padding: 0.5rem 0.8rem;
+  }
+  
+  .timeValue {
+    font-size: 1.2rem;
+  }
+}

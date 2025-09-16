@@ -1,0 +1,20 @@
+// This file is now handled by the parent ProductCardIcons.module.scss
+// The styles are consolidated for better maintainability
+
+.iconHolder {
+  // Inherits from parent .iconHolder in ProductCardIcons.module.scss
+}
+
+.detailsIcon {
+  // Inherits from parent .detailsIcon in ProductCardIcons.module.scss
+  
+  &:focus-visible {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+    background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
+    
+    svg {
+      color: #3182ce;
+    }
+  }
+}

@@ -1,0 +1,59 @@
+@use "src/Styles/mixins" as m;
+
+.thisMonthSection {
+  margin-bottom: 170px;
+}
+
+@include m.small {
+  .thisMonthSection {
+    margin-bottom: 100px;
+  }
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+@include m.small {
+  .wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.viewAllBtn {
+  -webkit-tap-highlight-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: fit-content;
+  height: fit-content;
+  background: linear-gradient(135deg, var(--primary-purple) 0%, var(--secondary-purple) 100%);
+  color: var(--white);
+  padding: 12px 48px;
+  border-radius: 8px;
+  letter-spacing: 0em;
+  font-weight: 500;
+  text-wrap: nowrap;
+  outline: solid 2px transparent;
+  outline-offset: -2px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+
+  &:focus-visible {
+    transition: var(--outline-transition);
+    outline-color: var(--primary-purple);
+    color: var(--white);
+    background: linear-gradient(135deg, var(--light-purple) 0%, var(--primary-purple) 100%);
+  }
+
+  &:not(:focus-visible):hover {
+    background: linear-gradient(135deg, var(--light-purple) 0%, var(--primary-purple) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  }
+}

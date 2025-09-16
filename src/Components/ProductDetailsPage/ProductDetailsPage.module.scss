@@ -1,0 +1,376 @@
+// src/Components/ProductDetailsPage/ProductDetailsPage.module.scss
+
+.detailsPage {
+  min-height: 20vh; /* Giảm chiều cao tối thiểu thêm */
+  padding: 0.15rem 0; /* Giảm padding thêm */
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: 2rem;
+}
+
+.loadingSpinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  p {
+    color: #666;
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
+.errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: 2rem;
+}
+
+.errorMessage {
+  text-align: center;
+  max-width: 500px;
+  padding: 2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fafafa;
+
+  h2 {
+    color: #d32f2f;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+}
+
+.errorActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.backButton,
+.browseButton {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.backButton {
+  background-color: #6c757d;
+  color: white;
+
+  &:hover {
+    background-color: #5a6268;
+  }
+}
+
+.browseButton {
+  background-color: #007bff;
+  color: white;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+}
+
+// Phần thông tin bổ sung mới
+.additionalInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 3rem var(--page-margin);
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.descriptionCard,
+.commentsCard {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(248, 250, 252, 0.95) 100%
+  );
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.08);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.15);
+    transform: translateY(-4px);
+    border-color: rgba(102, 126, 234, 0.2);
+  }
+}
+
+.cardHeader {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.25rem;
+  border-bottom: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    z-index: 0;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.badge {
+  background: rgba(255, 255, 255, 0.9);
+  color: #667eea;
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cardContent {
+  padding: 1.2rem; /* Tăng padding */
+
+  p {
+    color: #4b5563;
+    line-height: 1.7; /* Tăng line-height */
+    font-size: 1rem; /* Tăng kích thước chữ */
+    margin: 0;
+  }
+}
+
+.descriptionTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+
+  td {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+    color: #4b5563;
+    font-size: 0.95rem;
+  }
+
+  .tableKey {
+    font-weight: 600;
+    width: 35%; /* Adjust as needed */
+    padding-left: 0.5rem;
+  }
+
+  .tableValue {
+    width: 65%; /* Adjust as needed */
+    padding-right: 0.5rem;
+  }
+
+  .tableCategoryRow {
+    background-color: #f9fafb;
+    td {
+      font-size: 1.05rem;
+      padding: 0.75rem 0.5rem;
+      border-bottom: 2px solid #e5e7eb;
+      color: #1f2937;
+    }
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.emptyComments {
+  text-align: center;
+  padding: 3rem 0; /* Tăng padding */
+
+  .emptyIcon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  h4 {
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
+  }
+
+  p {
+    color: #9ca3af;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+.addCommentBtn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 0.5s;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .errorMessage {
+    margin: 1rem;
+    padding: 1.5rem;
+
+    h2 {
+      font-size: 1.3rem;
+    }
+  }
+
+  .errorActions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .backButton,
+  .browseButton {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .additionalInfo {
+    margin: 1.5rem 0.8rem; /* Giảm margin */
+  }
+
+  .cardHeader {
+    padding: 0.8rem; /* Giảm padding */
+
+    h3 {
+      font-size: 1rem; /* Giảm kích thước chữ */
+    }
+  }
+
+  .cardContent {
+    padding: 0.8rem; /* Giảm padding */
+  }
+}
+
+.reportSection {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.reportButton {
+  background: none;
+  border: 1px solid #ccc;
+  color: #555;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #f0f0f0;
+    border-color: #aaa;
+  }
+}

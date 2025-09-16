@@ -1,0 +1,52 @@
+:root {
+  /* Primary Colors - Blue Tech Theme */
+  --primary-blue: #2563eb;
+  --primary-blue-dark: #1d4ed8;
+  --primary-blue-light: #3b82f6;
+  --secondary-blue: #0ea5e9;
+  --accent-blue: #06b6d4;
+  
+  /* Neon Orange - CTA & Highlights */
+  --neon-orange: #ff6b35;
+  --neon-orange-hover: #ff5722;
+  --neon-orange-light: #ff8a65;
+  
+  /* Background Colors - Clean & Modern */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-off-white: #fafafa;
+  --bg-light-gray: #e2e8f0;
+  
+  /* Text Colors */
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  
+  /* Status Colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+  
+  /* Legacy Colors (keeping for compatibility) */
+  --black: #000;
+  --white: #fff;
+  --dark-gray: #4C5355;
+  --light-gray: #7D8184;
+  --gray-blue: #848d97;
+  --tomato: #db4444;
+  --green: #078639;
+  --yellow: #fffb19;
+  
+  /* Shadows & Effects */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  /* Gradients */
+  --gradient-blue: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+  --gradient-orange: linear-gradient(135deg, var(--neon-orange) 0%, var(--neon-orange-hover) 100%);
+}

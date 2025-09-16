@@ -1,0 +1,844 @@
+// Dark mode variables
+$dark-bg-primary: #1a1a1a;
+$dark-bg-secondary: #2d2d2d;
+$dark-bg-tertiary: #404040;
+$dark-text-primary: #ffffff;
+$dark-text-secondary: #999999;
+$dark-border: #404040;
+
+// Light mode variables
+$light-bg-primary: #ffffff;
+$light-bg-secondary: #f8f9fa;
+$light-bg-tertiary: #e9ecef;
+$light-text-primary: #212529;
+$light-text-secondary: #6c757d;
+$light-border: #dee2e6;
+
+// Common colors
+$accent-color: #0066cc;
+$accent-hover: #0052a3;
+$error-color: #ff4444;
+$success-color: #28a745;
+
+.chatPage {
+  display: flex;
+  height: 100vh;
+  transition: all 0.3s ease;
+  
+  &.darkMode {
+    background: $dark-bg-primary;
+    color: $dark-text-primary;
+  }
+  
+  &.lightMode {
+    background: $light-bg-primary;
+    color: $light-text-primary;
+  }
+}
+
+.sidebar {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    background: $dark-bg-secondary;
+    border-right: 1px solid $dark-border;
+  }
+  
+  .lightMode & {
+    background: $light-bg-secondary;
+    border-right: 1px solid $light-border;
+  }
+}
+
+.sidebarHeader {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    border-bottom: 1px solid $dark-border;
+  }
+  
+  .lightMode & {
+    border-bottom: 1px solid $light-border;
+  }
+  
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    
+    .darkMode & {
+      color: $dark-text-primary;
+    }
+    
+    .lightMode & {
+      color: $light-text-primary;
+    }
+  }
+}
+
+.themeToggle {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    .darkMode & {
+      background: $dark-bg-tertiary;
+    }
+    
+    .lightMode & {
+      background: $light-bg-tertiary;
+    }
+  }
+}
+
+.searchBox {
+  padding: 15px;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    border-bottom: 1px solid $dark-border;
+  }
+  
+  .lightMode & {
+    border-bottom: 1px solid $light-border;
+  }
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    background: $dark-bg-tertiary;
+    color: $dark-text-primary;
+    
+    &::placeholder {
+      color: $dark-text-secondary;
+    }
+    
+    &:focus {
+      outline: none;
+      background: #4a4a4a;
+    }
+  }
+  
+  .lightMode & {
+    background: $light-bg-tertiary;
+    color: $light-text-primary;
+    
+    &::placeholder {
+      color: $light-text-secondary;
+    }
+    
+    &:focus {
+      outline: none;
+      background: #f0f0f0;
+    }
+  }
+}
+
+.filterBox {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    border-bottom: 1px solid $dark-border;
+  }
+  
+  .lightMode & {
+    border-bottom: 1px solid $light-border;
+  }
+}
+
+.filterButton {
+  background: $accent-color;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: $accent-hover;
+  }
+}
+
+.settingsButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    color: $dark-text-secondary;
+    
+    &:hover {
+      color: $dark-text-primary;
+      background: $dark-bg-tertiary;
+    }
+  }
+  
+  .lightMode & {
+    color: $light-text-secondary;
+    
+    &:hover {
+      color: $light-text-primary;
+      background: $light-bg-tertiary;
+    }
+  }
+}
+
+.contactsList {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    .darkMode & {
+      background: $dark-bg-tertiary;
+    }
+    
+    .lightMode & {
+      background: $light-bg-tertiary;
+    }
+  }
+  
+  &.active {
+    background: $accent-color;
+    color: white;
+    
+    .contactInfo h4,
+    .contactInfo p {
+      color: white !important;
+    }
+  }
+}
+
+.contactAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 12px;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.contactInfo {
+  flex: 1;
+  
+  h4 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    
+    .darkMode & {
+      color: $dark-text-primary;
+    }
+    
+    .lightMode & {
+      color: $light-text-primary;
+    }
+  }
+  
+  p {
+    margin: 0;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    
+    .darkMode & {
+      color: $dark-text-secondary;
+    }
+    
+    .lightMode & {
+      color: $light-text-secondary;
+    }
+  }
+}
+
+.sidebarFooter {
+  padding: 15px;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    border-top: 1px solid $dark-border;
+  }
+  
+  .lightMode & {
+    border-top: 1px solid $light-border;
+  }
+}
+
+.hideButton {
+  width: 100%;
+  background: transparent;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    border: 1px solid $dark-border;
+    color: $dark-text-secondary;
+    
+    &:hover {
+      background: $dark-bg-tertiary;
+      color: $dark-text-primary;
+    }
+  }
+  
+  .lightMode & {
+    border: 1px solid $light-border;
+    color: $light-text-secondary;
+    
+    &:hover {
+      background: $light-bg-tertiary;
+      color: $light-text-primary;
+    }
+  }
+}
+
+.chatArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    border-bottom: 1px solid $dark-border;
+    background: $dark-bg-secondary;
+  }
+  
+  .lightMode & {
+    border-bottom: 1px solid $light-border;
+    background: $light-bg-secondary;
+  }
+}
+
+.chatUserInfo {
+  display: flex;
+  align-items: center;
+  
+  h3 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    
+    .darkMode & {
+      color: $dark-text-primary;
+    }
+    
+    .lightMode & {
+      color: $light-text-primary;
+    }
+  }
+  
+  p {
+    margin: 0;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    
+    .darkMode & {
+      color: $dark-text-secondary;
+    }
+    
+    .lightMode & {
+      color: $light-text-secondary;
+    }
+  }
+}
+
+.chatAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.productInfo {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    background: $dark-bg-tertiary;
+  }
+  
+  .lightMode & {
+    background: $light-bg-tertiary;
+  }
+  
+  h4 {
+    margin: 0;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    
+    .darkMode & {
+      color: $dark-text-primary;
+    }
+    
+    .lightMode & {
+      color: $light-text-primary;
+    }
+  }
+}
+
+.productImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.moreButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    color: $dark-text-secondary;
+    
+    &:hover {
+      color: $dark-text-primary;
+      background: $dark-bg-tertiary;
+    }
+  }
+  
+  .lightMode & {
+    color: $light-text-secondary;
+    
+    &:hover {
+      color: $light-text-primary;
+      background: $light-bg-tertiary;
+    }
+  }
+}
+
+.messagesContainer {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    background: $dark-bg-primary;
+  }
+  
+  .lightMode & {
+    background: $light-bg-primary;
+  }
+}
+
+.loadingMessage {
+  text-align: center;
+  padding: 20px;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    color: $dark-text-secondary;
+  }
+  
+  .lightMode & {
+    color: $light-text-secondary;
+  }
+}
+
+.message {
+  display: flex;
+  margin-bottom: 15px;
+  align-items: flex-start;
+  
+  &.myMessage {
+    justify-content: flex-end;
+    
+    .messageContent {
+      background: $accent-color;
+      color: white;
+      border-radius: 18px 18px 4px 18px;
+    }
+  }
+  
+  &.theirMessage {
+    justify-content: flex-start;
+    
+    .messageContent {
+      border-radius: 18px 18px 18px 4px;
+      transition: all 0.3s ease;
+      
+      .darkMode & {
+        background: $dark-bg-tertiary;
+        color: $dark-text-primary;
+      }
+      
+      .lightMode & {
+        background: $light-bg-tertiary;
+        color: $light-text-primary;
+      }
+    }
+  }
+}
+
+.messageContent {
+  max-width: 70%;
+  padding: 12px 16px;
+  position: relative;
+  
+  p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}
+
+.messageTime {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: 8px;
+  
+  .theirMessage & {
+    .darkMode & {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .lightMode & {
+      color: rgba(33, 37, 41, 0.6);
+    }
+  }
+}
+
+.deleteButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 16px;
+  padding: 4px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    color: $dark-text-secondary;
+    
+    &:hover {
+      color: $error-color;
+      background: rgba(255, 68, 68, 0.1);
+    }
+  }
+  
+  .lightMode & {
+    color: $light-text-secondary;
+    
+    &:hover {
+      color: $error-color;
+      background: rgba(255, 68, 68, 0.1);
+    }
+  }
+}
+
+.quickActions {
+  display: flex;
+  gap: 10px;
+  padding: 15px 20px;
+  overflow-x: auto;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    background: $dark-bg-secondary;
+    border-bottom: 1px solid $dark-border;
+  }
+  
+  .lightMode & {
+    background: $light-bg-secondary;
+    border-bottom: 1px solid $light-border;
+  }
+}
+
+.quickActionButton {
+  background: transparent;
+  padding: 8px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    border: 1px solid $dark-border;
+    color: $dark-text-secondary;
+    
+    &:hover {
+      background: $dark-bg-tertiary;
+      color: $dark-text-primary;
+    }
+  }
+  
+  .lightMode & {
+    border: 1px solid $light-border;
+    color: $light-text-secondary;
+    
+    &:hover {
+      background: $light-bg-tertiary;
+      color: $light-text-primary;
+    }
+  }
+}
+
+.messageInput {
+  padding: 15px 20px;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    background: $dark-bg-secondary;
+    border-top: 1px solid $dark-border;
+  }
+  
+  .lightMode & {
+    background: $light-bg-secondary;
+    border-top: 1px solid $light-border;
+  }
+}
+
+.inputActions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.actionButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    color: $dark-text-secondary;
+    
+    &:hover {
+      color: $dark-text-primary;
+      background: $dark-bg-tertiary;
+    }
+  }
+  
+  .lightMode & {
+    color: $light-text-secondary;
+    
+    &:hover {
+      color: $light-text-primary;
+      background: $light-bg-tertiary;
+    }
+  }
+}
+
+.inputForm {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.textInput {
+  flex: 1;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    background: $dark-bg-tertiary;
+    color: $dark-text-primary;
+    
+    &::placeholder {
+      color: $dark-text-secondary;
+    }
+    
+    &:focus {
+      outline: none;
+      background: #4a4a4a;
+    }
+  }
+  
+  .lightMode & {
+    background: $light-bg-tertiary;
+    color: $light-text-primary;
+    
+    &::placeholder {
+      color: $light-text-secondary;
+    }
+    
+    &:focus {
+      outline: none;
+      background: #f0f0f0;
+    }
+  }
+}
+
+.sendButton {
+  background: $accent-color;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  
+  &:hover:not(:disabled) {
+    background: $accent-hover;
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+    
+    .darkMode & {
+      background: $dark-bg-tertiary;
+    }
+    
+    .lightMode & {
+      background: $light-bg-tertiary;
+    }
+  }
+}
+
+.noChat {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  
+  .darkMode & {
+    color: $dark-text-secondary;
+  }
+  
+  .lightMode & {
+    color: $light-text-secondary;
+  }
+  
+  h3 {
+    font-weight: 400;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .chatPage {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: 200px;
+  }
+  
+  .contactsList {
+    display: flex;
+    overflow-x: auto;
+  }
+  
+  .contactItem {
+    min-width: 200px;
+  }
+  
+  .themeToggle {
+    display: none; // Hide theme toggle on mobile to save space
+  }
+}
+
+// Scrollbar styling for dark/light mode
+.darkMode {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: $dark-bg-secondary;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: $dark-bg-tertiary;
+    border-radius: 4px;
+    
+    &:hover {
+      background: #555;
+    }
+  }
+}
+
+.lightMode {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: $light-bg-secondary;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: $light-bg-tertiary;
+    border-radius: 4px;
+    
+    &:hover {
+      background: #ccc;
+    }
+  }
+}
+
+// Animation for theme transition
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

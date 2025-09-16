@@ -1,0 +1,141 @@
+@use "src/Styles/mixins" as m;
+
+.buttons {
+  align-self: flex-end;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+@include m.very-small {
+  .buttons {
+    align-self: normal;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.buttons > a {
+  -webkit-tap-highlight-color: transparent;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  outline: none;
+  border: 2px solid rgba(102, 126, 234, 0.1);
+  padding: 12px 24px;
+  margin-inline-end: 0;
+  color: var(--dark-gray);
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover {
+    color: var(--primary-purple);
+    border-color: var(--primary-purple);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  &:focus-visible {
+    color: var(--primary-purple);
+    outline: 2px solid var(--primary-purple);
+    outline-offset: 2px;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@include m.small {
+  .buttons > a {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+}
+
+.buttons > button {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  border: none;
+  padding: 16px 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
+  border: 2px solid transparent;
+  color: var(--white);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, var(--light-purple), var(--primary-purple));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--white);
+    outline-offset: 2px;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  }
+}
+
+@include m.medium {
+  .buttons > button {
+    padding: 14px 36px;
+    font-size: 0.95rem;
+  }
+}
+
+@include m.small {
+  .buttons > button {
+    padding: 12px 30px;
+    font-size: 0.9rem;
+  }
+}

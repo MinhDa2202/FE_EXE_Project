@@ -1,0 +1,405 @@
+.demoPage {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem 0;
+  
+  @media (max-width: 768px) {
+    padding: 1rem 0;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
+}
+
+.pageHeader {
+  text-align: center;
+  margin-bottom: 4rem;
+  
+  h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 2rem;
+    }
+  }
+  
+  p {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    
+    @media (max-width: 768px) {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+.featuresSection {
+  margin-bottom: 4rem;
+  
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 3rem;
+    
+    @media (max-width: 768px) {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.featureCard {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  text-align: center;
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+}
+
+.featureIcon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  display: block;
+  
+  @media (max-width: 768px) {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.featureCard h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+  }
+}
+
+.featureCard p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+}
+
+.demoButton {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+.featureStatus {
+  margin-top: 1rem;
+}
+
+.statusActive {
+  background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.statusPending {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.componentsSection {
+  margin-bottom: 4rem;
+  
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 3rem;
+    
+    @media (max-width: 768px) {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.componentDemo {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  
+  h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
+  
+  p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+}
+
+.instructionsSection {
+  margin-bottom: 4rem;
+  
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 3rem;
+    
+    @media (max-width: 768px) {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.instructionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.instructionCard {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  
+  h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    
+    @media (max-width: 768px) {
+      font-size: 1.125rem;
+    }
+  }
+  
+  ol {
+    padding-left: 1.5rem;
+    
+    li {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+      
+      @media (max-width: 768px) {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.25rem;
+  }
+}
+
+.techSection {
+  margin-bottom: 2rem;
+  
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 3rem;
+    
+    @media (max-width: 768px) {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.techGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+}
+
+.techItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.1);
+  }
+  
+  .techIcon {
+    font-size: 1.5rem;
+  }
+  
+  span:last-child {
+    font-weight: 600;
+    color: var(--text-primary);
+    
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.875rem;
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.featureCard,
+.componentDemo,
+.instructionCard,
+.techItem {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.featureCard:nth-child(1) { animation-delay: 0.1s; }
+.featureCard:nth-child(2) { animation-delay: 0.2s; }
+.featureCard:nth-child(3) { animation-delay: 0.3s; }
+.featureCard:nth-child(4) { animation-delay: 0.4s; }
+.featureCard:nth-child(5) { animation-delay: 0.5s; }
+.featureCard:nth-child(6) { animation-delay: 0.6s; }
+
+// RTL support
+[dir=rtl] .demoPage {
+  .techItem {
+    flex-direction: row-reverse;
+  }
+}
+
+// Dark mode support (if implemented)
+@media (prefers-color-scheme: dark) {
+  .demoPage {
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+  }
+  
+  .featureCard,
+  .componentDemo,
+  .instructionCard,
+  .techItem {
+    background: var(--bg-dark);
+    border-color: var(--border-dark);
+    
+    &:hover {
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+  }
+}

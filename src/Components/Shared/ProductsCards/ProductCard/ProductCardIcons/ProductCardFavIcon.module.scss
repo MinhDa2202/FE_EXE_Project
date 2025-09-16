@@ -1,0 +1,49 @@
+// This file is now handled by the parent ProductCardIcons.module.scss
+// The styles are consolidated for better maintainability
+
+.iconHolder {
+  // Inherits from parent .iconHolder in ProductCardIcons.module.scss
+}
+
+.favIcon {
+  // Inherits from parent .favIcon in ProductCardIcons.module.scss
+}
+
+// Keep the heart background animation for active state
+.favIcon .heartBackground {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  
+  &::before {
+    content: '❤️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    animation: heartBeat 0.6s ease-in-out;
+  }
+}
+
+.favIcon.active .heartBackground {
+  opacity: 1;
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

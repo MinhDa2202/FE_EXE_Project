@@ -1,0 +1,12 @@
+@use "src/Styles/mixins" as m;
+
+.relatedItemsSection {
+  margin-top: 4rem; /* Add top margin to separate from previous section */
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.section [data-event-name] {
+  color: var(--dark-tomato);
+}
