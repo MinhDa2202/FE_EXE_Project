@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../Components/Footer/Footer";
 // import FirstHeader from "../Components/Header/FirstHeader/FirstHeader";
 import Header from "../Components/Header/Header/Header";
@@ -15,12 +15,14 @@ import useOnlineStatus from "../Hooks/Helper/useOnlineStatus";
 const RoutesLayout = () => {
   const skipLinkSectionId = useCurrentSkipLinkId();
   const isWebsiteOnline = useOnlineStatus();
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
 
   return (
     <div className="App" tabIndex="-1">
       <SkipContentLink scrollTo={skipLinkSectionId} />
       {/* <FirstHeader /> */}
-      <Header />
+      {!isLoginPage && <Header />}
       <MobileNav />
       <GlobalOverlay />
       <ScrollToTop />

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { WEBSITE_NAME } from "src/Data/constants";
 import brandLogo from "src/Assets/Images/brand-logo.png";
@@ -10,11 +10,13 @@ import authStyles from "./Nav.module.scss";
 import MobileNavIcon from "./MobileNavIcon";
 import Nav from "./Nav";
 import { openAddProductModal } from "src/Features/uiSlice";
+import { signOut } from "src/Features/userSlice";
 
 const Header = () => {
   const navToolsProps = useNavToolsProps();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { isSignIn } = useSelector((state) => state.user.loginInfo);
 
   const handleAddProduct = () => {
     dispatch(openAddProductModal());
@@ -58,12 +60,16 @@ const Header = () => {
             </button>
 
             {/* Auth Buttons */}
-            <Link to="/login" className={authStyles.loginLink}>
-              {t("nav.logIn", "Log In")}
-            </Link>
-            <Link to="/signup" className={authStyles.signUpLink}>
-              {t("nav.signUp", "Sign Up")}
-            </Link>
+            {!isSignIn && (
+              <Link to="/login" className={authStyles.loginLink}>
+                {t("nav.logIn", "Log In")}
+              </Link>
+            )}
+            {!isSignIn && (
+              <Link to="/signup" className={authStyles.signUpLink}>
+                {t("nav.signUp", "Sign Up")}
+              </Link>
+            )}
 
           </div>
         </div>
