@@ -19,6 +19,25 @@ body {
   background-color: var(--bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-top: 120px; /* Header 100px + 20px spacing cho trải nghiệm tốt hơn */
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 105px; /* Header 85px + 20px spacing cho tablet */
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 85px; /* Header 65px + 20px spacing cho mobile */
+  }
+}
+
+@media (max-width: 360px) {
+  body {
+    padding-top: 80px; /* Header 60px + 20px spacing cho màn hình rất nhỏ */
+  }
 }
 
 // Typography
@@ -90,6 +109,23 @@ input, textarea, select {
 .text-left { text-align: left; }
 .text-right { text-align: right; }
 
+// Header spacing utilities
+.page-content {
+  margin-top: 120px; /* Header 100px + 20px spacing */
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    margin-top: 105px; /* Header 85px + 20px spacing cho tablet */
+  }
+}
+
+@media (max-width: 480px) {
+  .page-content {
+    margin-top: 95px; /* Header 75px + 20px spacing cho mobile */
+  }
+}
+
 .mb-1 { margin-bottom: 0.25rem; }
 .mb-2 { margin-bottom: 0.5rem; }
 .mb-3 { margin-bottom: 0.75rem; }
@@ -123,6 +159,45 @@ input, textarea, select {
   h4 { font-size: 1.25rem; }
   h5 { font-size: 1.125rem; }
   h6 { font-size: 1rem; }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+  
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+  h4 { font-size: 1.125rem; }
+  h5 { font-size: 1rem; }
+  h6 { font-size: 0.875rem; }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+  
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.125rem; }
+  h4 { font-size: 1rem; }
+  h5 { font-size: 0.875rem; }
+  h6 { font-size: 0.75rem; }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 0 0.25rem;
+  }
+  
+  h1 { font-size: 1.25rem; }
+  h2 { font-size: 1.125rem; }
+  h3 { font-size: 1rem; }
+  h4 { font-size: 0.875rem; }
+  h5 { font-size: 0.75rem; }
+  h6 { font-size: 0.625rem; }
 }
 
 // Scrollbar styling

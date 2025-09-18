@@ -10,6 +10,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  padding-top: 140px; /* Tăng để phù hợp với header 100px + khoảng cách */
   position: relative;
   z-index: 1;
 }
@@ -112,7 +113,8 @@
 // Enhanced responsive design
 @media (max-width: 1024px) {
   .container {
-    padding: 0 2rem;
+    padding: 0.75rem 2rem 0;
+    padding-top: 125px; /* Điều chỉnh cho tablet */
   }
   
   .featuresContainer {
@@ -132,7 +134,8 @@
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 1rem;
+    padding: 0.5rem 1rem 0;
+    padding-top: 115px; /* Điều chỉnh cho mobile */
   }
   
   .introductionContainer {

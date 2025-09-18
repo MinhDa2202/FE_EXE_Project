@@ -3,6 +3,7 @@
 .productsPage {
   min-height: 100vh;
   padding: 2rem 0;
+  margin-top: 120px; /* Thêm margin-top để tránh bị header che */
 }
 
 .pageHeader {
@@ -27,6 +28,18 @@
     h1 {
       font-size: 2rem;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .productsPage {
+    margin-top: 105px; /* Điều chỉnh cho tablet */
+  }
+}
+
+@media (max-width: 480px) {
+  .productsPage {
+    margin-top: 95px; /* Điều chỉnh cho mobile */
   }
 }
 

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import styles from './ChatWidget.module.scss';
 
 const ChatWidget = () => {
   const [open, setOpen] = useState(false);
@@ -44,13 +45,19 @@ const ChatWidget = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [currentMode, selectedProducts, selectedProduct]);
+  }, [messages, currentMode, selectedProducts, selectedProduct]);
 
   // Fetch tất cả sản phẩm
   const fetchProducts = async () => {
     try {
       setIsLoading(true);
       const token = localStorage.getItem("token");
+      
+      if (!token) {
+        console.error("Không tìm thấy token xác thực");
+        return;
+      }
+
       const response = await fetch("https://localhost:7235/api/Product", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -60,12 +67,14 @@ const ChatWidget = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setProducts(data);
+        setProducts(Array.isArray(data) ? data : []);
       } else {
         console.error("Lỗi khi tải sản phẩm:", response.status);
+        setProducts([]);
       }
     } catch (error) {
       console.error("Lỗi khi tải sản phẩm:", error);
+      setProducts([]);
     } finally {
       setIsLoading(false);
     }
@@ -108,10 +117,27 @@ const ChatWidget = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setComparisonResult(data.result);
+        console.log("Comparison API response data:", data);
+        
+        // Xử lý phản hồi từ API - trích xuất text từ cấu trúc Gemini
+        let processedResult = data.result || data;
+        
+        // Nếu kết quả là string JSON, parse nó
+        if (typeof processedResult === 'string') {
+          try {
+            processedResult = JSON.parse(processedResult);
+          } catch (e) {
+            // Nếu không parse được, giữ nguyên string
+          }
+        }
+        
+        setComparisonResult(processedResult);
         setShowResult(true);
       } else {
-        console.error("Lỗi khi so sánh sản phẩm:", response.status);
+        const errorText = await response.text();
+        console.error("Lỗi khi so sánh sản phẩm:", response.status, errorText);
+        setComparisonResult({ error: `Lỗi: ${response.status} - ${errorText}` });
+        setShowResult(true);
       }
     } catch (error) {
       console.error("Lỗi khi so sánh sản phẩm:", error);
@@ -141,7 +167,20 @@ const ChatWidget = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setAnalysisResult(data);
+        
+        // Xử lý phản hồi từ API - trích xuất text từ cấu trúc Gemini
+        let processedResult = data.result || data;
+        
+        // Nếu kết quả là string JSON, parse nó
+        if (typeof processedResult === 'string') {
+          try {
+            processedResult = JSON.parse(processedResult);
+          } catch (e) {
+            // Nếu không parse được, giữ nguyên string
+          }
+        }
+        
+        setAnalysisResult(processedResult);
         setShowResult(true);
       } else {
         const errorText = await response.text();
@@ -161,18 +200,98 @@ const ChatWidget = () => {
   // Parse HTML/Markdown từ Gemini response
   const parseResult = (result) => {
     if (!result) return "";
-    if (result.error) return `<p class="error">${result.error}</p>`;
+    if (result.error) return `<p style="color: #dc2626; padding: 12px; background: #fef2f2; border-radius: 8px; border: 1px solid #fecaca;">${result.error}</p>`;
 
-    try {
-      if (result.candidates && result.candidates[0] && result.candidates[0].content) {
-        return result.candidates[0].content.parts[0].text
-          .replace(/\n/g, "<br/>")
-          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    // Nếu kết quả là một đối tượng JSON, xử lý cấu trúc Gemini API
+    if (typeof result === 'object' && result !== null) {
+      try {
+        // Kiểm tra nếu đây là kết quả từ Gemini API với cấu trúc candidates
+        if (result.candidates && result.candidates.length > 0 && result.candidates[0].content) {
+          const textContent = result.candidates[0].content.parts[0].text;
+          
+          // Trả về text đã được định dạng với markdown
+          return formatMarkdownText(textContent);
+        }
+        
+        // Nếu là đối tượng khác, kiểm tra xem có phải là string JSON không
+        if (typeof result === 'string') {
+          try {
+            const parsed = JSON.parse(result);
+            if (parsed.candidates && parsed.candidates.length > 0) {
+              return formatMarkdownText(parsed.candidates[0].content.parts[0].text);
+            }
+          } catch (e) {
+            // Không phải JSON, xử lý như text thường
+            return formatMarkdownText(result);
+          }
+        }
+        
+        // Fallback: hiển thị JSON được format (chỉ khi thực sự cần thiết)
+        return `<div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+          <p style="margin: 0 0 8px 0; font-weight: 600; color: #64748b;">Phản hồi từ AI:</p>
+          <pre style="margin: 0; white-space: pre-wrap; word-break: break-word; font-size: 13px; line-height: 1.4;">${JSON.stringify(result, null, 2)}</pre>
+        </div>`;
+      } catch (error) {
+        console.error("Lỗi khi xử lý kết quả:", error);
+        return `<p style="color: #dc2626; padding: 12px; background: #fef2f2; border-radius: 8px;">Lỗi khi hiển thị kết quả: ${error.message}</p>`;
       }
-    } catch (error) {
-      console.error("Lỗi parse JSON:", error);
     }
-    return "Không thể hiển thị kết quả.";
+
+    // Nếu kết quả là một chuỗi, xử lý markdown
+    if (typeof result === 'string') {
+      return formatMarkdownText(result);
+    }
+    
+    // Fallback nếu không thể xử lý
+    return "<p style='color: #64748b; font-style: italic;'>Không thể hiển thị kết quả.</p>";
+  };
+
+  // Hàm helper để format markdown text
+  const formatMarkdownText = (text) => {
+    if (!text) return "";
+    
+    return text
+      // Xử lý headers
+      .replace(/^### (.*$)/gm, '<h3 style="font-size: 16px; font-weight: 700; margin: 16px 0 8px 0; color: #1e293b;">$1</h3>')
+      .replace(/^## (.*$)/gm, '<h2 style="font-size: 18px; font-weight: 700; margin: 20px 0 10px 0; color: #1e293b;">$1</h2>')
+      .replace(/^# (.*$)/gm, '<h1 style="font-size: 20px; font-weight: 700; margin: 24px 0 12px 0; color: #1e293b;">$1</h1>')
+      
+      // Xử lý bảng markdown
+      .replace(/\|(.+)\|/g, (match, content) => {
+        const cells = content.split('|').map(cell => cell.trim()).filter(cell => cell);
+        const isHeader = content.includes('---');
+        
+        if (isHeader) {
+          return ''; // Bỏ qua dòng separator
+        }
+        
+        const cellElements = cells.map(cell => 
+          `<td style="padding: 8px 12px; border: 1px solid #e2e8f0; background: #fff;">${cell}</td>`
+        ).join('');
+        
+        return `<tr>${cellElements}</tr>`;
+      })
+      
+      // Wrap table rows
+      .replace(/(<tr>.*<\/tr>)/gs, '<table style="width: 100%; border-collapse: collapse; margin: 16px 0; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">$1</table>')
+      
+      // Xử lý text formatting
+      .replace(/\*\*(.*?)\*\*/g, '<strong style="font-weight: 600; color: #1e293b;">$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em style="font-style: italic;">$1</em>')
+      
+      // Xử lý lists
+      .replace(/^\* (.+)$/gm, '<li style="margin: 4px 0; padding-left: 8px;">$1</li>')
+      .replace(/(<li.*<\/li>)/gs, '<ul style="margin: 12px 0; padding-left: 20px; list-style-type: disc;">$1</ul>')
+      
+      // Xử lý line breaks
+      .replace(/\n\n/g, '</p><p style="margin: 12px 0; line-height: 1.6; color: #374151;">')
+      .replace(/\n/g, '<br/>')
+      
+      // Wrap trong paragraph nếu chưa có
+      .replace(/^(?!<[h1-6]|<table|<ul|<li|<p)(.+)/gm, '<p style="margin: 12px 0; line-height: 1.6; color: #374151;">$1</p>')
+      
+      // Clean up empty paragraphs
+      .replace(/<p[^>]*><\/p>/g, '');
   };
 
   const formatPrice = (price) => {
@@ -212,15 +331,19 @@ const ChatWidget = () => {
         body: JSON.stringify(input)
       });
 
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
       const data = await res.json();
       
       let aiReply;
       
       if (data && data.candidates && data.candidates.length > 0) {
-        const candidate = data.candidates[0];
+        const candidate = data.candidates[0]; // Access the first candidate
         
         if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
-          aiReply = candidate.content.parts[0].text;
+          aiReply = candidate.content.parts[0].text; // Access the first part's text
         } else {
           aiReply = 'Không nhận được phản hồi từ AI.';
         }
@@ -757,16 +880,38 @@ const ChatWidget = () => {
 
           <div style={{
             background: '#fff',
-            padding: '16px',
-            borderRadius: '8px',
+            padding: '20px',
+            borderRadius: '12px',
             border: '1px solid #e2e8f0',
             minHeight: '200px',
-            maxHeight: '300px',
-            overflowY: 'auto'
+            maxHeight: '400px',
+            overflowY: 'auto',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
           }}>
             {isLoading ? (
-              <div style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>
-                {isCompareMode ? 'Đang so sánh...' : 'Đang phân tích...'}
+              <div style={{ 
+                textAlign: 'center', 
+                padding: '60px 20px', 
+                color: '#64748b',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '16px'
+              }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  border: '3px solid #e2e8f0',
+                  borderTop: '3px solid #667eea',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite'
+                }}></div>
+                <div style={{ fontSize: '16px', fontWeight: '500' }}>
+                  {isCompareMode ? 'Đang so sánh sản phẩm...' : 'Đang phân tích sản phẩm...'}
+                </div>
+                <div style={{ fontSize: '14px', opacity: 0.7 }}>
+                  Vui lòng đợi trong giây lát
+                </div>
               </div>
             ) : (
               <div
@@ -775,7 +920,7 @@ const ChatWidget = () => {
                 }}
                 style={{
                   fontSize: '14px',
-                  lineHeight: '1.6',
+                  lineHeight: '1.7',
                   color: '#1e293b'
                 }}
               />
@@ -841,14 +986,7 @@ const ChatWidget = () => {
       </div>
 
       {/* Messages */}
-      <div style={{
-        background: '#fff',
-        borderRadius: '12px',
-        border: '1px solid #e2e8f0',
-        marginBottom: '20px',
-        maxHeight: '300px',
-        overflowY: 'auto'
-      }}>
+      <div className={styles.messageContainer}>
         {messages.length === 0 ? (
           <div style={{
             textAlign: 'center',
@@ -864,74 +1002,29 @@ const ChatWidget = () => {
             </div>
           </div>
         ) : (
-          <div style={{ padding: '16px' }}>
+          <div className={styles.messagesContent}>
             {messages.map((msg) => (
-              <div key={msg.id} style={{
-                display: 'flex',
-                marginBottom: '16px',
-                justifyContent: msg.from === 'user' ? 'flex-end' : 'flex-start'
-              }}>
+              <div key={msg.id} className={`${styles.message} ${styles[msg.from]}`}>
                 {msg.from === 'ai' && (
-                  <div style={{
-                    width: '32px',
-                    height: '32px',
-                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                    borderRadius: '50%',
-                    marginRight: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#fff',
-                    fontSize: '14px',
-                    fontWeight: '700'
-                  }}>
+                  <div className={`${styles.messageAvatar} ${styles.ai}`}>
                     🤖
                   </div>
                 )}
                 
                 <div style={{ maxWidth: '75%' }}>
-                  <div style={{
-                    padding: '12px 16px',
-                    borderRadius: msg.from === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
-                    background: msg.from === 'user'
-                      ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
-                      : '#f1f5f9',
-                    color: msg.from === 'user' ? '#fff' : '#1e293b',
-                    fontSize: '14px',
-                    lineHeight: '1.5',
-                    wordWrap: 'break-word'
-                  }}>
+                  <div className={`${styles.messageBubble} ${styles[msg.from]}`}>
                     {msg.text}
                   </div>
                   
                   {msg.timestamp && (
-                    <div style={{
-                      fontSize: '11px',
-                      color: '#94a3b8',
-                      marginTop: '4px',
-                      textAlign: msg.from === 'user' ? 'right' : 'left',
-                      paddingLeft: msg.from === 'ai' ? '8px' : '0',
-                      paddingRight: msg.from === 'user' ? '8px' : '0'
-                    }}>
+                    <div className={`${styles.messageTimestamp} ${styles[msg.from]}`}>
                       {msg.timestamp}
                     </div>
                   )}
                 </div>
                 
                 {msg.from === 'user' && (
-                  <div style={{
-                    width: '32px',
-                    height: '32px',
-                    background: 'linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%)',
-                    borderRadius: '50%',
-                    marginLeft: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#4a5568',
-                    fontSize: '14px',
-                    fontWeight: '600'
-                  }}>
+                  <div className={`${styles.messageAvatar} ${styles.user}`}>
                     👤
                   </div>
                 )}
@@ -940,55 +1033,14 @@ const ChatWidget = () => {
             
             {/* Typing indicator */}
             {isTyping && (
-              <div style={{
-                display: 'flex',
-                marginBottom: '16px',
-                justifyContent: 'flex-start'
-              }}>
-                <div style={{
-                  width: '32px',
-                  height: '32px',
-                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                  borderRadius: '50%',
-                  marginRight: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#fff',
-                  fontSize: '14px',
-                  fontWeight: '700'
-                }}>
+              <div className={styles.typingIndicator}>
+                <div className={`${styles.messageAvatar} ${styles.ai}`}>
                   🤖
                 </div>
-                <div style={{
-                  padding: '12px 16px',
-                  borderRadius: '16px 16px 16px 4px',
-                  background: '#f1f5f9',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px'
-                }}>
-                  <div style={{
-                    width: '6px',
-                    height: '6px',
-                    background: '#94a3b8',
-                    borderRadius: '50%',
-                    animation: 'typingDot 1.4s infinite ease-in-out'
-                  }}></div>
-                  <div style={{
-                    width: '6px',
-                    height: '6px',
-                    background: '#94a3b8',
-                    borderRadius: '50%',
-                    animation: 'typingDot 1.4s infinite ease-in-out 0.2s'
-                  }}></div>
-                  <div style={{
-                    width: '6px',
-                    height: '6px',
-                    background: '#94a3b8',
-                    borderRadius: '50%',
-                    animation: 'typingDot 1.4s infinite ease-in-out 0.4s'
-                  }}></div>
+                <div className={styles.typingBubble}>
+                  <div className={styles.typingDot}></div>
+                  <div className={styles.typingDot}></div>
+                  <div className={styles.typingDot}></div>
                 </div>
               </div>
             )}
@@ -997,11 +1049,8 @@ const ChatWidget = () => {
       </div>
 
       {/* Chat input */}
-      <form onSubmit={sendMessage} style={{ marginBottom: '16px' }}>
-        <div style={{
-          display: 'flex',
-          gap: '8px'
-        }}>
+      <form onSubmit={sendMessage} className={styles.chatForm}>
+        <div className={styles.inputContainer}>
           <input
             ref={inputRef}
             type="text"
@@ -1009,34 +1058,12 @@ const ChatWidget = () => {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Nhắn tin với AI..."
             disabled={isTyping}
-            style={{
-              flex: 1,
-              padding: '12px 16px',
-              border: '1px solid #e2e8f0',
-              borderRadius: '24px',
-              fontSize: '14px',
-              outline: 'none',
-              transition: 'border-color 0.2s ease'
-            }}
-            onFocus={(e) => e.target.style.borderColor = '#10b981'}
-            onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
+            className={styles.messageInput}
           />
           <button
             type="submit"
             disabled={!input.trim() || isTyping}
-            style={{
-              padding: '12px 16px',
-              background: input.trim() && !isTyping 
-                ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
-                : '#e2e8f0',
-              border: 'none',
-              borderRadius: '24px',
-              color: input.trim() && !isTyping ? '#fff' : '#94a3b8',
-              cursor: input.trim() && !isTyping ? 'pointer' : 'not-allowed',
-              fontSize: '14px',
-              fontWeight: '600',
-              transition: 'all 0.2s ease'
-            }}
+            className={`${styles.sendButton} ${input.trim() && !isTyping ? styles.enabled : styles.disabled}`}
           >
             Gửi
           </button>
@@ -1059,6 +1086,24 @@ const ChatWidget = () => {
         >
           ← Quay lại
         </button>
+        
+        {messages.length > 0 && (
+          <button
+            onClick={() => setMessages([])}
+            style={{
+              padding: '12px 20px',
+              background: '#fef2f2',
+              border: '1px solid #fecaca',
+              borderRadius: '8px',
+              color: '#dc2626',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '500'
+            }}
+          >
+            Xóa tin nhắn
+          </button>
+        )}
       </div>
     </div>
   );
@@ -1066,90 +1111,32 @@ const ChatWidget = () => {
   return (
     <>
       {open && (
-        <div className="chat-widget" style={{
-          position: 'fixed',
-          bottom: 90,
-          right: 20,
-          width: 480,
-          height: 600,
-          background: '#fff',
-          borderRadius: 20,
-          boxShadow: '0 20px 60px rgba(0,0,0,0.12), 0 8px 25px rgba(0,0,0,0.08)',
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-          animation: 'chatSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-          zIndex: 9999,
-          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-          border: '1px solid rgba(0,0,0,0.05)'
-        }}>
+        <div className={styles.chatWidget}>
           {/* Header */}
-          <div style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            color: '#fff',
-            padding: '20px 24px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            position: 'relative'
-          }}>
+          <div className={styles.header}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{
-                width: 40,
-                height: 40,
-                background: 'rgba(255,255,255,0.2)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '18px'
-              }}>
+              <div className={styles.headerAvatar}>
                 🤖
               </div>
-              <div>
-                <div style={{ fontSize: '16px', fontWeight: '700', marginBottom: '2px' }}>
+              <div className={styles.headerInfo}>
+                <div className={styles.title}>
                   Trợ lý AI
                 </div>
-                <div style={{ 
-                  fontSize: '12px', 
-                  opacity: 0.9
-                }}>
+                <div className={styles.subtitle}>
                   So sánh & Phân tích sản phẩm
                 </div>
               </div>
             </div>
             <button
               onClick={toggleChat}
-              style={{
-                background: 'rgba(255,255,255,0.2)',
-                border: 'none',
-                color: '#fff',
-                fontSize: '20px',
-                cursor: 'pointer',
-                padding: '8px',
-                borderRadius: '8px',
-                transition: 'all 0.2s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '36px',
-                height: '36px'
-              }}
-              onMouseEnter={(e) => e.target.style.background = 'rgba(255,255,255,0.3)'}
-              onMouseLeave={(e) => e.target.style.background = 'rgba(255,255,255,0.2)'}
+              className={styles.closeButton}
             >
               ×
             </button>
           </div>
 
           {/* Content */}
-          <div style={{
-            flex: 1,
-            padding: '24px 20px',
-            overflowY: 'auto',
-            background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
-            scrollBehavior: 'smooth'
-          }}>
+          <div className={styles.content}>
             {currentMode === 'main' && renderMainMenu()}
             {currentMode === 'compare' && !showResult && renderCompareMode()}
             {currentMode === 'analyze' && !showResult && renderAnalyzeMode()}
@@ -1161,80 +1148,15 @@ const ChatWidget = () => {
       )}
 
       <button
-        className="chat-button"
+        className={styles.chatButton}
         onClick={toggleChat}
-        style={{
-          position: 'fixed',
-          bottom: 20,
-          right: 20,
-          width: 64,
-          height: 64,
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          border: 'none',
-          cursor: 'pointer',
-          boxShadow: '0 8px 16px rgba(102, 126, 234, 0.3)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 9999,
-          transition: 'all 0.3s ease'
-        }}
-        onMouseEnter={(e) => {
-          e.target.style.transform = 'scale(1.1)';
-          e.target.style.boxShadow = '0 12px 24px rgba(102, 126, 234, 0.4)';
-        }}
-        onMouseLeave={(e) => {
-          e.target.style.transform = 'scale(1)';
-          e.target.style.boxShadow = '0 8px 16px rgba(102, 126, 234, 0.3)';
-        }}
       >
         <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" fill="#fff" viewBox="0 0 24 24">
           <path d="M12 3C6.48 3 2 6.97 2 12c0 1.86.63 3.58 1.69 5L2 21l4.34-1.38C8.42 20.37 10.16 21 12 21c5.52 0 10-3.97 10-9s-4.48-9-10-9z"/>
         </svg>
       </button>
 
-      <style>{`
-        @keyframes chatSlideIn {
-          from { 
-            opacity: 0; 
-            transform: translateY(40px) scale(0.9);
-          }
-          to { 
-            opacity: 1; 
-            transform: translateY(0) scale(1);
-          }
-        }
-        
-        @keyframes typingDot {
-          0%, 60%, 100% {
-            transform: translateY(0);
-            opacity: 0.4;
-          }
-          30% {
-            transform: translateY(-10px);
-            opacity: 1;
-          }
-        }
-        
-        @media (max-width: 480px) {
-          .chat-widget {
-            width: calc(100vw - 20px) !important;
-            height: calc(100vh - 100px) !important;
-            bottom: 80px !important;
-            right: 10px !important;
-            left: 10px !important;
-            border-radius: 16px !important;
-          }
-          
-          .chat-button {
-            width: 56px !important;
-            height: 56px !important;
-            bottom: 16px !important;
-            right: 16px !important;
-          }
-        }
-      `}</style>
+
     </>
   );
 };

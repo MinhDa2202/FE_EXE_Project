@@ -53,3 +53,49 @@
   box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
   font-weight: 600;
 }
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .link {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .count {
+    width: 24px;
+    height: 24px;
+    font-size: 0.55rem;
+    left: 3px;
+    top: -10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .link {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .count {
+    width: 20px;
+    height: 20px;
+    font-size: 0.5rem;
+    left: 2px;
+    top: -8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .link {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .count {
+    width: 18px;
+    height: 18px;
+    font-size: 0.45rem;
+    left: 1px;
+    top: -6px;
+  }
+}

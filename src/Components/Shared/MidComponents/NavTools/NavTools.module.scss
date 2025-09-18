@@ -3,13 +3,16 @@
 .navTools {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 16px; /* Giảm gap để cân đối */
+  width: 100%;
+  max-width: 100%;
 }
 
 .tools {
   display: flex;
   align-items: center;
-  gap: 16px; // Added for equal spacing between icons
+  gap: 12px; /* Giảm gap giữa các icons */
+  flex-shrink: 0;
 }
 
 .tools>:where(button, a) {
@@ -19,7 +22,50 @@
   position: relative;
   cursor: pointer;
   width: fit-content;
-  // Removed margin-inline-end as gap handles spacing
+}
+
+@include m.small {
+  .navTools {
+    gap: 6px;
+    max-width: none;
+    min-width: 0;
+  }
+  
+  .tools {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+}
+
+/* Mobile breakpoints chi tiết */
+@media (max-width: 640px) {
+  .navTools {
+    gap: 4px;
+  }
+  
+  .tools {
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navTools {
+    gap: 2px;
+  }
+  
+  .tools {
+    gap: 2px;
+  }
+}
+
+@media (max-width: 360px) {
+  .navTools {
+    gap: 1px;
+  }
+  
+  .tools {
+    gap: 1px;
+  }
 }
 
 // Game button styles

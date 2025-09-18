@@ -6,62 +6,74 @@
   border: none;
   outline: none;
   display: none;
-  transition: all 0.3s ease;
   padding: 8px;
   border-radius: 8px;
-  position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 8px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
+  transition: all 0.2s ease;
+  cursor: pointer;
 
   &:hover {
-    transform: translateY(-1px);
-
-    &::before {
-      opacity: 1;
-    }
-
+    background-color: rgba(59, 130, 246, 0.1);
+    
     & > svg {
-      fill: var(--orange-degree2);
+      fill: #3b82f6;
     }
   }
 
   &:focus-visible {
-    outline: 2px solid var(--orange-degree2);
+    outline: 2px solid #3b82f6;
     outline-offset: 2px;
-    
-    & > svg {
-      fill: var(--orange-degree2);
-    }
   }
 
   &:active {
-    transform: translateY(0);
+    background-color: rgba(59, 130, 246, 0.2);
   }
 }
 
 @include m.small {
   .mobileNav {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
 .mobileNav > svg {
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  fill: var(--black);
-  position: relative;
-  z-index: 1;
+  width: 24px;
+  height: 24px;
+  fill: #374151;
+  transition: fill 0.2s ease;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .mobileNav {
+    padding: 6px;
+  }
+  
+  .mobileNav > svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobileNav {
+    padding: 4px;
+  }
+  
+  .mobileNav > svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 360px) {
+  .mobileNav {
+    padding: 3px;
+  }
+  
+  .mobileNav > svg {
+    width: 16px;
+    height: 16px;
+  }
 }
