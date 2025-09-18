@@ -2,14 +2,15 @@
 
 .nav {
   user-select: none;
-  margin-left: -40px; /* stronger nudge */
-  transform: translateX(-80px); /* move further left */
 }
 
 .nav ul {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 32px; /* Tăng từ 24px để có không gian hơn */
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .nav ul > li {
@@ -18,191 +19,117 @@
 
 @include m.medium {
   .nav ul {
-    gap: 20px;
+    gap: 20px; /* Tăng từ 16px */
 
     & li {
-      font-size: 0.9rem;
+      font-size: 0.875rem;
     }
-  }
-  .nav { 
-    margin-left: -20px; 
-    transform: translateX(-36px);
   }
 }
 
 .nav ul li a {
-  outline: none;
-  padding: 8px 12px;
-  color: var(--black);
-  position: relative;
-  outline: dashed 0 var(--regular-light-gray);
-  outline-offset: 0;
-  border-radius: 6px;
-  transition: all 0.3s ease;
+  display: block;
+  padding: 10px 18px; /* Tăng padding để nav items lớn hơn */
+  color: #374151;
   font-weight: 500;
+  font-size: 0.95rem; /* Tăng font size */
   text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+  white-space: nowrap; /* Đảm bảo text không bị wrap */
+
+  &:hover {
+    color: #1f2937;
+    background-color: rgba(59, 130, 246, 0.08);
+  }
 
   &:focus-visible {
-    outline: 2px solid var(--orange-degree2);
+    outline: 2px solid #3b82f6;
     outline-offset: 2px;
-    color: var(--orange-degree2);
-    background-color: rgba(255, 165, 0, 0.05);
   }
 
   &[class="active"] {
-    color: var(--primary-purple);
-    background-color: rgba(102, 126, 234, 0.1);
+    color: #3b82f6;
+    background-color: rgba(59, 130, 246, 0.1);
     font-weight: 600;
   }
 
-  &[class="active"]::before {
+  &[class="active"]::after {
     opacity: 1;
-    background-color: var(--primary-purple);
-  }
-
-  &:hover:not([class="active"]) {
-    color: var(--very-dark-gray);
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-
-  &:hover::before {
-    opacity: 1;
+    width: 100%;
   }
 }
 
-.nav ul li a::before {
+.nav ul li a::after {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: 2px;
+  bottom: 4px;
   width: 0;
   height: 2px;
-  background-color: var(--black);
+  background-color: #3b82f6;
   opacity: 0;
   transition: all 0.3s ease;
   transform: translateX(-50%);
+  border-radius: 1px;
 }
 
-.nav ul li:hover a::before {
-  width: 60%;
+.nav ul li:hover a::after {
+  width: 80%;
+  opacity: 0.7;
 }
-
-.nav ul li a:focus-visible::before {
-  background-color: var(--orange-degree2);
-  width: 60%;
-  opacity: 1;
-}
-
-// Enhanced Sign Up button styling
-.authLink { margin-left: 8px; }
 
 .loginLink {
-  position: relative;
-  /* Glassmorphism */
-  /* Base + glossy top highlight */
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.06) 52%, rgba(255,255,255,0) 53%) padding-box,
-    rgba(255,255,255,0.12) padding-box;
-  background-clip: padding-box;
-  color: #111 !important;
-  font-weight: 800;
-  letter-spacing: .25px;
-  padding: 10px 16px;
-  border-radius: 14px;
-  border: 1.2px solid rgba(0,0,0,0.45);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18),
-              inset 0 1px 0 rgba(255,255,255,0.35),
-              inset 0 -1px 0 rgba(0,0,0,0.08);
-  backdrop-filter: saturate(140%) blur(14px);
-  -webkit-backdrop-filter: saturate(140%) blur(14px);
-  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease, background .2s ease;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px; /* Tăng padding */
+  color: #374151;
+  font-weight: 500;
+  font-size: 0.9rem; /* Tăng font size */
   text-decoration: none;
-  text-shadow: none;
-  isolation: isolate;
-  overflow: hidden;
-  animation: borderFlow 9s linear infinite;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: white;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  min-width: 80px; /* Đảm bảo button có chiều rộng tối thiểu */
 
-  &:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 16px 44px rgba(0,0,0,0.22); background: linear-gradient(rgba(255,255,255,0.16), rgba(255,255,255,0.16)) padding-box, linear-gradient(135deg, rgba(255,255,255,0.65), rgba(255,255,255,0.2), rgba(255,255,255,0.65)) border-box; }
-  &:active { transform: translateY(.0) scale(0.98); box-shadow: inset 0 2px 10px rgba(0,0,0,.35); }
-  &:focus-visible { outline: 3px solid rgba(0,0,0,0.6); outline-offset: 2px; }
-
-  /* glossy sweep */
-  &::after {
-    content: "";
-    position: absolute;
-    top: -20%;
-    left: -30%;
-    width: 60%;
-    height: 140%;
-    transform: rotate(20deg);
-    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.55), rgba(255,255,255,0));
-    opacity: .0;
-    filter: blur(2px);
-    animation: sheen 3s linear infinite;
-    pointer-events: none;
+  &:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+    color: #1f2937;
   }
 
-  /* frosted glass ring */
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.5px; /* ring thickness */
-    background: linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,.15));
-    -webkit-mask: 
-      linear-gradient(#000 0 0) content-box, 
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    pointer-events: none;
-    opacity: .9;
+  &:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
   }
 }
 
 .signUpLink {
-  position: relative;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.06) 52%, rgba(255,255,255,0) 53%) padding-box,
-    rgba(255,255,255,0.12) padding-box;
-  background-clip: padding-box;
-  color: #111 !important;
-  font-weight: 800;
-  letter-spacing: .25px;
-  padding: 10px 16px;
-  border-radius: 14px;
-  border: 1.2px solid rgba(0,0,0,0.45);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18),
-              inset 0 1px 0 rgba(255,255,255,0.35),
-              inset 0 -1px 0 rgba(0,0,0,0.08);
-  backdrop-filter: saturate(140%) blur(14px);
-  -webkit-backdrop-filter: saturate(140%) blur(14px);
-  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease, background .2s ease;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px; /* Tăng padding */
+  color: white;
+  font-weight: 500;
+  font-size: 0.9rem; /* Tăng font size */
   text-decoration: none;
-  text-shadow: none;
-  isolation: isolate;
-  overflow: hidden;
-  animation: borderFlow 9s linear infinite;
+  background-color: #3b82f6;
+  border: 1px solid #3b82f6;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  min-width: 90px; /* Đảm bảo button có chiều rộng tối thiểu */
 
-  &:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 16px 44px rgba(0,0,0,0.22); background: linear-gradient(rgba(255,255,255,0.16), rgba(255,255,255,0.16)) padding-box, linear-gradient(135deg, rgba(255,255,255,0.65), rgba(255,255,255,0.2), rgba(255,255,255,0.65)) border-box; }
-  &:active { transform: translateY(.0) scale(0.98); box-shadow: inset 0 2px 10px rgba(0,0,0,.35); }
-  &:focus-visible { outline: 3px solid rgba(0,0,0,0.6); outline-offset: 2px; }
+  &:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+  }
 
-  /* frosted glass ring */
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.5px;
-    background: linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,.15));
-    -webkit-mask: 
-      linear-gradient(#000 0 0) content-box, 
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    pointer-events: none;
-    opacity: .9;
+  &:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
   }
 }
 

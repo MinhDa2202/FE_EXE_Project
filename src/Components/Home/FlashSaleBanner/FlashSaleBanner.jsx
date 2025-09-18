@@ -134,8 +134,8 @@ const FlashSaleBanner = () => {
   return (
     <div style={{
       width: '100%',
-      padding: '3rem 0',
-      margin: '3rem 0',
+      padding: '2rem 0', /* Giảm padding để cân đối */
+      margin: '3rem 0', /* Giảm margin để phù hợp */
       position: 'relative',
     }}>
       {/* Main Container */}
