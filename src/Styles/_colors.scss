@@ -19,10 +19,11 @@
   --bg-light-gray: #e2e8f0;
   
   /* Text Colors */
-  --text-primary: #1e293b;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
-  --text-light: #94a3b8;
+  --text-primary: #1e293b; /* Dark gray for headings/main text in light mode */
+  --text-secondary: #475569; /* Medium gray for paragraphs/secondary text in light mode */
+  --text-muted: #64748b; /* Lighter gray for subtle text in light mode */
+  --text-light: #94a3b8; /* Very light gray for disabled/hint text in light mode */
+  --text-link: #3182ce; /* Link color */
   
   /* Status Colors */
   --success: #10b981;
@@ -49,4 +50,27 @@
   /* Gradients */
   --gradient-blue: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
   --gradient-orange: linear-gradient(135deg, var(--neon-orange) 0%, var(--neon-orange-hover) 100%);
+}
+
+[data-theme='dark'] {
+  /* Dark Mode Backgrounds */
+  --bg-primary: #1a202c; /* Dark background for main areas */
+  --bg-secondary: #2d3748; /* Slightly lighter dark background for sections */
+  --bg-tertiary: #4a5568; /* Even lighter dark background for cards/elements */
+  --bg-off-white: #2c313a; /* Dark mode equivalent for off-white */
+  --bg-light-gray: #4a5568; /* Dark mode equivalent for light gray borders/dividers */
+  --bg-form: #2d3748; /* Specific background for forms in dark mode */
+
+  /* Dark Mode Text Colors */
+  --text-primary: #f7fafc; /* Light text for headings/main text in dark mode */
+  --text-secondary: #e2e8f0; /* Slightly darker light text for paragraphs/secondary text in dark mode */
+  --text-muted: #cbd5e0; /* Muted light text for subtle text in dark mode */
+  --text-light: #a0aec0; /* Darker muted light text for disabled/hint text in dark mode */
+  --text-link: #63b3ed; /* Link color in dark mode */
+
+  /* Dark Mode Shadows & Effects - Adjusted for darker backgrounds */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.2);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
 }

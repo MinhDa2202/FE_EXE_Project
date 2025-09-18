@@ -17,12 +17,13 @@ const RoutesLayout = () => {
   const isWebsiteOnline = useOnlineStatus();
   const location = useLocation();
   const isLoginPage = location.pathname === "/login";
+  const isSignUpPage = location.pathname === "/signup";
 
   return (
     <div className="App" tabIndex="-1">
       <SkipContentLink scrollTo={skipLinkSectionId} />
       {/* <FirstHeader /> */}
-      {!isLoginPage && <Header />}
+      {!isLoginPage && !isSignUpPage && <Header />}
       <MobileNav />
       <GlobalOverlay />
       <ScrollToTop />
