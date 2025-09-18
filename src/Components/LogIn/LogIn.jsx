@@ -1,12 +1,10 @@
 import { Helmet } from "react-helmet-async";
 import { signUpImg } from "src/Assets/Images/Images";
 import { WEBSITE_NAME } from "src/Data/constants";
-import useScrollOnMount from "src/Hooks/App/useScrollOnMount";
 import s from "./LogIn.module.scss";
 import LogInForm from "./LogInForm/LogInForm";
 
 const LogIn = () => {
-  useScrollOnMount(260);
 
   return (
     <>
@@ -19,12 +17,8 @@ const LogIn = () => {
       </Helmet>
 
       <main className={s.LogInPage} id="login-page">
-        <div className={s.container}>
-          <div className={s.imgHolder}>
-          </div>
 
           <LogInForm />
-        </div>
       </main>
     </>
   );
