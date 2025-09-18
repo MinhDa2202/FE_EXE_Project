@@ -1,109 +1,562 @@
-// Thêm vào SignUpForm.module.scss
-.form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
+@use "src/Styles/mixins" as m;
 
-.inputGroup {
-  margin: 16px 0;
-}
-
-.otpInput {
-  width: 100%;
-  padding: 12px;
-  font-size: 18px;
-  text-align: center;
-  letter-spacing: 0.5em;
-  border: 2px solid #ddd;
-  border-radius: 6px;
-  outline: none;
+.signupContainer {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem;
+  padding-top: 8vh;
+  position: relative;
+  overflow: hidden;
   
-  &:focus {
-    border-color: #007bff;
+  // Animated background elements
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(49, 130, 206, 0.03) 0%, transparent 50%);
+    animation: rotate 20s linear infinite;
+    z-index: 0;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(56, 161, 105, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(49, 130, 206, 0.05) 0%, transparent 50%);
+    animation: float 15s ease-in-out infinite;
+    z-index: 0;
   }
 }
 
-.otpActions {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.verifyButton {
-  background: #007bff;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
+@keyframes float {
+  0%, 100% { transform: translateY(0px) scale(1); opacity: 0.5; }
+  50% { transform: translateY(-20px) scale(1.1); opacity: 0.8; }
+}
+
+// Signup Form - Centered Card
+.rightSide {
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg-form);
+  backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg), 0 0 0 1px var(--bg-light-gray);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 0.8s ease-out;
   
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #3182ce, #38a169);
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0.1;
+    animation: borderGlow 3s ease-in-out infinite alternate;
+  }
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+      0 35px 70px rgba(0, 0, 0, 0.12),
+      0 0 0 1px var(--bg-light-gray);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 }
 
-.secondaryActions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.backButton {
-  background: #6c757d;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+@keyframes borderGlow {
+  from { opacity: 0.1; }
+  to { opacity: 0.2; }
 }
 
-.resendSection {
-  display: flex;
-  align-items: center;
+.formContainer {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
-.countdown {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #6c757d;
+.brandSection {
+  text-align: center;
+  margin-bottom: 2.5rem;
 }
 
-.resendButton {
+.logo {
+  width: auto;
+  height: auto;
   background: transparent;
-  color: #007bff;
-  border: 1px solid #007bff;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 0;
   display: flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: none;
+  padding: 0;
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+.logoImage {
+  width: auto;
+  height: auto;
+  max-width: 180px;
+  max-height: 70px;
+  object-fit: contain;
+  border-radius: 0;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+  }
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+.brandName {
+  color: var(--text-primary);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.formSection {
+  text-align: center;
+}
+
+.signupTitle {
+  color: var(--text-primary);
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  line-height: 1.2;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+  background: var(--gradient-blue); /* Using a gradient for text for visual appeal */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.signupSubtitle {
+  color: var(--text-secondary);
+  font-size: 15px;
+  margin: 0 0 2rem;
+  line-height: 1.4;
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+  opacity: 0.8;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.signupForm {
+  text-align: left;
+}
+
+.nameFields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.inputGroup {
+  position: relative;
+  margin-bottom: 1.25rem;
+  animation: fadeInUp 0.8s ease-out 0.8s both;
+  
+  &:nth-child(3) {
+    animation-delay: 1s;
+  }
+  
+  &:nth-child(4) {
+    animation-delay: 1.2s;
+  }
+  
+  &:nth-child(5) {
+    animation-delay: 1.4s;
+  }
+}
+
+.inputIcon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  z-index: 1;
+  transition: all 0.3s ease;
+  
+  svg {
+    transition: all 0.3s ease;
+  }
+}
+
+.inputGroup:focus-within .inputIcon {
+  color: var(--text-link);
+  transform: translateY(-50%) scale(1.1);
+  
+  svg {
+    filter: drop-shadow(0 2px 4px rgba(49, 130, 206, 0.3));
+  }
+}
+
+.input {
+  width: 100%;
+  padding: 15px 15px 15px 45px;
+  border: 2px solid var(--bg-light-gray);
+  border-radius: 12px;
+  font-size: 15px;
+  background: var(--bg-primary);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  position: relative;
+  
+  &:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow:
+      0 0 0 3px rgba(var(--primary-blue), 0.1),
+      0 4px 12px rgba(var(--primary-blue), 0.15);
+    transform: translateY(-2px);
+    background: var(--bg-primary);
+  }
+  
+  &:hover {
+    border-color: var(--text-light);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  &::placeholder {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+  }
+  
+  &:focus::placeholder {
+    color: var(--text-secondary);
+  }
+}
+
+.termsSection {
+  margin: 1.25rem 0;
+  animation: fadeInUp 0.8s ease-out 1.6s both;
+}
+
+.termsCheckbox {
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  gap: 0.75rem;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: #3182ce;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+  }
+  
+  &:checked {
+    animation: checkmark 0.3s ease-in-out;
+  }
+}
+
+@keyframes checkmark {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.checkboxLabel {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.termsLink {
+  color: var(--text-link);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #3182ce, #38a169);
+    transition: width 0.3s ease;
+  }
+  
+  &:hover {
+    color: var(--primary-blue-dark);
+    transform: translateY(-1px);
+    
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+.signupButton {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 20px rgba(49, 130, 206, 0.3);
+  position: relative;
+  overflow: hidden;
+  margin-top: 1.5rem; /* Added margin-top for spacing */
+  animation: fadeInUp 0.8s ease-out 1.8s both;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+  }
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 12px 40px rgba(49, 130, 206, 0.4),
+      0 0 0 1px rgba(49, 130, 206, 0.1);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 25px rgba(49, 130, 206, 0.35);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow:
+      0 0 0 3px rgba(49, 130, 206, 0.2),
+      0 8px 30px rgba(49, 130, 206, 0.4);
+  }
+}
+
+.loginSection {
+  text-align: center;
+  margin-top: 1.75rem;
+  animation: fadeInUp 0.8s ease-out 2s both;
+  /* Removed display: flex and justify-content: space-between to keep text and link on one line */
+  align-items: center;
+}
+
+.loginText {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0;
+  display: flex; /* Use flexbox for better control */
+  justify-content: center; /* Center the content */
+  align-items: center; /* Align items vertically */
+  flex-wrap: nowrap; /* Ensure content stays on one line */
+}
+
+.loginLink {
+  color: var(--text-link);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex; /* For icon alignment */
+  align-items: center;
+  gap: 0.5rem; /* Space between icon and text */
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #3182ce, #38a169);
+    transition: width 0.3s ease;
+  }
+  
+  &:hover {
+    color: var(--primary-blue-dark);
+    transform: translateY(-1px);
+    
+    &::after {
+      width: 100%;
+    }
+  }
 }
 
 .spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid #ffffff;
-  border-top: 2px solid transparent;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #fff;
   border-radius: 50%;
+  width: 18px;
+  height: 18px;
   animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5rem;
 }
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.checkIcon,
+.backIcon,
+.resendIcon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  font-size: 1.2em;
+}
+
+.signupButton.loading {
+  background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
+  cursor: not-allowed;
+  box-shadow: 0 4px 15px rgba(160, 174, 192, 0.3);
+  transform: none;
+
+  &::before {
+    left: -100%; // Disable hover effect when loading
+  }
+}
+
+.resendSection {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loginText strong {
+  color: var(--text-link);
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .signupContainer {
+    padding: 1rem;
+  }
+  
+  .rightSide {
+    padding: 2.5rem 2rem;
+    max-width: 100%;
+  }
+  
+  .formContainer {
+    max-width: 100%;
+  }
+  
+  .signupTitle {
+    font-size: 24px;
+  }
+  
+  .signupSubtitle {
+    font-size: 14px;
+  }
+  
+  .nameFields {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .signupContainer {
+    padding: 0.5rem;
+  }
+  
+  .rightSide {
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+  }
+  
+  .input {
+    padding: 14px 14px 14px 42px;
+    font-size: 14px;
+  }
+  
+  .inputIcon {
+    left: 14px;
+  }
+  
+  .signupButton {
+    padding: 14px;
+    font-size: 14px;
+  }
 }
