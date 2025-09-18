@@ -405,6 +405,7 @@
   color: #718096;
   font-size: 14px;
   margin: 0;
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
 .signUpLink {
