@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useSlider from "src/Hooks/App/useSlider";
 import SliderButtons from "../../Shared/MidComponents/ProductsSlider/SliderButtons/SliderButtons";
 import CategoryCard from "../../Shared/ProductsCards/CategoryCard/CategoryCard";
@@ -8,6 +9,11 @@ const CategoriesSlider = () => {
   const sliderRef = useRef();
   const { handleNextBtn, handlePrevBtn } = useSlider(sliderRef);
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (categoryId, categoryName) => {
+    navigate(`/category?id=${categoryId}&name=${categoryName}`);
+  };
 
   const categoryToIconMap = {
     Phone: "mobile",
@@ -45,7 +51,11 @@ const CategoriesSlider = () => {
 
       <div className={s.categoriesSlider} ref={sliderRef}>
         {categories.map((categoryData) => (
-          <CategoryCard categoryData={categoryData} key={categoryData.id} />
+          <CategoryCard
+            categoryData={categoryData}
+            key={categoryData.id}
+            onClick={() => handleCategoryClick(categoryData.id, categoryData.name)}
+          />
         ))}
       </div>
     </>
