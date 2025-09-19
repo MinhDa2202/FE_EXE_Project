@@ -104,10 +104,10 @@ const useProducts = (loadingKey = "loadingProducts") => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      
+
       // Map API data to component format
       const mappedProducts = mapApiDataToComponentFormat(data);
-      
+
       setProducts(mappedProducts);
       setError(null);
     } catch (error) {

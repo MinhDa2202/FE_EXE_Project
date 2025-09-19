@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const getInitialState = () => {
   try {
@@ -16,14 +16,14 @@ const getInitialState = () => {
         selectedProduct: parsed.selectedProduct || null,
         removeOrderProduct: parsed.removeOrderProduct || "",
         refetchFlag: parsed.refetchFlag || false,
+        products: Array.isArray(parsed.products) ? parsed.products : [], // Add products to initial state
       };
     }
   } catch (error) {
     console.warn("Error parsing products data from localStorage:", error);
-    // Clear corrupted data
     localStorage.removeItem("productsSliceData");
   }
-  
+
   return {
     saveBillingInfoToLocal: false,
     favoritesProducts: [],
@@ -34,6 +34,7 @@ const getInitialState = () => {
     selectedProduct: null,
     removeOrderProduct: "",
     refetchFlag: false,
+    products: [], // Start with empty array, will be populated from API
   };
 };
 
@@ -70,7 +71,55 @@ const productsSlice = createSlice({
       state[from] = [];
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        // Handle pending state if needed
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.products = action.payload;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        console.error("Failed to fetch products from API:", action.error);
+        // Leave products empty when API fails, search will work when API is available
+        state.products = [];
+      });
+  },
 });
+
+export const fetchProducts = createAsyncThunk(
+  "productsSlice/fetchProducts",
+  async () => {
+    const response = await fetch("https://localhost:7235/api/Product");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+
+    // Map API data to component format (based on useProducts.jsx)
+    const mappedProducts = data.map((product) => ({
+      Id: product.id || product.Id || product.productId,
+      id: product.id || product.Id || product.productId,
+      Title: product.name || product.title || product.Title || product.productName,
+      name: product.name || product.title || product.Title || product.productName,
+      Price: product.price || product.Price || product.originalPrice,
+      Discount: product.discount || product.Discount || product.discountPercent || 0,
+      AfterDiscount: product.afterDiscount || product.AfterDiscount || product.salePrice,
+      ImageUrls: product.imageUrls || product.ImageUrls || product.images || (product.imageUrl ? [product.imageUrl] : []),
+      category: product.category || product.Category || product.categoryName,
+      shortName: product.shortName || product.name || product.title || product.Title || product.productName,
+      description: product.description || product.Description || product.productDescription || "",
+      brand: product.brand || product.Brand || product.brandName || "",
+      Condition: product.condition || product.Condition || product.productCondition,
+      locations: product.location || product.locations || product.address || "",
+      rating: product.rating || product.rate || product.averageRating || 0,
+      reviews: product.reviewCount || product.voteCount || product.votes || 0,
+      isActive: product.isActive !== undefined ? product.isActive : true
+    }));
+
+    return mappedProducts;
+  }
+);
 
 export const {
   triggerRefetch,

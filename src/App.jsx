@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useStoreWebsiteDataToLocalStorage from "./Hooks/App/useStoreWebsiteDataToLocalStorage";
 import useLoadLoginFromLocalStorage from "./Hooks/App/useLoadLoginFromLocalStorage";
 import { useDispatch, useSelector } from "react-redux";
@@ -5,8 +6,7 @@ import AppRoutes from "./Routes/AppRoutes";
 import ChatWidget from "./Components/ChatWidget/ChatWidget";
 import AddProductModal from "./Components/Shared/PopUps/AddProductModal/AddProductModal";
 import { closeAddProductModal } from "./Features/uiSlice";
-import { triggerRefetch } from "./Features/productsSlice";
-
+import { fetchProducts, triggerRefetch } from "./Features/productsSlice";
 
 function App() {
   useStoreWebsiteDataToLocalStorage();
@@ -23,9 +23,12 @@ function App() {
     dispatch(triggerRefetch());
   };
 
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   return (
-    <>
+    <div id="modal-root">
       <AppRoutes />
       <ChatWidget />
       {isAddProductModalOpen && (
@@ -34,7 +37,7 @@ function App() {
           onProductAdded={handleProductAdded}
         />
       )}
-    </>
+    </div>
   );
 }
 
