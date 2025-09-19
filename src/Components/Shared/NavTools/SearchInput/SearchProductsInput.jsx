@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { productsData } from "src/Data/productsData";
+
 import { updateLoadingState } from "src/Features/loadingSlice";
 import { updateProductsState } from "src/Features/productsSlice";
 import { searchByObjectKey } from "src/Functions/helper";
@@ -18,11 +18,11 @@ const SearchProductsInput = () => {
   const location = useLocation();
   const pathName = location.pathname;
   const [searchParams, setSearchParams] = useSearchParams();
+  const { products } = useSelector((state) => state.products);
 
   function handleSearchProducts(e) {
-    setSearchParams({ query: searchRef.current });
     e.preventDefault();
-
+    
     const isEmptyQuery = searchRef.current?.trim()?.length === 0;
     if (isEmptyQuery) return;
 
@@ -32,32 +32,56 @@ const SearchProductsInput = () => {
   function updateSearchProducts() {
     dispatch(updateLoadingState({ key: "loadingSearchProducts", value: true }));
 
-    const queryValue = searchRef.current || searchParams.get("query");
+    const queryValue = searchRef.current || decodeURIComponent(searchParams.get("query") || "");
     const isEmptyQuery = queryValue?.trim()?.length === 0;
 
     if (isEmptyQuery) {
       dispatch(updateProductsState({ key: "searchProducts", value: [] }));
+      dispatch(updateLoadingState({ key: "loadingSearchProducts", value: false }));
       return;
     }
 
-    const productsFound = getProducts(queryValue);
+    // If not on search page, navigate there
+    if (pathName !== "/search") {
+      navigateTo("/search?query=" + encodeURIComponent(queryValue));
+      return;
+    }
+
+    // If on search page, update URL and search results
+    const currentQuery = searchParams.get("query");
+    const encodedQuery = encodeURIComponent(queryValue);
+    
+    // Update URL if query is different
+    if (currentQuery !== encodedQuery) {
+      navigateTo("/search?query=" + encodedQuery, { replace: true });
+    }
+
+    // Use products from Redux store (from API backend)
+    const productsFound = getProducts(queryValue, products);
 
     dispatch(
       updateProductsState({ key: "searchProducts", value: productsFound })
     );
-    navigateTo("/search?query=" + queryValue);
+    
+    dispatch(updateLoadingState({ key: "loadingSearchProducts", value: false }));
   }
 
   useEffect(() => {
     const isSearchPage = pathName === "/search";
-    if (isSearchPage) updateSearchProducts();
+    const queryFromUrl = searchParams.get("query");
+    
+    if (isSearchPage && queryFromUrl) {
+      // Set the search ref to the URL query for consistency
+      searchRef.current = decodeURIComponent(queryFromUrl);
+      updateSearchProducts();
+    }
 
     return () => {
       dispatch(
         updateLoadingState({ key: "loadingSearchProducts", value: true })
       );
     };
-  }, []);
+  }, [products, searchParams]); // Add searchParams as dependency
 
   return (
     <form
@@ -82,20 +106,44 @@ function focusInput(e) {
   searchInput.focus();
 }
 
-function getProducts(query) {
-  let productsFound = searchByObjectKey({
-    data: productsData,
-    key: "shortName",
-    query,
-  });
-
-  if (productsFound.length === 0) {
-    productsFound = searchByObjectKey({
-      data: productsData,
-      key: "category",
-      query,
-    });
+function getProducts(query, products) {
+  // Only search if we have products data from API
+  if (!products || products.length === 0) {
+    return [];
   }
 
-  return productsFound;
+  let productsFound = [];
+
+  // Search in multiple fields simultaneously to get all matches
+  const searchableFields = [
+    "name",           // Primary field for API products
+    "Title",          // Alternative field
+    "title",          // Lowercase version
+    "productName",    // Common API variations
+    "product_name",
+    "productTitle",
+    "product_title",
+    "description",    // Content fields
+    "brand",          // Brand field
+    "category",       // Category field
+    "locations"       // Location field
+  ];
+
+  searchableFields.forEach((field) => {
+    const foundInField = searchByObjectKey({
+      data: products,
+      key: field,
+      query,
+    });
+
+    // Add found products to the collection
+    productsFound = productsFound.concat(foundInField);
+  });
+
+  // Remove duplicates based on product id
+  const uniqueProducts = productsFound.filter((product, index, self) => {
+    return index === self.findIndex(p => p.id === product.id || p.Id === product.id || p.Id === product.Id);
+  });
+
+  return uniqueProducts;
 }

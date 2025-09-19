@@ -162,7 +162,18 @@
     "resultsNotFound": "No results found.",
     "weDontHaveProducts": "Sorry We don't have any products in this category",
     "backTo": "Back to",
-    "home": "Home page"
+    "home": "Home page",
+    "back": "Back",
+    "viewAllProducts": "View All Products",
+    "more": "more"
+  },
+  "search": {
+    "resultsFor": "Search results for",
+    "productsFound": "products found",
+    "noResultsTitle": "No products found",
+    "noResultsMessage": "We couldn't find any products matching '{{query}}'",
+    "tryDifferentKeywords": "Try searching with different keywords or browse our categories.",
+    "popularSearches": "Popular searches"
   },
   "history": {
     "account": "Account",
