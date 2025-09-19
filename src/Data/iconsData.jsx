@@ -173,68 +173,27 @@ export const iconsData = [
 
   {
     name: "gamepad",
-    icon: (
-      <svg strokeWidth="2" viewBox="0 0 56 56" data-stroke-hover>
-        <rect
-          width="46"
-          height="28"
-          x="5"
-          y="14"
-          fill="none"
-          stroke="#000"
-          rx="5"
-          ry="5"
-        />
-        <path d="M14 28h9m-4-5v10" />
-        <circle cx="36" cy="25" r="1.5" />
-        <circle cx="43" cy="30" r="1.5" />
-      </svg>
-    ),
+    icon: <span style={{ fontSize: '3em' }}>🎮</span>,
   },
 
   {
     name: "headphone",
-    icon: (
-      <svg fill="none" viewBox="0 0 56 56" strokeWidth="2" data-stroke-hover>
-        <g stroke="#000">
-          <path d="M16 30h-2c-3 0-5 2-5 5v7c0 3 2 5 5 5h2c3 0 5-2 5-5v-7c0-3-2-5-5-5Zm26 0h-2c-3 0-5 2-5 5v7c0 3 2 5 5 5h2c3 0 5-2 5-5v-7c0-3-2-5-5-5Z" />
-          <path d="M9 35v-7a19 19 0 0 1 38 0v7" />
-        </g>
-      </svg>
-    ),
+    icon: <span style={{ fontSize: '3em' }}>🎧</span>,
   },
 
   {
     name: "smartWatch",
-    icon: (
-      <svg fill="none" strokeWidth="2" viewBox="0 0 56 56" data-stroke-hover>
-        <path d="M35 14H21c-4 0-7 3-7 7v14c0 4 3 7 7 7h14c4 0 7-3 7-7V21c0-4-3-7-7-7ZM21 42v7h14v-7M21 14V7h14v7m-11 9v11m4-6v6m4-8v8" />
-      </svg>
-    ),
+    icon: <span style={{ fontSize: '3em' }}>⌚</span>,
   },
 
   {
     name: "computer",
-    icon: (
-      <svg fill="none" strokeWidth="2" viewBox="0 0 56 56" data-stroke-hover>
-        <path
-          stroke="#000"
-          d="M47 9H9c-1 0-2 1-2 3v23l2 2h38l2-2V12c0-2-1-3-2-3ZM16 47h24M21 37v10m14-10v10M8 32h40"
-        />
-      </svg>
-    ),
+    icon: <span style={{ fontSize: '3em' }}>💻</span>,
   },
 
   {
     name: "camera",
-    icon: (
-      <svg fill="none" viewBox="0 0 56 56" strokeWidth="2" data-stroke-hover>
-        <g stroke="#000">
-          <path d="M12 16h2a5 5 0 0 0 5-4 2 2 0 0 1 2-3h14a2 2 0 0 1 2 3 5 5 0 0 0 5 4h2a5 5 0 0 1 5 5v21a5 5 0 0 1-5 5H12a5 5 0 0 1-5-5V21a5 5 0 0 1 5-5" />
-          <path d="M28 37a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z" />
-        </g>
-      </svg>
-    ),
+    icon: <span style={{ fontSize: '3em' }}>📷</span>,
   },
 
   {
@@ -483,14 +442,7 @@ export const iconsData = [
 
   {
     name: "mobile",
-    icon: (
-      <svg fill="none" strokeWidth="2" viewBox="0 0 56 56" data-stroke-hover>
-        <path
-          stroke="#000"
-          d="M39 6H17c-1 0-3 1-3 3v38c0 2 2 3 3 3h22c1 0 3-1 3-3V9c0-2-2-3-3-3ZM26 7h5M15 40h26"
-        />
-      </svg>
-    ),
+    icon: <span style={{ fontSize: '3em' }}>📱</span>,
   },
 
   {

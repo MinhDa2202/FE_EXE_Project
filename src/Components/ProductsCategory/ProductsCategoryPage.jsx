@@ -16,7 +16,7 @@ const ProductsCategoryPage = () => {
   const { t } = useTranslation();
   const categoryId = useGetSearchParam("id");
   const categoryName = useGetSearchParam("name");
-  const categoryTypeTrans = t(`categoriesData.${categoryName}`);
+  const categoryTypeTrans = t(`${categoryName}`);
   const isWebsiteOnline = useOnlineStatus();
   
   const [allProducts, setAllProducts] = useState([]);
@@ -29,7 +29,6 @@ const ProductsCategoryPage = () => {
   const getCategoryIdFromCategoryName = (categoryName, categories) => {
     if (!categoryName || !categories.length) return null;
     
-    // Find matching category by name (case insensitive)
     const matchingCategory = categories.find(cat =>
       cat.name && cat.name.toLowerCase() === categoryName.toLowerCase()
     );
@@ -44,13 +43,11 @@ const ProductsCategoryPage = () => {
       setLoadingError(null);
       
       try {
-        // Fetch categories and products in parallel
         const [categoriesResponse, productsResponse] = await Promise.allSettled([
           fetch("https://localhost:7235/api/Category"),
           fetch("https://localhost:7235/api/Product")
         ]);
 
-        // Handle categories response
         let categoriesData = [];
         if (categoriesResponse.status === 'fulfilled' && categoriesResponse.value.ok) {
           categoriesData = await categoriesResponse.value.json();
@@ -59,7 +56,6 @@ const ProductsCategoryPage = () => {
           console.warn("⚠️ Categories API failed:", categoriesResponse.reason || "Unknown error");
         }
 
-        // Handle products response
         let productsData = [];
         if (productsResponse.status === 'fulfilled' && productsResponse.value.ok) {
           productsData = await productsResponse.value.json();
@@ -80,7 +76,7 @@ const ProductsCategoryPage = () => {
     };
 
     fetchAllData();
-  }, []); // Empty dependency array - only run once on mount
+  }, []);
 
   // Filter products when categoryId or allProducts change
   useEffect(() => {
@@ -95,18 +91,15 @@ const ProductsCategoryPage = () => {
     }
     
     const filtered = allProducts.filter((product) => {
-      // First try to get categoryId directly
       let productCategoryId = product.categoryId ||
                              product.category_id ||
                              product.CategoryId ||
                              product.category?.id;
       
-      // If no direct categoryId, map from categoryName using categories data
       if (!productCategoryId && product.categoryName && allCategories.length) {
         productCategoryId = getCategoryIdFromCategoryName(product.categoryName, allCategories);
       }
       
-      // Convert both to numbers for comparison
       const targetCategoryId = Number(categoryId);
       const currentCategoryId = Number(productCategoryId);
       
@@ -132,57 +125,95 @@ const ProductsCategoryPage = () => {
       </Helmet>
       <div className="container">
         <main className={s.categoryPage}>
-          <PagesHistory history={["/", categoryTypeTrans || categoryName || 'Products']} />
+          <div className={s.headerSection}>
+            <PagesHistory history={["/", categoryTypeTrans || categoryName || 'Products']} />
+            <div className={s.categoryHeader}>
+
+              {!isLoading && filteredProducts.length > 0 && (
+                <div className={s.resultsInfo}>
+                  <span className={s.productCount}>{filteredProducts.length} sản phẩm</span>
+                </div>
+              )}
+            </div>
+          </div>
+
           <section className={s.categoryContent} id="category-page">
-            {/* Show error message if loading failed */}
+            {/* Loading State */}
+            {(isLoading || !isWebsiteOnline) && (
+              <div className={s.loadingContainer}>
+                <div className={s.loadingHeader}>
+                  <div className={s.loadingTitle}></div>
+                  <div className={s.loadingSubtitle}></div>
+                </div>
+                <div className={s.skeletonGrid}>
+                  <SkeletonCards numberOfCards={8} />
+                </div>
+              </div>
+            )}
+
+            {/* Error State */}
             {loadingError && (
-              <div className={s.errorMessage}>
-                <p>❌ Error loading products: {loadingError}</p>
-                <button onClick={() => window.location.reload()}>
-                  🔄 Retry
+              <div className={s.errorContainer}>
+                <div className={s.errorIcon}>⚠️</div>
+                <h3 className={s.errorTitle}>Oops! Có lỗi xảy ra</h3>
+                <p className={s.errorMessage}>
+                  Không thể tải danh sách sản phẩm. Vui lòng thử lại sau.
+                </p>
+                <button 
+                  onClick={() => window.location.reload()}
+                  className={s.retryButton}
+                >
+                  <span>🔄</span>
+                  Thử lại
                 </button>
               </div>
             )}
             
-            
-            {/* Show products when loaded and online */}
+            {/* Products Display */}
             {!isLoading && isWebsiteOnline && !loadingError && (
               <>
                 {filteredProducts.length > 0 ? (
-                  <ProductsCategory
-                    products={filteredProducts}
-                    customization={productCardCustomizations.categoryProducts}
-                  />
+                  <div className={s.productsContainer}>
+                    <ProductsCategory
+                      products={filteredProducts}
+                      customization={productCardCustomizations.categoryProducts}
+                    />
+                  </div>
                 ) : (
-                  <div className={s.noProducts}>
-                    <h3>🔍 No products found</h3>
-                    <p>
+                  <div className={s.emptyState}>
+                    <div className={s.emptyIcon}>🔍</div>
+                    <h3 className={s.emptyTitle}>Không tìm thấy sản phẩm</h3>
+                    <p className={s.emptyDescription}>
                       {categoryId 
-                        ? `No products found in category "${categoryName || categoryId}"` 
-                        : "No products available"
+                        ? `Hiện tại chưa có sản phẩm nào trong danh mục "${categoryName || categoryId}"` 
+                        : "Không có sản phẩm nào khả dụng"
                       }
                     </p>
-                    {categoryId && (
+                    <div className={s.emptyActions}>
                       <button 
                         onClick={() => window.location.href = '/products'}
                         className={s.viewAllButton}
                       >
-                        View All Products
+                        <span>🛍️</span>
+                        Xem tất cả sản phẩm
                       </button>
-                    )}
+                      <button 
+                        onClick={() => window.history.back()}
+                        className={s.backButton}
+                      >
+                        <span>↩️</span>
+                        Quay lại
+                      </button>
+                    </div>
                   </div>
                 )}
               </>
             )}
-            
-            {/* Show loading skeleton */}
-            {(isLoading || !isWebsiteOnline) && (
-              <div className={s.skeletonCards}>
-                <SkeletonCards numberOfCards={4} />
-              </div>
-            )}
           </section>
-          <CategoriesSection />
+          
+          <div className={s.categoriesWrapper}>
+            <CategoriesSection />
+          </div>
         </main>
       </div>
     </>
