@@ -1,9 +1,9 @@
 @use "src/Styles/mixins" as m;
 
 .contactPage {
-  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-  min-height: 100vh;
-  padding: 40px 0;
+  margin: var(--page-margin);
+  min-height: 70vh;
+  padding: 32px;
   position: relative;
   overflow: hidden;
   

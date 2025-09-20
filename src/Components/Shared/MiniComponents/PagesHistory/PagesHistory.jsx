@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import SvgIcon from "../SvgIcon";
 import s from "./PagesHistory.module.scss";
 
 const PagesHistory = ({ history, historyPaths }) => {
@@ -9,56 +10,96 @@ const PagesHistory = ({ history, historyPaths }) => {
   const { t } = useTranslation();
 
   function navigateToPage(pageIndex) {
-    console.log('Navigating to page index:', pageIndex);
-    console.log('History paths:', historyPaths);
-    
-    // Simple navigation logic
+    // Always navigate to home for index 0
     if (pageIndex === 0) {
-      // First page (Home)
-      console.log('Navigating to home page');
       navigateTo("/");
       return;
     }
     
-    // For other pages, use historyPaths if available
-    const clickedParam = historyPaths?.[pageIndex];
-    if (clickedParam && clickedParam.path) {
-      console.log('Navigating to path:', clickedParam.path);
-      navigateTo(clickedParam.path);
+    // Use historyPaths if available
+    if (historyPaths && historyPaths[pageIndex] && historyPaths[pageIndex].path) {
+      navigateTo(historyPaths[pageIndex].path);
       return;
     }
+    
+    // Fallback: construct path from page name
+    const pageName = previousPages[pageIndex];
+    if (pageName && pageName !== "/") {
+      // Simple path construction
+      const path = `/${pageName.toLowerCase().replace(/\s+/g, '-')}`;
+      navigateTo(path);
+      return;
+    }
+    
+    // Final fallback: go to home
+    navigateTo("/");
   }
 
   const handleClick = (e, pageIndex) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('Link clicked for index:', pageIndex);
     navigateToPage(pageIndex);
   };
 
+  const handleKeyDown = (e, pageIndex) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navigateToPage(pageIndex);
+    }
+  };
+
   return (
-    <div className={s.pageHistory}>
-      {previousPages.map((page, i) => {
-        // Use hardcoded text for now to ensure it works
-        const pageName = page === "/" ? "Home" : page;
+    <nav className={s.pageHistory} aria-label="Breadcrumb navigation" role="navigation">
+      <ol style={{ display: 'flex', alignItems: 'center', gap: '4px', margin: 0, padding: 0, listStyle: 'none' }}>
+        {previousPages.map((page, i) => {
+          // Get page name from historyPaths if available, otherwise use page directly
+          let pageName;
+          if (historyPaths && historyPaths[i] && historyPaths[i].label) {
+            pageName = historyPaths[i].label;
+          } else if (page === "/") {
+            pageName = t("nav.home") || "Home";
+          } else {
+            pageName = page;
+          }
+          
+          const isLast = i === previousPages.length - 1;
 
-        return (
-          <div className={s.page} key={i}>
-            <a 
-              href="#" 
-              onClick={(e) => handleClick(e, i)}
-              style={{ cursor: 'pointer' }}
-              className={s.clickableLink}
-            >
-              {pageName}
-            </a>
-            <span>/</span>
-          </div>
-        );
-      })}
-
-      <span className={s.currentPage}>{currentPage}</span>
-    </div>
+          return (
+            <li key={i} className={s.page}>
+              <a 
+                href="#" 
+                onClick={(e) => handleClick(e, i)}
+                onKeyDown={(e) => handleKeyDown(e, i)}
+                aria-label={`Navigate to ${pageName}`}
+                tabIndex={0}
+                role="button"
+              >
+                {pageName}
+              </a>
+              {!isLast && (
+                <span className={s.separator} aria-hidden="true">
+                  <SvgIcon name="chevronRight" />
+                </span>
+              )}
+            </li>
+          );
+        })}
+        
+        {previousPages.length > 0 && (
+          <li>
+            <span className={s.separator} aria-hidden="true">
+              <SvgIcon name="chevronRight" />
+            </span>
+          </li>
+        )}
+        
+        <li>
+          <span className={s.currentPage} aria-current="page">
+            {currentPage}
+          </span>
+        </li>
+      </ol>
+    </nav>
   );
 };
 

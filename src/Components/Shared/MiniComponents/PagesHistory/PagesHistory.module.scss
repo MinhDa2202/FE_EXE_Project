@@ -1,62 +1,220 @@
+@use "src/Styles/mixins" as m;
+
 .pageHistory {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  row-gap: 3px;
-  padding-top: 2rem; /* Add padding top */
-  padding-bottom: 0.5px; /* Reduce padding bottom */
+  gap: 4px;
+  padding: 8px 0 4px 0;
+  margin-bottom: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .page {
-  font-size: .875rem;
-  color: var(--dark-gray);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.4;
 }
 
-.page>a {
+.page > a {
   outline: none;
   user-select: none;
-  color: var(--dark-gray);
-  transition: color .1s;
-  cursor: pointer;
+  color: #374151;
   text-decoration: none;
-  padding: 2px 4px;
-  border-radius: 4px;
-
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  position: relative;
+  
   &:hover {
-    color: var(--black);
-    background-color: rgba(0, 0, 0, 0.05);
+    color: #1d4ed8;
+    background-color: rgba(29, 78, 216, 0.08);
     text-decoration: underline;
   }
 
   &:focus-visible {
-    color: var(--orange-degree2);
-    text-decoration: underline;
-    background-color: rgba(255, 165, 0, 0.1);
+    color: #1d4ed8;
+    background-color: rgba(29, 78, 216, 0.1);
+    box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.2);
   }
 
   &:active {
-    transform: translateY(1px);
+    background-color: rgba(29, 78, 216, 0.15);
   }
 }
 
-.clickableLink {
-  cursor: pointer !important;
-  color: #007bff !important;
-  text-decoration: underline !important;
-  
-  &:hover {
-    color: #0056b3 !important;
-    background-color: rgba(0, 123, 255, 0.1) !important;
-  }
-}
-
-.page>span {
-  margin: 0 8px;
+.separator {
+  color: #9ca3af;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0 6px;
   user-select: none;
+  display: flex;
+  align-items: center;
+  
+  svg {
+    width: 12px;
+    height: 12px;
+    opacity: 0.6;
+  }
 }
 
 .currentPage {
-  font-size: .875rem;
-  color: var(--black);
-  font-weight: 500;
+  font-size: 14px;
+  color: #111827;
+  font-weight: 600;
+  padding: 4px 8px;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 6px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+// Enhanced styles for better visual hierarchy
+.pageHistory::before {
+  display: none;
+}
+
+// Responsive design
+@include m.medium {
+  .pageHistory {
+    padding: 6px 0 3px 0;
+    margin-bottom: 6px;
+  }
+  
+  .page {
+    font-size: 13px;
+  }
+  
+  .page > a {
+    padding: 3px 6px;
+    border-radius: 5px;
+  }
+  
+  .currentPage {
+    font-size: 13px;
+    padding: 3px 6px;
+    border-radius: 5px;
+  }
+  
+  .separator {
+    font-size: 13px;
+    margin: 0 4px;
+    
+    svg {
+      width: 11px;
+      height: 11px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .pageHistory {
+    padding: 8px 10px 4px 10px;
+    margin-bottom: 4px;
+    gap: 2px;
+    border-radius: 8px;
+  }
+  
+  .page {
+    font-size: 12px;
+  }
+  
+  .page > a {
+    padding: 4px 8px;
+    border-radius: 5px;
+  }
+  
+  .currentPage {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 5px;
+  }
+  
+  .separator {
+    font-size: 12px;
+    margin: 0 4px;
+    
+    svg {
+      width: 11px;
+      height: 11px;
+    }
+  }
+}
+
+// Dark theme support
+@media (prefers-color-scheme: dark) {
+  .page {
+    color: #e5e7eb;
+  }
+  
+  .page > a {
+    color: #f9fafb;
+    background: rgba(31, 41, 55, 0.8);
+    border-color: rgba(75, 85, 99, 0.6);
+    
+    &:hover {
+      color: #dbeafe;
+      background-color: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    &:focus-visible {
+      color: #dbeafe;
+      background-color: rgba(59, 130, 246, 0.25);
+      border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+    }
+    
+    &:active {
+      background-color: rgba(59, 130, 246, 0.3);
+    }
+  }
+  
+  .currentPage {
+    color: #ffffff;
+    background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+    border-color: #3b82f6;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+  }
+  
+  .separator {
+    color: #d1d5db;
+    
+    svg {
+      opacity: 0.8;
+    }
+  }
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .page > a {
+    border: 1px solid transparent;
+    
+    &:hover, &:focus-visible {
+      border-color: #3b82f6;
+    }
+  }
+  
+  .currentPage {
+    border-width: 2px;
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .page > a {
+    transition: none;
+    
+    &:hover {
+      transform: none;
+    }
+  }
 }

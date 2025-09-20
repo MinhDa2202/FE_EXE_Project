@@ -1,9 +1,10 @@
 // src/Components/ProductsPage/ProductsPage.module.scss
 
 .productsPage {
-  min-height: 100vh;
-  padding: 2rem 0;
-  margin-top: 120px; /* Thêm margin-top để tránh bị header che */
+  margin: var(--page-margin);
+  min-height: 70vh;
+  padding: 32px;
+  position: relative;
 }
 
 .pageHeader {
