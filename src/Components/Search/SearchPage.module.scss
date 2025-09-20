@@ -2,58 +2,56 @@
 
 .searchPage {
   margin: var(--page-margin);
-  min-height: 60vh;
+  min-height: 70vh;
+  background: linear-gradient(135deg, #fafbfc 0%, #f8fafc 100%);
+  border-radius: 24px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.3) 50%, transparent 100%);
+  }
 }
 
 .searchHeader {
-  margin-bottom: 40px;
-  
-  .headerTop {
-    margin-bottom: 24px;
-  }
-  
-  .backButton {
-    background: none;
-    border: none;
-    color: var(--text-color-light);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-    
-    &:hover {
-      background-color: var(--background-light);
-      color: var(--text-color);
-    }
-    
-    svg {
-      width: 16px;
-      height: 16px;
-    }
-  }
+  margin-bottom: 24px;
   
   .searchInfo {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    padding: 32px;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    background: none;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    position: relative;
+    overflow: visible;
+    
+    &::before {
+      display: none;
+    }
     
     .searchTitle {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 700;
       color: var(--text-color);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       line-height: 1.3;
+      letter-spacing: normal;
       
       .searchQuery {
         color: var(--primary-color);
-        font-weight: 800;
+        font-weight: 700;
+        position: relative;
+        
+        &::after {
+          display: none;
+        }
       }
     }
     
@@ -62,13 +60,19 @@
       align-items: center;
       gap: 8px;
       color: var(--text-color-light);
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 500;
+      padding: 0;
+      background: none;
+      border-radius: 0;
+      border: none;
+      width: fit-content;
       
       svg {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         opacity: 0.7;
+        color: var(--text-color-light);
       }
     }
   }
@@ -76,93 +80,154 @@
 
 .searchResults {
   .loadingSection {
-    margin-top: 20px;
+    margin-top: 32px;
+    padding: 0 24px;
   }
   
   .products {
     display: grid;
-    gap: 24px;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    margin-bottom: 40px;
-    padding: 0 20px;
+    gap: 32px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    margin-bottom: 48px;
+    padding: 32px 24px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    border: 1px solid rgba(226, 232, 240, 0.3);
+    backdrop-filter: blur(10px);
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), #3b82f6);
+      border-radius: 2px;
+      opacity: 0.6;
+    }
   }
   
   .viewMoreSection {
     display: flex;
     justify-content: center;
-    margin: 40px 0;
+    margin: 48px 0;
     
     .viewMoreButton {
       background: linear-gradient(135deg, var(--primary-color) 0%, #3b82f6 100%);
       color: white;
       border: none;
-      padding: 16px 32px;
-      border-radius: 12px;
+      padding: 18px 36px;
+      border-radius: 16px;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 10px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.3);
+      gap: 12px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 
+        0 8px 32px rgba(59, 130, 246, 0.25),
+        0 1px 2px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s ease;
+      }
       
       &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px 0 rgba(59, 130, 246, 0.4);
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 
+          0 12px 40px rgba(59, 130, 246, 0.35),
+          0 4px 8px rgba(0, 0, 0, 0.1);
+        
+        &::before {
+          left: 100%;
+        }
+      }
+      
+      &:active {
+        transform: translateY(-1px) scale(1.01);
       }
       
       svg {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
+        transition: transform 0.3s ease;
+      }
+      
+      &:hover svg {
+        transform: scale(1.1);
       }
     }
   }
   
   .noResults {
     text-align: center;
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #fefefe 0%, #f8fafc 100%);
-    border-radius: 20px;
-    border: 1px solid #e2e8f0;
-    margin-top: 20px;
+    padding: 48px 24px;
+    background: rgba(248, 250, 252, 0.5);
+    border-radius: 16px;
+    border: 1px solid rgba(226, 232, 240, 0.3);
+    margin-top: 24px;
+    
+    &::before {
+      display: none;
+    }
     
     .noResultsIcon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 24px;
-      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      background: rgba(226, 232, 240, 0.3);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      border: none;
+      
+      &::after {
+        display: none;
+      }
       
       svg {
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
         color: var(--text-color-light);
         opacity: 0.6;
       }
     }
     
     .noResultsTitle {
-      font-size: 24px;
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: 600;
       color: var(--text-color);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
+      letter-spacing: normal;
     }
     
     .noResultsMessage {
-      font-size: 16px;
+      font-size: 14px;
       color: var(--text-color-light);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       line-height: 1.5;
+      font-weight: 400;
     }
     
     .noResultsSuggestion {
       font-size: 14px;
       color: var(--text-color-light);
-      margin-bottom: 32px;
+      margin-bottom: 24px;
+      font-weight: 400;
     }
     
     .suggestions {
@@ -171,30 +236,40 @@
         font-weight: 600;
         color: var(--text-color);
         margin-bottom: 16px;
+        letter-spacing: normal;
       }
       
       .suggestionTags {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 8px;
         justify-content: center;
         
         .suggestionTag {
           background: white;
-          border: 2px solid #e2e8f0;
+          border: 1px solid rgba(226, 232, 240, 0.8);
           color: var(--text-color);
-          padding: 10px 20px;
-          border-radius: 25px;
-          font-size: 14px;
+          padding: 8px 16px;
+          border-radius: 20px;
+          font-size: 13px;
           font-weight: 500;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.2s ease;
+          
+          &::before {
+            display: none;
+          }
           
           &:hover {
             border-color: var(--primary-color);
             color: var(--primary-color);
             background: rgba(59, 130, 246, 0.05);
             transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+          }
+          
+          &:active {
+            transform: translateY(0);
           }
         }
       }
@@ -203,92 +278,258 @@
 }
 
 // Responsive Design
+@media (max-width: 1400px) {
+  .searchResults .products {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px;
+  }
+}
+
 @media (max-width: 1200px) {
   .searchResults .products {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
   }
 }
 
 @include m.medium {
+  .searchPage {
+    padding: 24px;
+    border-radius: 20px;
+  }
+  
   .searchHeader {
+    margin-bottom: 20px;
+    
     .searchInfo {
-      padding: 24px;
+      padding: 32px 24px;
+      border-radius: 16px;
       
       .searchTitle {
-        font-size: 24px;
+        font-size: 26px;
+        margin-bottom: 14px;
       }
       
       .resultsCount {
-        font-size: 14px;
+        font-size: 16px;
+        padding: 10px 16px;
+        
+        svg {
+          width: 18px;
+          height: 18px;
+        }
       }
     }
   }
   
-  .searchResults .products {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 16px;
-    padding: 0 16px;
+  .searchResults {
+    .products {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+      padding: 24px 16px;
+      border-radius: 16px;
+    }
+    
+    .viewMoreSection {
+      margin: 36px 0;
+      
+      .viewMoreButton {
+        padding: 16px 28px;
+        font-size: 15px;
+        border-radius: 14px;
+        
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
   }
   
   .noResults {
-    padding: 60px 16px;
+    padding: 60px 24px;
+    border-radius: 20px;
     
     .noResultsIcon {
-      width: 60px;
-      height: 60px;
+      width: 80px;
+      height: 80px;
+      margin-bottom: 24px;
       
       svg {
-        width: 30px;
-        height: 30px;
+        width: 36px;
+        height: 36px;
       }
     }
     
     .noResultsTitle {
-      font-size: 20px;
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+    
+    .noResultsMessage {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    
+    .noResultsSuggestion {
+      font-size: 15px;
+      margin-bottom: 32px;
+    }
+    
+    .suggestions {
+      .suggestionsTitle {
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+      
+      .suggestionTags {
+        gap: 12px;
+        
+        .suggestionTag {
+          padding: 10px 20px;
+          font-size: 14px;
+        }
+      }
     }
   }
 }
 
 @media (max-width: 600px) {
   .searchPage {
-    margin: 20px 16px;
+    margin: 16px 12px;
+    padding: 20px;
+    border-radius: 16px;
   }
   
   .searchHeader {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     
     .searchInfo {
-      padding: 20px;
-      border-radius: 12px;
+      padding: 24px 20px;
+      border-radius: 14px;
       
       .searchTitle {
-        font-size: 20px;
+        font-size: 22px;
+        margin-bottom: 12px;
+      }
+      
+      .resultsCount {
+        font-size: 14px;
+        padding: 8px 14px;
+        
+        svg {
+          width: 16px;
+          height: 16px;
+        }
       }
     }
   }
   
-  .searchResults .products {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 0 12px;
-  }
-  
-  .viewMoreSection {
-    .viewMoreButton {
-      padding: 14px 24px;
-      font-size: 14px;
+  .searchResults {
+    .products {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 20px 12px;
+      border-radius: 14px;
+    }
+    
+    .viewMoreSection {
+      margin: 32px 0;
+      
+      .viewMoreButton {
+        padding: 14px 24px;
+        font-size: 14px;
+        border-radius: 12px;
+        
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
     }
   }
   
   .noResults {
-    padding: 40px 16px;
+    padding: 48px 20px;
+    border-radius: 16px;
     
-    .suggestionTags {
-      .suggestionTag {
-        padding: 8px 16px;
-        font-size: 13px;
+    .noResultsIcon {
+      width: 70px;
+      height: 70px;
+      margin-bottom: 20px;
+      
+      svg {
+        width: 32px;
+        height: 32px;
+      }
+    }
+    
+    .noResultsTitle {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    
+    .noResultsMessage {
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+    
+    .noResultsSuggestion {
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+    
+    .suggestions {
+      .suggestionsTitle {
+        font-size: 15px;
+        margin-bottom: 16px;
+      }
+      
+      .suggestionTags {
+        gap: 10px;
+        
+        .suggestionTag {
+          padding: 8px 16px;
+          font-size: 13px;
+          border-radius: 20px;
+        }
       }
     }
   }
+}
+
+// Animation keyframes
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Add animations to elements
+.searchPage {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.searchHeader {
+  animation: slideInFromLeft 0.8s ease-out 0.2s both;
+}
+
+.searchResults {
+  animation: fadeInUp 0.8s ease-out 0.4s both;
 }

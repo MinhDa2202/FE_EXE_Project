@@ -7,7 +7,7 @@ import useGetSearchParam from "src/Hooks/Helper/useGetSearchParam";
 import { useEffect, useState } from "react";
 import useOnlineStatus from "src/Hooks/Helper/useOnlineStatus";
 import CategoriesSection from "../Home/CategoriesSection/CategoriesSection";
-import PagesHistory from "../Shared/MiniComponents/PagesHistory/PagesHistory";
+import BreadcrumbWrapper from "../Shared/MiniComponents/PagesHistory/BreadcrumbWrapper";
 import SkeletonCards from "../Shared/SkeletonLoaders/ProductCard/SkeletonCards";
 import ProductsCategory from "./ProductsCategory";
 import s from "./ProductsCategoryPage.module.scss";
@@ -126,7 +126,15 @@ const ProductsCategoryPage = () => {
       <div className="container">
         <main className={s.categoryPage}>
           <div className={s.headerSection}>
-            <PagesHistory history={["/", categoryTypeTrans || categoryName || 'Products']} />
+            <BreadcrumbWrapper 
+              history={["/", categoryTypeTrans || categoryName || 'Products']} 
+              historyPaths={[
+                { path: "/", label: t("nav.home") || "Home" },
+                { path: `/category/${categoryName}`, label: categoryTypeTrans || categoryName || 'Products' }
+              ]}
+              pageType="productsCategory"
+              variant="clean"
+            />
             <div className={s.categoryHeader}>
 
               {!isLoading && filteredProducts.length > 0 && (

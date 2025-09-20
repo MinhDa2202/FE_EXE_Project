@@ -7,7 +7,7 @@ import { productCardCustomizations } from "src/Data/staticData";
 import useProducts from "src/Hooks/App/useProducts";
 import useScrollOnMount from "src/Hooks/App/useScrollOnMount";
 import ExploreProducts from "../Home/ProductPoster/ExploreProducts";
-import PagesHistory from "../Shared/MiniComponents/PagesHistory/PagesHistory";
+import BreadcrumbWrapper from "../Shared/MiniComponents/PagesHistory/BreadcrumbWrapper";
 import SkeletonCards from "../Shared/SkeletonLoaders/ProductCard/SkeletonCards";
 import s from "./ProductsPage.module.scss";
 
@@ -31,7 +31,15 @@ const ProductsPage = () => {
 
       <div className="container">
         <main className={s.productsPage}>
-          <PagesHistory history={["/", t("history.products")]} />
+          <BreadcrumbWrapper 
+            history={["/", t("history.products")]} 
+            historyPaths={[
+              { path: "/", label: t("nav.home") || "Home" },
+              { path: "/products", label: t("history.products") }
+            ]}
+            pageType="products"
+            variant="clean"
+          />
 
           <div className={s.pageHeader}>
             <h1>{t("products.title", "Products")}</h1>
