@@ -532,4 +532,61 @@
 
 .searchResults {
   animation: fadeInUp 0.8s ease-out 0.4s both;
+}// Filter
+ed results note
+.filteredNote {
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 4px;
+}// Filtere
+d results note
+.filteredNote {
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+// No filtered results (reuse noResults styles)
+.noFilteredResults {
+  text-align: center;
+  padding: 48px 24px;
+  background: rgba(248, 250, 252, 0.5);
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.3);
+  margin-top: 24px;
+  
+  .noResultsIcon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    background: rgba(226, 232, 240, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    svg {
+      width: 32px;
+      height: 32px;
+      color: var(--text-color-light);
+      opacity: 0.6;
+    }
+  }
+  
+  .noResultsTitle {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 8px;
+  }
+  
+  .noResultsMessage {
+    font-size: 14px;
+    color: var(--text-color-light);
+    margin-bottom: 6px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
 }

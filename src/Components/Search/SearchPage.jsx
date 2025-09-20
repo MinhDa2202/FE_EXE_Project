@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -15,9 +15,9 @@ import SkeletonCards from "../Shared/SkeletonLoaders/ProductCard/SkeletonCards";
 import SvgIcon from "../Shared/MiniComponents/SvgIcon";
 import s from "./SearchPage.module.scss";
 import enhancements from "./SearchPageEnhancements.module.scss";
-import themes from "./SearchPageThemes.module.scss";
-import SearchProducts from "./SearchProducts/SearchProducts";
+
 import SearchProductWrapper from "./SearchProductWrapper/SearchProductWrapper";
+import FilterSort from "../Shared/FilterSort/FilterSort";
 
 const SearchPage = () => {
   const { t } = useTranslation();
@@ -28,11 +28,16 @@ const SearchPage = () => {
   const isWebsiteOnline = useOnlineStatus();
   const searchQuery = decodeURIComponent(searchParams.get("query") || "");
   const [showAllProducts, setShowAllProducts] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [hasFiltersApplied, setHasFiltersApplied] = useState(false); // Track if filters are applied
   
   const PRODUCTS_PER_PAGE = 12;
   const hasResults = searchProducts.length > 0;
-  const displayedProducts = showAllProducts ? searchProducts : searchProducts.slice(0, PRODUCTS_PER_PAGE);
-  const hasMoreProducts = searchProducts.length > PRODUCTS_PER_PAGE;
+  // Logic hiển thị sản phẩm: chỉ hiển thị khi có kết quả thực sự
+  const productsToShow = hasFiltersApplied ? filteredProducts : searchProducts;
+  const displayedProducts = showAllProducts ? productsToShow : productsToShow.slice(0, PRODUCTS_PER_PAGE);
+  const hasMoreProducts = productsToShow.length > PRODUCTS_PER_PAGE;
+  const shouldShowProducts = productsToShow.length > 0;
   
   // Popular search suggestions
   const searchSuggestions = [
@@ -44,6 +49,14 @@ const SearchPage = () => {
     navigate(`/search?query=${encodeURIComponent(suggestion)}`);
   };
 
+  const handleFilteredProducts = useCallback((filtered) => {
+    setFilteredProducts(filtered);
+  }, []);
+
+  const handleFilterStateChange = useCallback((hasFilters) => {
+    setHasFiltersApplied(hasFilters);
+  }, []);
+
 
 
   useUpdateLoadingState({
@@ -54,6 +67,12 @@ const SearchPage = () => {
     dependencies: [searchProducts],
   });
   useScrollOnMount(160);
+
+  // Reset filter state when search query changes
+  useEffect(() => {
+    setHasFiltersApplied(false);
+    setFilteredProducts([]);
+  }, [searchQuery]);
 
   return (
     <>
@@ -119,11 +138,49 @@ const SearchPage = () => {
                 </h1>
                 <div className={s.resultsCount}>
                   <SvgIcon name="search" />
-                  <span>{searchProducts.length} {t("search.productsFound")}</span>
+                  <span>
+                    {filteredProducts.length > 0 ? filteredProducts.length : searchProducts.length} {t("search.productsFound")}
+                    {filteredProducts.length > 0 && filteredProducts.length !== searchProducts.length && (
+                      <span className={s.filteredNote}> ({t("search.filtered", "filtered from")} {searchProducts.length})</span>
+                    )}
+                  </span>
                 </div>
               </div>
             )}
           </div>
+
+          {/* Filter & Sort */}
+          {!loadingSearchProducts && isWebsiteOnline && hasResults && (
+            <div>
+              {searchProducts && searchProducts.length > 0 && (
+                <FilterSort 
+                  products={searchProducts}
+                  onFilteredProducts={handleFilteredProducts}
+                  onFilterStateChange={handleFilterStateChange}
+                  showCategoryFilter={true}
+                  showPriceFilter={true}
+                />
+              )}
+            </div>
+          )}
+
+          {/* No filtered results message */}
+          {!loadingSearchProducts && isWebsiteOnline && hasResults && hasFiltersApplied && !shouldShowProducts && (
+            <div className={s.noFilteredResults}>
+              <div className={s.noResultsIcon}>
+                <SvgIcon name="filter" />
+              </div>
+              <h3 className={s.noResultsTitle}>
+                Không tìm thấy sản phẩm nào phù hợp với bộ lọc
+              </h3>
+              <p className={s.noResultsMessage}>
+                Có {searchProducts.length} sản phẩm cho "{searchQuery}" nhưng không có sản phẩm nào phù hợp với điều kiện lọc hiện tại.
+              </p>
+              <p className={s.noResultsSuggestion}>
+                Hãy thử điều chỉnh bộ lọc hoặc xóa một số điều kiện để xem thêm kết quả.
+              </p>
+            </div>
+          )}
 
           {/* Search Results */}
           <section className={s.searchResults} aria-label="Search results" role="region">
@@ -133,12 +190,12 @@ const SearchPage = () => {
               </div>
             )}
             
-            {!loadingSearchProducts && isWebsiteOnline && hasResults && (
+            {!loadingSearchProducts && isWebsiteOnline && hasResults && shouldShowProducts && (
               <>
                 <div className={s.products}>
                   {displayedProducts.map((product, index) => (
                     <SearchProductWrapper 
-                      key={product.id || `product-${index}`} 
+                      key={product.id || product.Id || `product-${index}-${searchQuery}`} 
                       product={product} 
                       index={index}
                     />
@@ -152,7 +209,7 @@ const SearchPage = () => {
                       onClick={() => setShowAllProducts(true)}
                     >
                       <SvgIcon name="eye" />
-                      {t("common.viewAllProducts")} ({searchProducts.length - PRODUCTS_PER_PAGE} {t("common.more")})
+                      {t("common.viewAllProducts")} ({productsToShow.length - PRODUCTS_PER_PAGE} {t("common.more")})
                     </button>
                   </div>
                 )}

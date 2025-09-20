@@ -2,10 +2,15 @@ import { memo, useState, useRef, useEffect } from "react";
 import SearchProducts from "../SearchProducts/SearchProducts";
 import s from "./SearchProductWrapper.module.scss";
 
-const SearchProductWrapper = memo(({ product, index }) => {
+const SearchProductWrapper = memo(({ product, index = 0 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const elementRef = useRef(null);
+
+  // Safety check
+  if (!product) {
+    return null;
+  }
 
   useEffect(() => {
     const observer = new IntersectionObserver(
