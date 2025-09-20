@@ -1,25 +1,14 @@
 @use "src/Styles/mixins" as m;
 
 .categoryPage {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 120px);
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  margin: var(--page-margin);
+  min-height: 70vh;
+  padding: 32px;
+  position: relative;
 }
 
 .headerSection {
-  background: white;
-  padding: 2rem 0;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border-radius: 0 0 24px 24px;
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
+  margin-bottom: 24px;
 }
 
 .categoryHeader {
@@ -138,9 +127,6 @@
 
 .categoryContent {
   flex: 1;
-  padding: 0 1.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
   width: 100%;
 }
 
@@ -412,47 +398,30 @@
   }
 }
 
-// Responsive Design
+// Responsive design đồng bộ với SearchPage
 @include m.medium {
   .categoryPage {
-    margin: 0 1rem;
+    margin: 20px 16px;
+    padding: 24px;
   }
 
   .headerSection {
-    margin-bottom: 1.5rem;
-    border-radius: 0 0 16px 16px;
-  }
-
-  .categoriesWrapper {
-    margin-top: 2rem;
-    padding: 1.5rem 1rem;
-    border-radius: 16px 16px 0 0;
+    margin-bottom: 20px;
   }
 }
 
 @media (max-width: 600px) {
   .categoryPage {
-    margin: 0 0.5rem;
+    margin: 16px 12px;
+    padding: 16px;
   }
 
   .headerSection {
-    padding: 1.5rem 0;
-    margin-bottom: 1rem;
-    border-radius: 0 0 12px 12px;
-
-    .container {
-      padding: 0 1rem;
-    }
+    margin-bottom: 16px;
   }
 
   .categoryContent {
-    padding: 0 1rem;
-  }
-
-  .categoriesWrapper {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    border-radius: 12px 12px 0 0;
+    padding: 0;
   }
 
   .emptyState,

@@ -173,7 +173,31 @@
     "noResultsTitle": "No products found",
     "noResultsMessage": "We couldn't find any products matching '{{query}}'",
     "tryDifferentKeywords": "Try searching with different keywords or browse our categories.",
-    "popularSearches": "Popular searches"
+    "popularSearches": "Popular searches",
+    "filtered": "filtered from"
+  },
+  "filter": {
+    "filterSort": "Filter & Sort",
+    "clear": "Clear",
+    "category": "Category",
+    "allCategories": "All Categories",
+    "priceRange": "Price Range",
+    "allPrices": "All Prices",
+    "customRange": "Custom Range",
+    "minPrice": "Min Price",
+    "maxPrice": "Max Price",
+    "sortBy": "Sort By",
+    "activeFilters": "Active Filters",
+    "price": "Price",
+    "sort": "Sort"
+  },
+  "sort": {
+    "default": "Default",
+    "nameAsc": "Name A-Z",
+    "nameDesc": "Name Z-A",
+    "priceAsc": "Price Low to High",
+    "priceDesc": "Price High to Low",
+    "newest": "Newest First"
   },
   "history": {
     "account": "Account",

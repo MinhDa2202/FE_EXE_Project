@@ -1,9 +1,10 @@
 // src/Components/ProductsPage/ProductsPage.module.scss
 
 .productsPage {
-  min-height: 100vh;
-  padding: 2rem 0;
-  margin-top: 120px; /* Thêm margin-top để tránh bị header che */
+  margin: var(--page-margin);
+  min-height: 70vh;
+  padding: 32px;
+  position: relative;
 }
 
 .pageHeader {
@@ -97,5 +98,64 @@
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1rem;
+  }
+}
+
+.noFilteredResults {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  margin: 2rem 0;
+  border: 2px dashed #ddd;
+
+  .noResultsIcon {
+    margin-bottom: 1.5rem;
+
+    svg {
+      width: 64px;
+      height: 64px;
+      color: #999;
+    }
+  }
+
+  .noResultsTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+
+  .noResultsMessage {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .noResultsSuggestion {
+    font-size: 0.95rem;
+    color: #888;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    padding: 3rem 1.5rem;
+    margin: 1rem 0;
+
+    .noResultsIcon svg {
+      width: 48px;
+      height: 48px;
+    }
+
+    .noResultsTitle {
+      font-size: 1.3rem;
+    }
+
+    .noResultsMessage,
+    .noResultsSuggestion {
+      font-size: 0.9rem;
+    }
   }
 }

@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { WEBSITE_NAME } from "src/Data/constants";
 import useScrollOnMount from "src/Hooks/App/useScrollOnMount";
-import PagesHistory from "../Shared/MiniComponents/PagesHistory/PagesHistory";
+import BreadcrumbWrapper from "../Shared/MiniComponents/PagesHistory/BreadcrumbWrapper";
 import s from "./About.module.scss";
 
 const About = () => {
@@ -28,9 +28,11 @@ const About = () => {
 
       <main className={s.aboutPage}>
         <div className="container">
-          <PagesHistory 
+          <BreadcrumbWrapper 
             history={["/", t("nav.about")]} 
             historyPaths={historyPaths}
+            pageType="about"
+            variant="clean"
           />
           
           {/* About Us Section */}
