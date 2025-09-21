@@ -15,7 +15,7 @@ const CompareSection = () => {
     try {
       setIsLoading(true);
       const token = localStorage.getItem("token"); // Lấy token từ localStorage
-      const response = await fetch("https://localhost:7235/api/Product", {
+      const response = await fetch("/api/Product", {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const CompareSection = () => {
       setIsLoading(true);
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `https://localhost:7235/api/Product/compare/${selectedProducts[0].id}/${selectedProducts[1].id}`,
+        `/api/Product/compare/${selectedProducts[0].id}/${selectedProducts[1].id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -95,7 +95,11 @@ const CompareSection = () => {
   const parseComparisonResult = (result) => {
     try {
       const parsed = JSON.parse(result);
-      if (parsed.candidates && parsed.candidates[0] && parsed.candidates[0].content) {
+      if (
+        parsed.candidates &&
+        parsed.candidates[0] &&
+        parsed.candidates[0].content
+      ) {
         return parsed.candidates[0].content.parts[0].text;
       }
     } catch (error) {
@@ -136,7 +140,8 @@ const CompareSection = () => {
             </div>
             <h3 className={s.cardTitle}>So sánh thông minh</h3>
             <p className={s.cardDescription}>
-              So sánh chi tiết hai sản phẩm để tìm ra lựa chọn phù hợp nhất cho bạn.
+              So sánh chi tiết hai sản phẩm để tìm ra lựa chọn phù hợp nhất cho
+              bạn.
             </p>
           </div>
           <button className={s.compareButton} onClick={handleOpenModal}>
@@ -145,122 +150,133 @@ const CompareSection = () => {
         </div>
 
         {/* Modal */}
-        {isModalOpen && createPortal(
-          <div className={s.modal}>
-            <div className={s.modalOverlay} onClick={handleCloseModal}></div>
-            <div className={s.modalContent}>
-              <div className={s.modalHeader}>
-                <h3>
-                  {showComparison ? "Kết quả so sánh" : "Chọn sản phẩm để so sánh"}
-                </h3>
-                <button className={s.closeButton} onClick={handleCloseModal}>
-                  ×
-                </button>
-              </div>
-
-              {showComparison ? (
-                // Hiển thị kết quả so sánh
-                <div className={s.comparisonResult}>
-                  <div className={s.selectedProducts}>
-                    {selectedProducts.map((product) => (
-                      <div key={product.id} className={s.selectedProduct}>
-                        <img
-                          src={product.imageUrls?.[0] || "/placeholder.jpg"}
-                          alt={product.title}
-                          className={s.productImage}
-                        />
-                        <div className={s.productInfo}>
-                          <h4>{product.title}</h4>
-                          <p className={s.price}>{formatPrice(product.price)}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className={s.comparisonContent}>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: parseComparisonResult(comparisonResult)
-                          .replace(/\n/g, "<br/>")
-                          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>"),
-                      }}
-                    />
-                  </div>
-                  
-                  <div className={s.modalActions}>
-                    <button
-                      className={s.backButton}
-                      onClick={() => setShowComparison(false)}
-                    >
-                      Chọn lại sản phẩm
-                    </button>
-                  </div>
+        {isModalOpen &&
+          createPortal(
+            <div className={s.modal}>
+              <div className={s.modalOverlay} onClick={handleCloseModal}></div>
+              <div className={s.modalContent}>
+                <div className={s.modalHeader}>
+                  <h3>
+                    {showComparison
+                      ? "Kết quả so sánh"
+                      : "Chọn sản phẩm để so sánh"}
+                  </h3>
+                  <button className={s.closeButton} onClick={handleCloseModal}>
+                    ×
+                  </button>
                 </div>
-              ) : (
-                // Hiển thị danh sách sản phẩm
-                <div className={s.modalBody}>
-                  <div className={s.selectedInfo}>
-                    <p>Đã chọn: {selectedProducts.length}/2 sản phẩm</p>
-                    {selectedProducts.length > 0 && (
-                      <div className={s.selectedList}>
-                        {selectedProducts.map((product) => (
-                          <span key={product.id} className={s.selectedTag}>
-                            {product.title}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
 
-                  <div className={s.productList}>
-                    {products.map((product) => (
+                {showComparison ? (
+                  // Hiển thị kết quả so sánh
+                  <div className={s.comparisonResult}>
+                    <div className={s.selectedProducts}>
+                      {selectedProducts.map((product) => (
+                        <div key={product.id} className={s.selectedProduct}>
+                          <img
+                            src={product.imageUrls?.[0] || "/placeholder.jpg"}
+                            alt={product.title}
+                            className={s.productImage}
+                          />
+                          <div className={s.productInfo}>
+                            <h4>{product.title}</h4>
+                            <p className={s.price}>
+                              {formatPrice(product.price)}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className={s.comparisonContent}>
                       <div
-                        key={product.id}
-                        className={`${s.productItem} ${
-                          selectedProducts.find((p) => p.id === product.id)
-                            ? s.selected
-                            : ""
-                        }`}
-                        onClick={() => handleProductSelect(product)}
-                      >
-                        <img
-                          src={product.imageUrls?.[0] || "/placeholder.jpg"}
-                          alt={product.title}
-                          className={s.productImage}
-                        />
-                        <div className={s.productInfo}>
-                          <h4 className={s.productTitle}>{product.title}</h4>
-                          <p className={s.productPrice}>
-                            {formatPrice(product.price)}
-                          </p>
-                          <p className={s.productCondition}>
-                            {product.condition || "—"}
-                          </p>
-                        </div>
-                        <div className={`${s.radio} ${selectedProducts.find((p) => p.id === product.id) ? s.selected : ""}`}>
-                          {selectedProducts.find((p) => p.id === product.id) && (
-                            <div className={s.radioInner}></div>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+                        dangerouslySetInnerHTML={{
+                          __html: parseComparisonResult(comparisonResult)
+                            .replace(/\n/g, "<br/>")
+                            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>"),
+                        }}
+                      />
+                    </div>
 
-              <div className={s.modalActions}>
-                <button
-                  className={s.compareButton}
-                  onClick={handleCompareProducts}
-                  disabled={selectedProducts.length !== 2 || isLoading}
-                >
-                  {isLoading ? "Đang so sánh..." : "So sánh ngay"}
-                </button>
+                    <div className={s.modalActions}>
+                      <button
+                        className={s.backButton}
+                        onClick={() => setShowComparison(false)}
+                      >
+                        Chọn lại sản phẩm
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  // Hiển thị danh sách sản phẩm
+                  <div className={s.modalBody}>
+                    <div className={s.selectedInfo}>
+                      <p>Đã chọn: {selectedProducts.length}/2 sản phẩm</p>
+                      {selectedProducts.length > 0 && (
+                        <div className={s.selectedList}>
+                          {selectedProducts.map((product) => (
+                            <span key={product.id} className={s.selectedTag}>
+                              {product.title}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className={s.productList}>
+                      {products.map((product) => (
+                        <div
+                          key={product.id}
+                          className={`${s.productItem} ${
+                            selectedProducts.find((p) => p.id === product.id)
+                              ? s.selected
+                              : ""
+                          }`}
+                          onClick={() => handleProductSelect(product)}
+                        >
+                          <img
+                            src={product.imageUrls?.[0] || "/placeholder.jpg"}
+                            alt={product.title}
+                            className={s.productImage}
+                          />
+                          <div className={s.productInfo}>
+                            <h4 className={s.productTitle}>{product.title}</h4>
+                            <p className={s.productPrice}>
+                              {formatPrice(product.price)}
+                            </p>
+                            <p className={s.productCondition}>
+                              {product.condition || "—"}
+                            </p>
+                          </div>
+                          <div
+                            className={`${s.radio} ${
+                              selectedProducts.find((p) => p.id === product.id)
+                                ? s.selected
+                                : ""
+                            }`}
+                          >
+                            {selectedProducts.find(
+                              (p) => p.id === product.id
+                            ) && <div className={s.radioInner}></div>}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className={s.modalActions}>
+                  <button
+                    className={s.compareButton}
+                    onClick={handleCompareProducts}
+                    disabled={selectedProducts.length !== 2 || isLoading}
+                  >
+                    {isLoading ? "Đang so sánh..." : "So sánh ngay"}
+                  </button>
+                </div>
               </div>
-            </div>
-          </div>,
-          document.body
-        )}
+            </div>,
+            document.body
+          )}
       </div>
     </section>
   );

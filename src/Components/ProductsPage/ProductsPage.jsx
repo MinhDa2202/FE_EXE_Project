@@ -22,7 +22,6 @@ const ProductsPage = () => {
     <>
       <Helmet>
         <title>Products</title>
-        <link rel="preconnect" href="https://localhost:7235/" />
         <meta
           name="description"
           content={`Explore the entire collection of products available on ${WEBSITE_NAME}. From fashion to electronics, browse our comprehensive catalog to find the perfect items for your needs.`}
@@ -41,25 +40,23 @@ const ProductsPage = () => {
             {error && (
               <div className={s.errorMessage}>
                 <p>{error}</p>
-                <button onClick={refetch}>
-                  Thử lại
-                </button>
+                <button onClick={refetch}>Thử lại</button>
               </div>
             )}
-            
+
             {!loadingProductsPage && products.length > 0 && (
               <ExploreProducts
                 customization={productCardCustomizations.allProducts}
                 products={products}
               />
             )}
-            
+
             {!loadingProductsPage && products.length === 0 && !error && (
               <div className={s.noProducts}>
                 <p>Không tìm thấy sản phẩm nào.</p>
               </div>
             )}
-            
+
             {loadingProductsPage && (
               <div className={s.SkeletonCards}>
                 <SkeletonCards numberOfCards={8} />
@@ -68,7 +65,6 @@ const ProductsPage = () => {
           </section>
         </main>
       </div>
-
     </>
   );
 };

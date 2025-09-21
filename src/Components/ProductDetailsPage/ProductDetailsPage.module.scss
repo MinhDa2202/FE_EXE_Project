@@ -33,6 +33,7 @@
     color: #666;
     font-size: 1rem;
     text-align: center;
+    font-family: "Inter", sans-serif;
   }
 }
 
@@ -56,12 +57,15 @@
     color: #d32f2f;
     margin-bottom: 1rem;
     font-size: 1.5rem;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
   }
 
   p {
     color: #666;
     margin-bottom: 2rem;
     line-height: 1.6;
+    font-family: "Inter", sans-serif;
   }
 }
 
@@ -79,6 +83,8 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
   transition: all 0.3s ease;
 
   &:hover {
@@ -110,11 +116,6 @@
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   margin: 3rem var(--page-margin);
-
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
 }
 
 .descriptionCard,
@@ -312,55 +313,6 @@
   }
   100% {
     transform: rotate(360deg);
-  }
-}
-
-// Responsive design
-@media (max-width: 768px) {
-  .detailsPage {
-    margin-top: 105px; /* Điều chỉnh cho tablet */
-  }
-
-  .errorMessage {
-    margin: 1rem;
-    padding: 1.5rem;
-
-    h2 {
-      font-size: 1.3rem;
-    }
-  }
-
-  .errorActions {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .backButton,
-  .browseButton {
-    width: 100%;
-    max-width: 200px;
-  }
-
-  .additionalInfo {
-    margin: 1.5rem 0.8rem; /* Giảm margin */
-  }
-
-  .cardHeader {
-    padding: 0.8rem; /* Giảm padding */
-
-    h3 {
-      font-size: 1rem; /* Giảm kích thước chữ */
-    }
-  }
-
-  .cardContent {
-    padding: 0.8rem; /* Giảm padding */
-  }
-}
-
-@media (max-width: 480px) {
-  .detailsPage {
-    margin-top: 95px; /* Điều chỉnh cho mobile */
   }
 }
 

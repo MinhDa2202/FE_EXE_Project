@@ -14,7 +14,7 @@ const ProductAnalyzerSection = () => {
     try {
       setIsLoading(true);
       const token = localStorage.getItem("token");
-      const response = await fetch("https://localhost:7235/api/Product", {
+      const response = await fetch("/api/Product", {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -64,17 +64,14 @@ const ProductAnalyzerSection = () => {
     try {
       setIsLoading(true);
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `https://localhost:7235/api/ProductAnalyzer/analyze`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ productId: selectedProduct.id }),
-        }
-      );
+      const response = await fetch(`/api/ProductAnalyzer/analyze`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId: selectedProduct.id }),
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -101,7 +98,11 @@ const ProductAnalyzerSection = () => {
     if (result.error) return `<p class="error">${result.error}</p>`;
 
     try {
-      if (result.candidates && result.candidates[0] && result.candidates[0].content) {
+      if (
+        result.candidates &&
+        result.candidates[0] &&
+        result.candidates[0].content
+      ) {
         return result.candidates[0].content.parts[0].text
           .replace(/\n/g, "<br/>")
           .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
@@ -111,7 +112,7 @@ const ProductAnalyzerSection = () => {
     }
     return "Không thể hiển thị kết quả phân tích.";
   };
-  
+
   const formatPrice = (price) => {
     return new Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -132,11 +133,25 @@ const ProductAnalyzerSection = () => {
         <div className={s.analyzerCard}>
           <div className={s.cardContent}>
             <div className={s.analyzerIcon}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 12a10 10 0 0 0-7.07 2.93L12 22V12z"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12 2a10 10 0 1 0 10 10H12V2z" />
+                <path d="M12 12a10 10 0 0 0-7.07 2.93L12 22V12z" />
+              </svg>
             </div>
             <h3 className={s.cardTitle}>Phân tích thông minh</h3>
             <p className={s.cardDescription}>
-              Hiểu rõ hơn về tình trạng sản phẩm với công nghệ phân tích hình ảnh tiên tiến.
+              Hiểu rõ hơn về tình trạng sản phẩm với công nghệ phân tích hình
+              ảnh tiên tiến.
             </p>
           </div>
           <button className={s.analyzerButton} onClick={handleOpenModal}>
@@ -150,7 +165,9 @@ const ProductAnalyzerSection = () => {
             <div className={s.modalContent}>
               <div className={s.modalHeader}>
                 <h3>
-                  {showAnalysis ? "Kết quả phân tích" : "Chọn sản phẩm để phân tích"}
+                  {showAnalysis
+                    ? "Kết quả phân tích"
+                    : "Chọn sản phẩm để phân tích"}
                 </h3>
                 <button className={s.closeButton} onClick={handleCloseModal}>
                   ×
@@ -162,17 +179,21 @@ const ProductAnalyzerSection = () => {
                   {selectedProduct && (
                     <div className={s.selectedProduct}>
                       <img
-                        src={selectedProduct.imageUrls?.[0] || "/placeholder.jpg"}
+                        src={
+                          selectedProduct.imageUrls?.[0] || "/placeholder.jpg"
+                        }
                         alt={selectedProduct.title}
                         className={s.productImage}
                       />
                       <div className={s.productInfo}>
                         <h4>{selectedProduct.title}</h4>
-                        <p className={s.price}>{formatPrice(selectedProduct.price)}</p>
+                        <p className={s.price}>
+                          {formatPrice(selectedProduct.price)}
+                        </p>
                       </div>
                     </div>
                   )}
-                  
+
                   <div className={s.analysisContent}>
                     {isLoading ? (
                       <div className={s.loading}>Đang phân tích...</div>
@@ -184,7 +205,7 @@ const ProductAnalyzerSection = () => {
                       />
                     )}
                   </div>
-                  
+
                   <div className={s.modalActions}>
                     <button
                       className={s.backButton}
@@ -235,10 +256,17 @@ const ProductAnalyzerSection = () => {
                             {product.condition || "—"}
                           </p>
                         </div>
-                        <div className={`${s.radio} ${selectedProduct && selectedProduct.id === product.id ? s.selected : ""}`}>
-                          {selectedProduct && selectedProduct.id === product.id && (
-                            <div className={s.radioInner}></div>
-                          )}
+                        <div
+                          className={`${s.radio} ${
+                            selectedProduct && selectedProduct.id === product.id
+                              ? s.selected
+                              : ""
+                          }`}
+                        >
+                          {selectedProduct &&
+                            selectedProduct.id === product.id && (
+                              <div className={s.radioInner}></div>
+                            )}
                         </div>
                       </div>
                     ))}

@@ -16,7 +16,7 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
     price: "",
     condition: "",
     locations: "",
-    categoryId: ""
+    categoryId: "",
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -28,25 +28,25 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     // Clear validation error for this field
     if (validationErrors[name]) {
-      setValidationErrors(prev => ({
+      setValidationErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
 
   const validateField = (name, value) => {
     switch (name) {
-      case 'title':
+      case "title":
         return value.trim() ? "" : "Tiêu đề là bắt buộc";
-      case 'price':
+      case "price":
         return value && parseFloat(value) > 0 ? "" : "Giá phải lớn hơn 0";
       default:
         return "";
@@ -57,9 +57,9 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
     const { name, value } = e.target;
     const error = validateField(name, value);
     if (error) {
-      setValidationErrors(prev => ({
+      setValidationErrors((prev) => ({
         ...prev,
-        [name]: error
+        [name]: error,
       }));
     }
   };
@@ -68,8 +68,10 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
     if (files.length === 0) return;
 
     // Validate file types
-    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-    const invalidFiles = files.filter(file => !validTypes.includes(file.type));
+    const validTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+    const invalidFiles = files.filter(
+      (file) => !validTypes.includes(file.type)
+    );
 
     if (invalidFiles.length > 0) {
       setError("Chỉ chấp nhận file ảnh (JPEG, PNG, GIF)");
@@ -78,7 +80,7 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
 
     // Validate file size (max 5MB per file)
     const maxSize = 5 * 1024 * 1024; // 5MB
-    const oversizedFiles = files.filter(file => file.size > maxSize);
+    const oversizedFiles = files.filter((file) => file.size > maxSize);
 
     if (oversizedFiles.length > 0) {
       setError("Kích thước file không được vượt quá 5MB");
@@ -98,21 +100,21 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
     setError("");
 
     // Create preview URLs for new files
-    const newPreviews = files.map(file => ({
+    const newPreviews = files.map((file) => ({
       file,
       url: URL.createObjectURL(file),
-      name: file.name
+      name: file.name,
     }));
-    
+
     // Add new previews to existing ones
-    setImagePreviews(prev => [...prev, ...newPreviews]);
+    setImagePreviews((prev) => [...prev, ...newPreviews]);
   };
 
   const handleFileSelect = (e) => {
     const files = Array.from(e.target.files);
     processFiles(files);
     // Reset input value để có thể chọn lại cùng file
-    e.target.value = '';
+    e.target.value = "";
   };
 
   const handleDragOver = (e) => {
@@ -145,7 +147,7 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
 
   const removeAllImages = () => {
     // Revoke all URLs to prevent memory leaks
-    imagePreviews.forEach(preview => {
+    imagePreviews.forEach((preview) => {
       URL.revokeObjectURL(preview.url);
     });
 
@@ -160,51 +162,55 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
     setUploadProgress(`Đang upload ${selectedFiles.length} ảnh...`);
 
     const formData = new FormData();
-    selectedFiles.forEach(file => {
-      formData.append('files', file);
+    selectedFiles.forEach((file) => {
+      formData.append("files", file);
     });
 
     try {
-      const response = await fetch(`https://localhost:7235/api/ProductImage/upload-to-cloud/${productId}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          // Không set Content-Type khi upload file, để browser tự set
-        },
-        body: formData
-      });
+      const response = await fetch(
+        `/api/ProductImage/upload-to-cloud/${productId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Không set Content-Type khi upload file, để browser tự set
+          },
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
-        let errorMessage = 'Không thể upload ảnh';
-        
+        let errorMessage = "Không thể upload ảnh";
+
         if (response.status === 401) {
-          errorMessage = 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.';
+          errorMessage = "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.";
         } else if (response.status === 403) {
-          errorMessage = 'Bạn không có quyền upload ảnh';
+          errorMessage = "Bạn không có quyền upload ảnh";
         } else if (response.status === 413) {
-          errorMessage = 'File quá lớn. Vui lòng chọn ảnh nhỏ hơn 5MB';
+          errorMessage = "File quá lớn. Vui lòng chọn ảnh nhỏ hơn 5MB";
         } else if (response.status === 400) {
-          errorMessage = 'Định dạng file không hợp lệ. Chỉ chấp nhận JPEG, PNG, GIF';
+          errorMessage =
+            "Định dạng file không hợp lệ. Chỉ chấp nhận JPEG, PNG, GIF";
         } else {
           try {
             const errorData = await response.text();
-            console.log('Upload error response:', errorData);
+            console.log("Upload error response:", errorData);
             errorMessage = errorData || errorMessage;
           } catch (e) {
-            console.log('Could not read upload error response:', e);
+            console.log("Could not read upload error response:", e);
           }
         }
-        
+
         throw new Error(errorMessage);
       }
 
       const result = await response.json();
-      console.log('Upload successful:', result);
+      console.log("Upload successful:", result);
       setUploadProgress(`Upload thành công ${selectedFiles.length} ảnh!`);
       return result;
     } catch (error) {
-      console.error('Upload error:', error);
-      setUploadProgress(''); // Clear progress on error
+      console.error("Upload error:", error);
+      setUploadProgress(""); // Clear progress on error
       throw error;
     }
   };
@@ -244,18 +250,18 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
       const payload = {
         ...formData,
         price: parseFloat(formData.price) || 0,
-        categoryId: parseInt(formData.categoryId) || 0
+        categoryId: parseInt(formData.categoryId) || 0,
       };
 
       console.log("Sending payload to API:", JSON.stringify(payload, null, 2));
 
-      const productResponse = await fetch("https://localhost:7235/api/Product", {
+      const productResponse = await fetch("/api/Product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       if (!productResponse.ok) {
@@ -266,7 +272,8 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
         } else if (productResponse.status === 403) {
           errorMessage = "Bạn không có quyền thêm sản phẩm";
         } else if (productResponse.status === 400) {
-          errorMessage = "Thông tin sản phẩm không hợp lệ. Vui lòng kiểm tra lại.";
+          errorMessage =
+            "Thông tin sản phẩm không hợp lệ. Vui lòng kiểm tra lại.";
         } else {
           try {
             const errorData = await productResponse.text();
@@ -290,10 +297,15 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
           await uploadImages(createdProduct.id);
           // Progress message already set in uploadImages function
         } catch (uploadError) {
-          console.warn("Image upload failed, but product was created:", uploadError);
-          setError(`Sản phẩm đã được tạo thành công, nhưng upload ảnh thất bại: ${uploadError.message}`);
+          console.warn(
+            "Image upload failed, but product was created:",
+            uploadError
+          );
+          setError(
+            `Sản phẩm đã được tạo thành công, nhưng upload ảnh thất bại: ${uploadError.message}`
+          );
           setUploadProgress("");
-          
+
           // Still call onProductAdded because product was created successfully
           setTimeout(() => {
             onProductAdded();
@@ -308,7 +320,6 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
       setTimeout(() => {
         onProductAdded();
       }, 1000);
-
     } catch (err) {
       console.error("Error creating product:", err);
       setError(err.message || "Đã xảy ra lỗi khi thêm sản phẩm");
@@ -321,7 +332,7 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
   // Cleanup preview URLs on unmount
   useEffect(() => {
     return () => {
-      imagePreviews.forEach(preview => {
+      imagePreviews.forEach((preview) => {
         URL.revokeObjectURL(preview.url);
       });
     };
@@ -365,10 +376,11 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
           {/* Thông tin cơ bản */}
           <div className={s.formSection}>
             <h3 className={s.sectionTitle}>📝 Thông tin cơ bản</h3>
-            
+
             <div className={s.formGroup}>
               <label htmlFor="title">
-                {t("products.title", "Tiêu đề")} <span className={s.required}>*</span>
+                {t("products.title", "Tiêu đề")}{" "}
+                <span className={s.required}>*</span>
               </label>
               <input
                 type="text"
@@ -378,8 +390,11 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
                 onChange={handleInputChange}
                 onBlur={handleBlur}
                 required
-                placeholder={t("products.titlePlaceholder", "Nhập tiêu đề sản phẩm")}
-                className={validationErrors.title ? s.inputError : ''}
+                placeholder={t(
+                  "products.titlePlaceholder",
+                  "Nhập tiêu đề sản phẩm"
+                )}
+                className={validationErrors.title ? s.inputError : ""}
               />
               {validationErrors.title && (
                 <div className={s.fieldError}>{validationErrors.title}</div>
@@ -396,7 +411,10 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
                 value={formData.descriptions}
                 onChange={handleInputChange}
                 rows="4"
-                placeholder={t("products.descriptionsPlaceholder", "Nhập mô tả chi tiết về sản phẩm của bạn...")}
+                placeholder={t(
+                  "products.descriptionsPlaceholder",
+                  "Nhập mô tả chi tiết về sản phẩm của bạn..."
+                )}
               />
             </div>
           </div>
@@ -404,11 +422,12 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
           {/* Giá và danh mục */}
           <div className={s.formSection}>
             <h3 className={s.sectionTitle}>💰 Giá và phân loại</h3>
-            
+
             <div className={s.formRow}>
               <div className={s.formGroup}>
                 <label htmlFor="price">
-                  {t("products.price", "Giá")} <span className={s.required}>*</span>
+                  {t("products.price", "Giá")}{" "}
+                  <span className={s.required}>*</span>
                 </label>
                 <input
                   type="number"
@@ -421,7 +440,7 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
                   min="0"
                   step="0.01"
                   placeholder="0.00"
-                  className={validationErrors.price ? s.inputError : ''}
+                  className={validationErrors.price ? s.inputError : ""}
                 />
                 {validationErrors.price && (
                   <div className={s.fieldError}>{validationErrors.price}</div>
@@ -457,7 +476,9 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
                   value={formData.condition}
                   onChange={handleInputChange}
                 >
-                  <option value="">{t("products.selectCondition", "Chọn tình trạng")}</option>
+                  <option value="">
+                    {t("products.selectCondition", "Chọn tình trạng")}
+                  </option>
                   <option value="new">✨ Mới</option>
                   <option value="used">🔄 Đã sử dụng</option>
                   <option value="refurbished">🛠️ Tân trang</option>
@@ -474,7 +495,10 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
                   name="locations"
                   value={formData.locations}
                   onChange={handleInputChange}
-                  placeholder={t("products.locationsPlaceholder", "Nhập vị trí của bạn")}
+                  placeholder={t(
+                    "products.locationsPlaceholder",
+                    "Nhập vị trí của bạn"
+                  )}
                 />
               </div>
             </div>
@@ -483,10 +507,10 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
           {/* Hình ảnh sản phẩm */}
           <div className={s.formSection}>
             <h3 className={s.sectionTitle}>📸 Hình ảnh sản phẩm</h3>
-            
+
             <div className={s.formGroup}>
-              <div 
-                className={`${s.imageUpload} ${isDragOver ? s.dragOver : ''}`}
+              <div
+                className={`${s.imageUpload} ${isDragOver ? s.dragOver : ""}`}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
@@ -502,10 +526,13 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
                 <label htmlFor="images" className={s.fileLabel}>
                   <span className={s.uploadIcon}>📷</span>
                   <span className={s.uploadText}>
-                    {isDragOver ? 'Thả ảnh vào đây' : 'Kéo thả ảnh hoặc nhấp để chọn'}
+                    {isDragOver
+                      ? "Thả ảnh vào đây"
+                      : "Kéo thả ảnh hoặc nhấp để chọn"}
                   </span>
                   <span className={s.fileHint}>
-                    Hỗ trợ JPEG, PNG, GIF • Tối đa 5MB mỗi file • Có thể chọn nhiều ảnh (tối đa 10 ảnh)
+                    Hỗ trợ JPEG, PNG, GIF • Tối đa 5MB mỗi file • Có thể chọn
+                    nhiều ảnh (tối đa 10 ảnh)
                   </span>
                 </label>
               </div>
@@ -547,16 +574,10 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
 
           {/* Progress Message */}
           {uploadProgress && (
-            <div className={s.uploadProgress}>
-              {uploadProgress}
-            </div>
+            <div className={s.uploadProgress}>{uploadProgress}</div>
           )}
 
-          {error && (
-            <div className={s.error}>
-              {error}
-            </div>
-          )}
+          {error && <div className={s.error}>{error}</div>}
 
           <div className={s.formActions}>
             <button
@@ -574,8 +595,7 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
             >
               {isSubmitting
                 ? t("common.adding", "Đang thêm...")
-                : t("products.addProduct", "Thêm sản phẩm")
-              }
+                : t("products.addProduct", "Thêm sản phẩm")}
             </button>
           </div>
         </form>

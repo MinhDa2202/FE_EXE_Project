@@ -40,7 +40,7 @@ const LogInForm = () => {
     };
 
     try {
-      const response = await fetch("https://localhost:7235/api/Auth/login", {
+      const response = await fetch("/api/Auth/login", {
         method: "POST",
         headers: {
           Accept: "*/*",
@@ -124,19 +124,16 @@ const LogInForm = () => {
 
     try {
       setOtpLoading(true);
-      const response = await fetch(
-        "https://localhost:7235/api/Auth/verify-email",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: loginPayload.email,
-            otp: otp.trim(),
-          }),
-        }
-      );
+      const response = await fetch("/api/Auth/verify-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: loginPayload.email,
+          otp: otp.trim(),
+        }),
+      });
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -162,7 +159,7 @@ const LogInForm = () => {
 
   async function loginWithVerifiedEmail(payload) {
     try {
-      const response = await fetch("https://localhost:7235/api/Auth/login", {
+      const response = await fetch("/api/Auth/login", {
         method: "POST",
         headers: {
           Accept: "*/*",
@@ -248,7 +245,9 @@ const LogInForm = () => {
         <div className={s.formContainer}>
           <div className={s.formSection}>
             <h2 className={s.loginTitle}>{t("loginSignUpPage.login")}</h2>
-            <p className={s.loginSubtitle}>{t("loginSignUpPage.enterDetails")}</p>
+            <p className={s.loginSubtitle}>
+              {t("loginSignUpPage.enterDetails")}
+            </p>
 
             <form onSubmit={login} className={s.loginForm}>
               {/* Email */}

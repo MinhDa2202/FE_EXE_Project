@@ -17,12 +17,13 @@
     "contact": "Contact",
     "about": "About",
     "profile": "Profile",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "payment": "Payment"
   },
   "navTools": {
     "favorite": "Favorites",
     "userMenu": "User menu",
-    "orderMenu": "Order menu"
+    "shoppingCart": "Shopping Cart"
   },
   "homeSlider": {
     "title": "Up to 30% off Voucher"
@@ -299,7 +300,6 @@
         "jobTitle": "Product Designer"
       }
     }
-    
   },
   "sectionTitles": {
     "todaysSection": {
@@ -475,10 +475,7 @@
     "wishlist": "Wishlist",
     "logout": "Logout"
   },
-  "orderMenuItems": {
-    "donMua": "Purchase Order",
-    "donBan": "Sales Order"
-  },
+
   "toastAlert": {
     "accountInfoUpdated": "Account's information updated.",
     "messageSent": "Thank you for your message!, we will get back to you shortly.",
@@ -507,5 +504,66 @@
   "bank": "Bank",
   "billingDetails": "Billing Details",
   "skipToContent": "Skip to Content",
-  "whatImWorking": "What i'm working on?"
+  "whatImWorking": "What i'm working on?",
+  "payment": {
+    "title": "Payment",
+    "subtitle": "Complete your order",
+    "orderItems": "Order Items",
+    "items": "items",
+    "emptyCart": "Cart is empty",
+    "emptyCartDesc": "Add products to cart to continue checkout",
+    "continueShopping": "Continue Shopping",
+    "quantity": "Quantity",
+    "subtotal": "Subtotal",
+    "shippingInfo": "Shipping Information",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "email": "Email",
+    "emailPlaceholder": "example@email.com",
+    "phone": "Phone Number",
+    "phonePlaceholder": "0123456789",
+    "address": "Address",
+    "addressPlaceholder": "Street address",
+    "city": "City",
+    "cityPlaceholder": "Ho Chi Minh City",
+    "zipCode": "Zip Code",
+    "zipCodePlaceholder": "700000",
+    "paymentMethod": "Payment Method",
+    "creditCard": "Credit Card",
+    "paypal": "PayPal",
+    "bankTransfer": "Bank Transfer",
+    "cod": "Cash on Delivery",
+    "cardDetails": "Card Details",
+    "cardNumber": "Card Number",
+    "cardName": "Name on Card",
+    "cardNamePlaceholder": "JOHN DOE",
+    "expiryDate": "Expiry Date",
+    "cvv": "CVV",
+    "orderSummary": "Order Summary",
+    "shipping": "Shipping",
+    "freeShipping": "Free",
+    "tax": "Tax",
+    "discount": "Discount",
+    "total": "Total",
+    "selectedMethod": "Payment Method",
+    "completeOrder": "Complete Order",
+    "emptyCartAlert": "Cart is empty. Please add products before checkout.",
+    "processingPayment": "Processing payment...",
+    "processing": "Processing...",
+    "paymentSuccess": "Payment successful! Thank you for your purchase.",
+    "paymentFailed": "Payment failed. Please try again.",
+    "paymentInitiated": "Payment initiated. Waiting for confirmation...",
+    "walletBalance": "Wallet Balance",
+    "webhookListening": "Waiting for payment confirmation...",
+    "webhookReceived": "Payment confirmation received!",
+    "webhookError": "Error checking payment status",
+    "webhookIdle": "Ready to check payment",
+    "paymentDetails": "Payment Details",
+    "code": "Code",
+    "description": "Description",
+    "status": "Status",
+    "successful": "Successful",
+    "failed": "Failed",
+    "securityNote": "Your payment information is secure and encrypted"
+  }
 }

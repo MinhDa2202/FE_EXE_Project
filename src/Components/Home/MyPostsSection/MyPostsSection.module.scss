@@ -1,0 +1,320 @@
+// MyPostsSection.module.scss
+.myPostsSection {
+  margin: 2rem 0;
+}
+
+.sectionCard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+}
+
+.newBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--neon-orange);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.cardIcon {
+  color: white;
+
+  svg {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.cardContent {
+  flex: 1;
+  color: white;
+
+  .cardTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: white;
+  }
+
+  .cardDescription {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin: 0;
+  }
+}
+
+.cardArrow {
+  .arrowIcon {
+    font-size: 1.5rem;
+    color: white;
+    transition: transform 0.3s ease;
+  }
+}
+
+.sectionCard:hover .arrowIcon {
+  transform: translateX(4px);
+}
+
+// Modal Styles
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: var(--shadow-xl);
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 0 1.5rem;
+
+  h3 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin: 0;
+  }
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+.modalContent {
+  padding: 1.5rem;
+
+  p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+}
+
+.modalActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.loginBtn,
+.signupBtn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.loginBtn {
+  background: var(--primary-blue);
+  color: white;
+
+  &:hover {
+    background: var(--primary-blue-dark);
+  }
+}
+
+.signupBtn {
+  background: var(--bg-light-gray);
+  color: var(--text-primary);
+
+  &:hover {
+    background: var(--text-muted);
+    color: white;
+  }
+}
+
+// Products Section
+.productsSection {
+  margin: 3rem 0;
+}
+
+.loadingContainer {
+  margin: 2rem 0;
+}
+
+.errorContainer {
+  text-align: center;
+  padding: 2rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.errorMessage {
+  color: var(--error);
+  font-size: 1rem;
+}
+
+.emptyMessage {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.addProductBtn {
+  display: inline-block;
+  background: var(--primary-blue);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: var(--primary-blue-dark);
+    transform: translateY(-2px);
+  }
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.viewAllContainer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.viewAllBtn {
+  display: inline-block;
+  background: var(--bg-secondary);
+  color: var(--primary-blue);
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid var(--primary-blue);
+
+  &:hover {
+    background: var(--primary-blue);
+    color: white;
+    transform: translateY(-2px);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .sectionCard {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .cardIcon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .cardContent .cardTitle {
+    font-size: 1.3rem;
+  }
+
+  .newBadge {
+    position: static;
+    margin-bottom: 1rem;
+  }
+
+  .modalActions {
+    flex-direction: column;
+  }
+
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+}

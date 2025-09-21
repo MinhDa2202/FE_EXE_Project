@@ -19,24 +19,6 @@
   margin-bottom: 50px;
 }
 
-@media (max-width: 1300px) {
-  .skeletonCards {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@include m.medium {
-  .skeletonCards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .skeletonCards {
-    grid-template-columns: 1fr;
-  }
-}
-
 // Add these styles to your ProductsCategoryPage.module.scss file
 
 .errorMessage {
@@ -50,6 +32,7 @@
   p {
     color: #c33;
     margin-bottom: 1rem;
+    font-family: "Inter", sans-serif;
   }
 
   button {
@@ -60,6 +43,8 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.2s;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
 
     &:hover {
       background: #a22;
@@ -70,17 +55,20 @@
 .noProducts {
   text-align: center;
   padding: 3rem 1rem;
-  
+
   h3 {
     color: #666;
     margin-bottom: 1rem;
     font-size: 1.5rem;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
   }
 
   p {
     color: #888;
     margin-bottom: 2rem;
     line-height: 1.6;
+    font-family: "Inter", sans-serif;
   }
 }
 
@@ -92,6 +80,8 @@
   border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
   transition: background 0.2s;
 
   &:hover {

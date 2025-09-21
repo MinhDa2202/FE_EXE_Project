@@ -18,7 +18,7 @@ const ProductsCategoryPage = () => {
   const categoryName = useGetSearchParam("name");
   const categoryTypeTrans = t(`categoriesData.${categoryName}`);
   const isWebsiteOnline = useOnlineStatus();
-  
+
   const [allProducts, setAllProducts] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -28,12 +28,12 @@ const ProductsCategoryPage = () => {
   // Helper function to map categoryName to categoryId
   const getCategoryIdFromCategoryName = (categoryName, categories) => {
     if (!categoryName || !categories.length) return null;
-    
+
     // Find matching category by name (case insensitive)
-    const matchingCategory = categories.find(cat =>
-      cat.name && cat.name.toLowerCase() === categoryName.toLowerCase()
+    const matchingCategory = categories.find(
+      (cat) => cat.name && cat.name.toLowerCase() === categoryName.toLowerCase()
     );
-    
+
     return matchingCategory ? matchingCategory.id : null;
   };
 
@@ -42,33 +42,43 @@ const ProductsCategoryPage = () => {
     const fetchAllData = async () => {
       setIsLoading(true);
       setLoadingError(null);
-      
+
       try {
         // Fetch categories and products in parallel
-        const [categoriesResponse, productsResponse] = await Promise.allSettled([
-          fetch("https://localhost:7235/api/Category"),
-          fetch("https://localhost:7235/api/Product")
-        ]);
+        const [categoriesResponse, productsResponse] = await Promise.allSettled(
+          [fetch("/api/Category"), fetch("/api/Product")]
+        );
 
         // Handle categories response
         let categoriesData = [];
-        if (categoriesResponse.status === 'fulfilled' && categoriesResponse.value.ok) {
+        if (
+          categoriesResponse.status === "fulfilled" &&
+          categoriesResponse.value.ok
+        ) {
           categoriesData = await categoriesResponse.value.json();
           setAllCategories(categoriesData);
         } else {
-          console.warn("⚠️ Categories API failed:", categoriesResponse.reason || "Unknown error");
+          console.warn(
+            "⚠️ Categories API failed:",
+            categoriesResponse.reason || "Unknown error"
+          );
         }
 
         // Handle products response
         let productsData = [];
-        if (productsResponse.status === 'fulfilled' && productsResponse.value.ok) {
+        if (
+          productsResponse.status === "fulfilled" &&
+          productsResponse.value.ok
+        ) {
           productsData = await productsResponse.value.json();
           setAllProducts(productsData);
         } else {
-          console.error("❌ Products API failed:", productsResponse.reason || "Unknown error");
+          console.error(
+            "❌ Products API failed:",
+            productsResponse.reason || "Unknown error"
+          );
           throw new Error("Failed to fetch products");
         }
-
       } catch (error) {
         console.error("❌ Error fetching data:", error);
         setLoadingError(error.message);
@@ -93,30 +103,34 @@ const ProductsCategoryPage = () => {
       setFilteredProducts(allProducts);
       return;
     }
-    
+
     const filtered = allProducts.filter((product) => {
       // First try to get categoryId directly
-      let productCategoryId = product.categoryId ||
-                             product.category_id ||
-                             product.CategoryId ||
-                             product.category?.id;
-      
+      let productCategoryId =
+        product.categoryId ||
+        product.category_id ||
+        product.CategoryId ||
+        product.category?.id;
+
       // If no direct categoryId, map from categoryName using categories data
       if (!productCategoryId && product.categoryName && allCategories.length) {
-        productCategoryId = getCategoryIdFromCategoryName(product.categoryName, allCategories);
+        productCategoryId = getCategoryIdFromCategoryName(
+          product.categoryName,
+          allCategories
+        );
       }
-      
+
       // Convert both to numbers for comparison
       const targetCategoryId = Number(categoryId);
       const currentCategoryId = Number(productCategoryId);
-      
-      const isMatch = !isNaN(currentCategoryId) && currentCategoryId === targetCategoryId;
-      
+
+      const isMatch =
+        !isNaN(currentCategoryId) && currentCategoryId === targetCategoryId;
+
       return isMatch;
     });
-    
+
     setFilteredProducts(filtered);
-    
   }, [categoryId, allProducts, allCategories]);
 
   useScrollOnMount(0);
@@ -124,7 +138,7 @@ const ProductsCategoryPage = () => {
   return (
     <>
       <Helmet>
-        <title>{categoryName || 'Products'}</title>
+        <title>{categoryName || "Products"}</title>
         <meta
           name="description"
           content={`Discover a wide range of products categorized for easy browsing on ${WEBSITE_NAME}. Explore our extensive selection by category or type to find exactly what you're looking for.`}
@@ -132,7 +146,9 @@ const ProductsCategoryPage = () => {
       </Helmet>
       <div className="container">
         <main className={s.categoryPage}>
-          <PagesHistory history={["/", categoryTypeTrans || categoryName || 'Products']} />
+          <PagesHistory
+            history={["/", categoryTypeTrans || categoryName || "Products"]}
+          />
           <section className={s.categoryContent} id="category-page">
             {/* Show error message if loading failed */}
             {loadingError && (
@@ -143,8 +159,7 @@ const ProductsCategoryPage = () => {
                 </button>
               </div>
             )}
-            
-            
+
             {/* Show products when loaded and online */}
             {!isLoading && isWebsiteOnline && !loadingError && (
               <>
@@ -157,14 +172,15 @@ const ProductsCategoryPage = () => {
                   <div className={s.noProducts}>
                     <h3>🔍 No products found</h3>
                     <p>
-                      {categoryId 
-                        ? `No products found in category "${categoryName || categoryId}"` 
-                        : "No products available"
-                      }
+                      {categoryId
+                        ? `No products found in category "${
+                            categoryName || categoryId
+                          }"`
+                        : "No products available"}
                     </p>
                     {categoryId && (
-                      <button 
-                        onClick={() => window.location.href = '/products'}
+                      <button
+                        onClick={() => (window.location.href = "/products")}
                         className={s.viewAllButton}
                       >
                         View All Products
@@ -174,7 +190,7 @@ const ProductsCategoryPage = () => {
                 )}
               </>
             )}
-            
+
             {/* Show loading skeleton */}
             {(isLoading || !isWebsiteOnline) && (
               <div className={s.skeletonCards}>

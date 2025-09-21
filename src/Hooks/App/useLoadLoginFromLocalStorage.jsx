@@ -6,17 +6,37 @@ const useLoadLoginFromLocalStorage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const saved = localStorage.getItem("userSliceData");
-    if (saved) {
+    const loadUserData = () => {
       try {
-        const parsed = JSON.parse(saved);
-        if (parsed.loginInfo?.isSignIn) {
-          dispatch(setLoginData(parsed.loginInfo));
+        const userSliceData = localStorage.getItem("userSliceData");
+        const storedToken = localStorage.getItem("token");
+
+        if (userSliceData) {
+          const parsed = JSON.parse(userSliceData);
+          if (
+            parsed.loginInfo?.isSignIn &&
+            (parsed.loginInfo?.token || storedToken)
+          ) {
+            // Ensure we have a valid token
+            const validToken = parsed.loginInfo?.token || storedToken;
+            dispatch(
+              setLoginData({
+                ...parsed.loginInfo,
+                token: validToken,
+                isSignIn: true,
+              })
+            );
+          }
         }
       } catch (err) {
         console.error("Failed to parse userSliceData:", err);
+        // Clear corrupted data
+        localStorage.removeItem("userSliceData");
+        localStorage.removeItem("token");
       }
-    }
+    };
+
+    loadUserData();
   }, [dispatch]);
 };
 
