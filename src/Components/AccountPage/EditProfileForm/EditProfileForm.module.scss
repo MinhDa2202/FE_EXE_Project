@@ -30,6 +30,11 @@
     padding: 36px 40px;
     width: 100%;
   }
+
+  .profileForm > h2 {
+    margin: 0 0 40px 0;
+    padding: 6px 0 14px 0;
+  }
 }
 
 @include m.small {
@@ -43,8 +48,8 @@
   color: var(--primary-purple);
   font-weight: 600;
   font-size: 1.5rem;
-  margin-bottom: 32px;
-  padding-bottom: 16px;
+  margin: 0 0 48px 0;
+  padding: 8px 0 16px 0;
   border-bottom: 2px solid rgba(102, 126, 234, 0.1);
   display: flex;
   align-items: center;
@@ -71,6 +76,7 @@
 @include m.small {
   .profileForm > h2 {
     font-size: 1.3rem;
-    margin-bottom: 24px;
+    margin: 0 0 32px 0;
+    padding: 4px 0 12px 0;
   }
 }

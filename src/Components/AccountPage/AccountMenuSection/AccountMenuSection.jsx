@@ -30,29 +30,11 @@ const AccountMenuSection = () => {
 
           <ul>
             <li>
-              <NavLink to="/profile">{t(`${accountMenu}.profile`)}</NavLink>
+              <NavLink to="/profile" end>{t(`${accountMenu}.profile`)}</NavLink>
             </li>
 
             <li>
-              <a href="#">{t(`${accountMenu}.addressBook`)}</a>
-            </li>
-
-            <li>
-              <a href="#">{t(`${accountMenu}.paymentOptions`)}</a>
-            </li>
-          </ul>
-        </section>
-
-        <section className={s.section}>
-          <h2>{t(`${accountMenu}.myOrders`)}</h2>
-
-          <ul>
-            <li>
-              <a href="#">{t(`${accountMenu}.myOrders`)}</a>
-            </li>
-
-            <li>
-              <a href="#">{t(`${accountMenu}.returns`)}</a>
+              <NavLink to="/profile/password" end>{t(`${accountMenu}.changePassword`)}</NavLink>
             </li>
           </ul>
         </section>

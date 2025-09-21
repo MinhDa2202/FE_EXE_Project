@@ -480,7 +480,8 @@
       "addressBook": "Address Book",
       "paymentOptions": "My Payment Options",
       "returns": "My Returns",
-      "my_reports": "My Reports"
+      "my_reports": "My Reports",
+      "changePassword": "Change Password"
     }
   },
   "cartPage": {
