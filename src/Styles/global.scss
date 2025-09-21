@@ -19,24 +19,24 @@ body {
   background-color: var(--bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding-top: 120px; /* Header 100px + 20px spacing cho trải nghiệm tốt hơn */
+  padding-top: 100px; /* Header height only */
 }
 
 @media (max-width: 768px) {
   body {
-    padding-top: 105px; /* Header 85px + 20px spacing cho tablet */
+    padding-top: 85px; /* Header responsive height */
   }
 }
 
 @media (max-width: 480px) {
   body {
-    padding-top: 85px; /* Header 65px + 20px spacing cho mobile */
+    padding-top: 75px; /* Header responsive height */
   }
 }
 
 @media (max-width: 360px) {
   body {
-    padding-top: 80px; /* Header 60px + 20px spacing cho màn hình rất nhỏ */
+    padding-top: 60px; /* Header responsive height */
   }
 }
 
@@ -111,18 +111,18 @@ input, textarea, select {
 
 // Header spacing utilities
 .page-content {
-  margin-top: 120px; /* Header 100px + 20px spacing */
+  margin-top: 100px; /* Header height only */
 }
 
 @media (max-width: 768px) {
   .page-content {
-    margin-top: 105px; /* Header 85px + 20px spacing cho tablet */
+    margin-top: 85px; /* Header responsive height */
   }
 }
 
 @media (max-width: 480px) {
   .page-content {
-    margin-top: 95px; /* Header 75px + 20px spacing cho mobile */
+    margin-top: 75px; /* Header responsive height */
   }
 }
 
