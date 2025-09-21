@@ -1,9 +1,10 @@
 // src/Components/ProductDetailsPage/ProductDetailsPage.module.scss
 
 .detailsPage {
-  min-height: 20vh; /* Giảm chiều cao tối thiểu thêm */
-  padding: 0.15rem 0; /* Giảm padding thêm */
-  margin-top: 120px; /* Thêm margin-top để tránh bị header che */
+  margin: var(--page-margin);
+  min-height: 70vh;
+  padding: 32px;
+  position: relative;
 }
 
 .loadingContainer {

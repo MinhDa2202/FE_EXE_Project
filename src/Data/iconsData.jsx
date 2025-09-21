@@ -173,27 +173,27 @@ export const iconsData = [
 
   {
     name: "gamepad",
-    icon: <span style={{ fontSize: '3em' }}>🎮</span>,
+    icon: <span style={{ fontSize: "3em" }}>🎮</span>,
   },
 
   {
     name: "headphone",
-    icon: <span style={{ fontSize: '3em' }}>🎧</span>,
+    icon: <span style={{ fontSize: "3em" }}>🎧</span>,
   },
 
   {
     name: "smartWatch",
-    icon: <span style={{ fontSize: '3em' }}>⌚</span>,
+    icon: <span style={{ fontSize: "3em" }}>⌚</span>,
   },
 
   {
     name: "computer",
-    icon: <span style={{ fontSize: '3em' }}>💻</span>,
+    icon: <span style={{ fontSize: "3em" }}>💻</span>,
   },
 
   {
     name: "camera",
-    icon: <span style={{ fontSize: '3em' }}>📷</span>,
+    icon: <span style={{ fontSize: "3em" }}>📷</span>,
   },
 
   {
@@ -442,7 +442,7 @@ export const iconsData = [
 
   {
     name: "mobile",
-    icon: <span style={{ fontSize: '3em' }}>📱</span>,
+    icon: <span style={{ fontSize: "3em" }}>📱</span>,
   },
 
   {
@@ -571,6 +571,107 @@ export const iconsData = [
           fillRule="evenodd"
           d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14"
         />
+      </svg>
+    ),
+  },
+
+  {
+    name: "filter",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3" />
+      </svg>
+    ),
+  },
+
+  {
+    name: "sort",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <path d="M3 6h18M7 12h10m-7 6h4" />
+      </svg>
+    ),
+  },
+
+  {
+    name: "tag",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+        <line x1="7" y1="7" x2="7.01" y2="7" />
+      </svg>
+    ),
+  },
+
+  {
+    name: "dollar",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <line x1="12" y1="1" x2="12" y2="23" />
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+      </svg>
+    ),
+  },
+
+  {
+    name: "chevronUp",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <polyline points="18,15 12,9 6,15" />
+      </svg>
+    ),
+  },
+
+  {
+    name: "chevronDown",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <polyline points="6,9 12,15 18,9" />
+      </svg>
+    ),
+  },
+
+  {
+    name: "x",
+    icon: (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
       </svg>
     ),
   },
