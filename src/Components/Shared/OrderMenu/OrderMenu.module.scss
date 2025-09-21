@@ -6,7 +6,7 @@
   right: 0;
   min-width: 125px;
   border-radius: 4px;
-  z-index: 30;
+  z-index: 9999;
   background: rgba(0, 0, 0, 0.8);
   box-shadow: 0 4px 30px rgba(0, 0, 0, .1);
   backdrop-filter: blur(45.4px);
@@ -14,6 +14,7 @@
   pointer-events: none;
   top: 30px;
   transition: opacity .3s ease-in-out, top .2s;
+  transform: translateZ(0); /* Force GPU layer */
 
   &.active {
     opacity: 1;

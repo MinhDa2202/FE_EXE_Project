@@ -43,6 +43,7 @@ export const ROUTES_CONFIG = [
   { path: "/signup", element: <SignUp /> },
   { path: "/login", element: <LogIn /> },
   { path: "/profile", element: <AccountPage /> },
+  { path: "/profile/password", element: <AccountPage /> },
   { path: "/search", element: <SearchPage /> },
   { path: "/chat", element: <ChatPage /> },
   { path: "/privacy", element: <PrivacyPolicy /> },

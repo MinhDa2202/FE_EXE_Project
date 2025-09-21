@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { WEBSITE_NAME } from "src/Data/constants";
 import useScrollOnMount from "src/Hooks/App/useScrollOnMount";
 import PagesHistory from "../Shared/MiniComponents/PagesHistory/PagesHistory";
@@ -12,8 +12,20 @@ import EditProfileForm from "./EditProfileForm/EditProfileForm";
 const AccountPage = () => {
   const { loginInfo } = useSelector((state) => state.user);
   const { t } = useTranslation();
+  const location = useLocation();
 
   useScrollOnMount();
+
+  // Determine active tab based on current path
+  const getActiveTab = () => {
+    const path = location.pathname;
+    if (path.includes('/password')) {
+      return 'password';
+    }
+    return 'profile';
+  };
+
+  const activeTab = getActiveTab();
 
   return (
     <>
@@ -39,7 +51,7 @@ const AccountPage = () => {
 
           <div className={s.accountPageContent}>
             <AccountMenuSection />
-            <EditProfileForm />
+            <EditProfileForm activeTab={activeTab} />
           </div>
         </main>
       </div>

@@ -4,16 +4,25 @@
 .breadcrumbContainer {
   width: 100%;
   padding: 0;
-  margin: 0 0 16px 0;
+  margin: 90px 0 16px 0; /* 90px top margin to account for fixed header */
   position: relative;
+  z-index: 10; /* Ensure breadcrumbs appear above other content */
+
+  @include m.medium {
+    margin-top: -40px; /* Account for responsive header height */
+  }
+
+  @media (max-width: 600px) {
+    margin-top: -45px; 
+  }
   
-  // Ensure consistent spacing from page content
+  
   & + * {
     margin-top: 0;
   }
 }
 
-// Page-specific adjustments - đồng bộ với SearchPage
+
 .productDetailsContainer {
   margin-bottom: 12px;
   
