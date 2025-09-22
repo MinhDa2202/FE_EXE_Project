@@ -125,7 +125,7 @@ const SignUpForm = () => {
     try {
       setOtpLoading(true);
 
-      const response = await fetch("https://localhost:7235/api/Auth/register", {
+      const response = await fetch("/api/Auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(signupPayload),
@@ -197,14 +197,11 @@ const SignUpForm = () => {
 
     try {
       setOtpLoading(true);
-      const otpResponse = await fetch(
-        "https://localhost:7235/api/Auth/verify-email",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: signupData.email, otp: otp.trim() }),
-        }
-      );
+      const otpResponse = await fetch("/api/Auth/verify-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: signupData.email, otp: otp.trim() }),
+      });
 
       if (!otpResponse.ok) throw new Error(await otpResponse.text());
 
@@ -236,14 +233,11 @@ const SignUpForm = () => {
     try {
       setOtpLoading(true);
       setOtp("");
-      const response = await fetch(
-        "https://localhost:7235/api/Auth/resend-otp",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: signupData.email }),
-        }
-      );
+      const response = await fetch("/api/Auth/resend-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: signupData.email }),
+      });
 
       if (!response.ok) throw new Error(await response.text());
 
@@ -329,14 +323,28 @@ const SignUpForm = () => {
     return (
       <div className={s.formSection}>
         <h2 className={s.signupTitle}>{"Verify OTP"}</h2>
-        <p className={s.signupSubtitle}>{`OTP has been sent to ${signupData?.email}`}</p>
+        <p
+          className={s.signupSubtitle}
+        >{`OTP has been sent to ${signupData?.email}`}</p>
 
         <form onSubmit={verifyOTPAndRegister} className={s.signupForm}>
           <div className={s.inputGroup}>
             <div className={s.inputIcon}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <polyline points="22,6 12,13 2,6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <polyline
+                  points="22,6 12,13 2,6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </div>
             <input
@@ -354,7 +362,7 @@ const SignUpForm = () => {
           <button
             type="submit"
             disabled={otpLoading}
-            className={`${s.signupButton} ${otpLoading ? s.loading : ''}`}
+            className={`${s.signupButton} ${otpLoading ? s.loading : ""}`}
           >
             {otpLoading ? (
               <>
@@ -369,7 +377,7 @@ const SignUpForm = () => {
             )}
           </button>
         </form>
-        
+
         <div className={s.loginSection}>
           <button
             type="button"
@@ -380,7 +388,7 @@ const SignUpForm = () => {
             <span className={s.backIcon}>←</span>
             {"Back"}
           </button>
-          
+
           <div className={s.resendSection}>
             {resendCountdown > 0 ? (
               <p className={s.loginText}>
@@ -429,8 +437,20 @@ const SignUpForm = () => {
             <div className={s.inputGroup}>
               <div className={s.inputIcon}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2"/>
+                  <path
+                    d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <circle
+                    cx="12"
+                    cy="7"
+                    r="4"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
                 </svg>
               </div>
               <input
@@ -446,8 +466,20 @@ const SignUpForm = () => {
             <div className={s.inputGroup}>
               <div className={s.inputIcon}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2"/>
+                  <path
+                    d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <circle
+                    cx="12"
+                    cy="7"
+                    r="4"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
                 </svg>
               </div>
               <input
@@ -466,8 +498,20 @@ const SignUpForm = () => {
           <div className={s.inputGroup}>
             <div className={s.inputIcon}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <polyline points="22,6 12,13 2,6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <polyline
+                  points="22,6 12,13 2,6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </div>
             <input
@@ -485,9 +529,28 @@ const SignUpForm = () => {
           <div className={s.inputGroup}>
             <div className={s.inputIcon}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>
-                <circle cx="12" cy="16" r="1" stroke="currentColor" strokeWidth="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" strokeWidth="2"/>
+                <rect
+                  x="3"
+                  y="11"
+                  width="18"
+                  height="11"
+                  rx="2"
+                  ry="2"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+                <circle
+                  cx="12"
+                  cy="16"
+                  r="1"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M7 11V7a5 5 0 0 1 10 0v4"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
               </svg>
             </div>
             <input
@@ -504,9 +567,28 @@ const SignUpForm = () => {
           <div className={s.inputGroup}>
             <div className={s.inputIcon}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>
-                <circle cx="12" cy="16" r="1" stroke="currentColor" strokeWidth="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" strokeWidth="2"/>
+                <rect
+                  x="3"
+                  y="11"
+                  width="18"
+                  height="11"
+                  rx="2"
+                  ry="2"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+                <circle
+                  cx="12"
+                  cy="16"
+                  r="1"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M7 11V7a5 5 0 0 1 10 0v4"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
               </svg>
             </div>
             <input
@@ -532,11 +614,11 @@ const SignUpForm = () => {
                 required
               />
               <span className={s.checkboxLabel}>
-                I agree to the{' '}
+                I agree to the{" "}
                 <Link to="/terms" className={s.termsLink}>
                   Terms of Service
-                </Link>
-                {' '}and{' '}
+                </Link>{" "}
+                and{" "}
                 <Link to="/privacy" className={s.termsLink}>
                   Privacy Policy
                 </Link>
@@ -564,7 +646,7 @@ const SignUpForm = () => {
         {/* Login Link */}
         <div className={s.loginSection}>
           <p className={s.loginText}>
-            Already have an account?{' '}
+            Already have an account?{" "}
             <Link to="/login" className={s.loginLink}>
               Log in
             </Link>

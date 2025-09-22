@@ -28,6 +28,7 @@ export const pagesRequireSignIn = [
   "/profile",
   "/wishlist",
   "/order",
+  "/payment",
 ];
 export const PRODUCT_SIZES = [
   {

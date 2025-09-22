@@ -246,6 +246,12 @@ export const mobileNavData = [
     requiteSignIn: false,
   },
   {
+    name: "Post Manager",
+    link: "/post-manager",
+    icon: "filePaper",
+    requiteSignIn: true,
+  },
+  {
     name: "Profile",
     link: "/profile",
     icon: "user",
@@ -336,8 +342,6 @@ export const mySocialMedia = [
   },
 ];
 
-
-
 export const billingInputsData = [
   {
     translationKey: "firstName",
@@ -396,5 +400,3 @@ export const billingInputsData = [
     regex: regexPatterns.email,
   },
 ];
-
-

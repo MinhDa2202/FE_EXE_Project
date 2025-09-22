@@ -5,8 +5,6 @@ import ChatPage from "../Components/ChatPage/ChatPage";
 // import CheckoutPage from "../Components/CheckoutPage/CheckoutPage";
 import Contact from "../Components/Contact/Contact";
 import DemoPage from "../Components/DemoPage/DemoPage";
-import DonBan from "../Components/DonBan/DonBan";
-import DonMua from "../Components/DonMua/DonMua";
 import FavoritePage from "../Components/FavoritePage/FavoritePage";
 import Home from "../Components/Home/Home";
 import LogIn from "../Components/LogIn/LogIn";
@@ -14,6 +12,8 @@ import LuckySpinPage from "../Components/DemoPage/LuckySpinPage";
 import MyReportsPage from "../Components/MyReportsPage/MyReportsPage";
 import NotFoundPage from "../Components/NotFoundPage/NotFoundPage";
 import OrderPage from "../Components/OrderPage/OrderPage";
+import PaymentPage from "../Components/PaymentPage/PaymentPage";
+import PostManagerWrapper from "../Components/PostManager/PostManagerWrapper";
 import ProductDetailsPage from "../Components/ProductDetailsPage/ProductDetailsPage";
 import ProductsCategoryPage from "../Components/ProductsCategory/ProductsCategoryPage";
 import ProductsPage from "../Components/ProductsPage/ProductsPage";
@@ -38,8 +38,9 @@ export const ROUTES_CONFIG = [
   { path: "/products", element: <ProductsPage /> },
   { path: "/favorites", element: <FavoritePage /> },
   { path: "/wishlist", element: <WishList /> },
-  // { path: "/checkout", element: <CheckoutPage /> },
+  { path: "/payment", element: <PaymentPage /> },
   { path: "/order", element: <OrderPage /> },
+  { path: "/post-manager", element: <PostManagerWrapper /> },
   { path: "/signup", element: <SignUp /> },
   { path: "/login", element: <LogIn /> },
   { path: "/profile", element: <AccountPage /> },

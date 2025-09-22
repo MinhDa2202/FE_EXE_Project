@@ -56,6 +56,10 @@ export const PAGE_SECTIONS_ID = [
     path: "/order",
   },
   {
+    id: "payment-page",
+    path: "/payment",
+  },
+  {
     id: "category-page",
     path: "/category",
   },

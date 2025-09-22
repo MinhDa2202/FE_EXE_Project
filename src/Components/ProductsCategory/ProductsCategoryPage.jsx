@@ -18,7 +18,7 @@ const ProductsCategoryPage = () => {
   const categoryName = useGetSearchParam("name");
   const categoryTypeTrans = t(`${categoryName}`);
   const isWebsiteOnline = useOnlineStatus();
-  
+
   const [allProducts, setAllProducts] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -32,7 +32,7 @@ const ProductsCategoryPage = () => {
     const matchingCategory = categories.find(cat =>
       cat.name && cat.name.toLowerCase() === categoryName.toLowerCase()
     );
-    
+
     return matchingCategory ? matchingCategory.id : null;
   };
 
@@ -41,7 +41,7 @@ const ProductsCategoryPage = () => {
     const fetchAllData = async () => {
       setIsLoading(true);
       setLoadingError(null);
-      
+
       try {
         const [categoriesResponse, productsResponse] = await Promise.allSettled([
           fetch("https://localhost:7235/api/Category"),
@@ -49,22 +49,33 @@ const ProductsCategoryPage = () => {
         ]);
 
         let categoriesData = [];
-        if (categoriesResponse.status === 'fulfilled' && categoriesResponse.value.ok) {
+        if (
+          categoriesResponse.status === "fulfilled" &&
+          categoriesResponse.value.ok
+        ) {
           categoriesData = await categoriesResponse.value.json();
           setAllCategories(categoriesData);
         } else {
-          console.warn("⚠️ Categories API failed:", categoriesResponse.reason || "Unknown error");
+          console.warn(
+            "⚠️ Categories API failed:",
+            categoriesResponse.reason || "Unknown error"
+          );
         }
 
         let productsData = [];
-        if (productsResponse.status === 'fulfilled' && productsResponse.value.ok) {
+        if (
+          productsResponse.status === "fulfilled" &&
+          productsResponse.value.ok
+        ) {
           productsData = await productsResponse.value.json();
           setAllProducts(productsData);
         } else {
-          console.error("❌ Products API failed:", productsResponse.reason || "Unknown error");
+          console.error(
+            "❌ Products API failed:",
+            productsResponse.reason || "Unknown error"
+          );
           throw new Error("Failed to fetch products");
         }
-
       } catch (error) {
         console.error("❌ Error fetching data:", error);
         setLoadingError(error.message);
@@ -89,7 +100,7 @@ const ProductsCategoryPage = () => {
       setFilteredProducts(allProducts);
       return;
     }
-    
+
     const filtered = allProducts.filter((product) => {
       let productCategoryId = product.categoryId ||
                              product.category_id ||
@@ -97,19 +108,22 @@ const ProductsCategoryPage = () => {
                              product.category?.id;
       
       if (!productCategoryId && product.categoryName && allCategories.length) {
-        productCategoryId = getCategoryIdFromCategoryName(product.categoryName, allCategories);
+        productCategoryId = getCategoryIdFromCategoryName(
+          product.categoryName,
+          allCategories
+        );
       }
       
       const targetCategoryId = Number(categoryId);
       const currentCategoryId = Number(productCategoryId);
-      
-      const isMatch = !isNaN(currentCategoryId) && currentCategoryId === targetCategoryId;
-      
+
+      const isMatch =
+        !isNaN(currentCategoryId) && currentCategoryId === targetCategoryId;
+
       return isMatch;
     });
-    
+
     setFilteredProducts(filtered);
-    
   }, [categoryId, allProducts, allCategories]);
 
   useScrollOnMount(0);
@@ -117,7 +131,7 @@ const ProductsCategoryPage = () => {
   return (
     <>
       <Helmet>
-        <title>{categoryName || 'Products'}</title>
+        <title>{categoryName || "Products"}</title>
         <meta
           name="description"
           content={`Discover a wide range of products categorized for easy browsing on ${WEBSITE_NAME}. Explore our extensive selection by category or type to find exactly what you're looking for.`}
