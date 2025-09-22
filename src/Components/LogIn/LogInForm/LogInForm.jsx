@@ -87,6 +87,8 @@ const LogInForm = () => {
         emailOrPhone: data.user.email,
         token: data.token,
         address: data.user.address || "",
+        gender: data.user.gender || "",
+        dateOfBirth: data.user.dateOfBirth ? new Date(data.user.dateOfBirth).toISOString().split('T')[0] : "",
         isSignIn: true,
       };
       dispatch(setLoginData(loginState));

@@ -1,17 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import s from "./ChatPage.module.scss";
 
 const ChatPage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const messagesEndRef = useRef(null);
 
   // Lấy thông tin từ navigation state
   const { productData, sellerId, sellerName } = location.state || {};
-
-  // Theme state
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -19,32 +14,13 @@ const ChatPage = () => {
   const [contacts, setContacts] = useState([]);
   const [currentContact, setCurrentContact] = useState(null);
 
-  // API Base URL
-  const API_BASE_URL = "";
-
-  // Detect system theme preference
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    setIsDarkMode(mediaQuery.matches);
-
-    const handleChange = (e) => {
-      setIsDarkMode(e.matches);
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
+  const API_BASE_URL = "https://localhost:7235";
 
   useEffect(() => {
-    // Load messages khi component mount
     loadMessages();
     loadContacts();
   }, []);
 
-  useEffect(() => {
-    // Scroll to bottom when new message
-    scrollToBottom();
-  }, [messages]);
 
   const loadMessages = async () => {
     if (!sellerId || !productData?.id) return;
@@ -92,7 +68,6 @@ const ChatPage = () => {
 
       if (response.ok) {
         const contactNames = await response.json();
-        // Convert contact names to objects (since API only returns names)
         const contactObjects = contactNames.map((name, index) => ({
           id: index + 1,
           name: name,
@@ -129,8 +104,6 @@ const ChatPage = () => {
         content: newMessage.trim(),
       };
 
-      console.log("Sending message:", messageData);
-
       const response = await fetch(`${API_BASE_URL}/api/Messenger`, {
         method: "POST",
         headers: {
@@ -141,7 +114,6 @@ const ChatPage = () => {
       });
 
       if (response.ok) {
-        // Sau khi gửi thành công, reload messages để cập nhật UI
         setNewMessage("");
         await loadMessages();
       } else {
@@ -160,9 +132,6 @@ const ChatPage = () => {
     console.log(`Deleting message with ID: ${messageId}`);
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
 
   const formatTime = (date) => {
     return new Date(date).toLocaleTimeString("vi-VN", {
@@ -173,37 +142,22 @@ const ChatPage = () => {
 
   const handleContactClick = (contact) => {
     setCurrentContact(contact);
-    // TODO: Load messages for this contact
   };
 
   return (
-    <div className={`${s.chatPage} ${isDarkMode ? s.darkMode : s.lightMode}`}>
-      {/* Left Sidebar - Contacts */}
+    <div className={s.chatPage}>
+      {/* Sidebar */}
       <div className={s.sidebar}>
         <div className={s.sidebarHeader}>
           <h2>Messenger</h2>
-          <button
-            className={s.themeToggle}
-            onClick={() => setIsDarkMode(!isDarkMode)}
-            title={
-              isDarkMode ? "Chuyển sang chế độ sáng" : "Chuyển sang chế độ tối"
-            }
-          >
-            {isDarkMode ? "☀️" : "🌙"}
-          </button>
         </div>
 
         <div className={s.searchBox}>
           <input
             type="text"
-            placeholder="Nhập tên để tìm kiếm"
+            placeholder="Tìm kiếm trong Messenger"
             className={s.searchInput}
           />
-        </div>
-
-        <div className={s.filterBox}>
-          <button className={s.filterButton}>Tất cả</button>
-          <button className={s.settingsButton}>⚙️</button>
         </div>
 
         <div className={s.contactsList}>
@@ -216,7 +170,8 @@ const ChatPage = () => {
               onClick={() => handleContactClick(contact)}
             >
               <div className={s.contactAvatar}>
-                <img src="/api/placeholder/40/40" alt={contact.name} />
+                {/* Placeholder for avatar, can be an image or initial */}
+                {contact.name ? contact.name.charAt(0).toUpperCase() : ""}
               </div>
               <div className={s.contactInfo}>
                 <h4>{contact.name}</h4>
@@ -225,30 +180,24 @@ const ChatPage = () => {
             </div>
           ))}
         </div>
-
-        <div className={s.sidebarFooter}>
-          <button className={s.hideButton}>🗣️ Ẩn hội thoại</button>
-        </div>
       </div>
 
-      {/* Main Chat Area */}
+      {/* Chat Area */}
       <div className={s.chatArea}>
         {currentContact ? (
           <>
             {/* Chat Header */}
             <div className={s.chatHeader}>
               <div className={s.chatUserInfo}>
-                <img
-                  src="/api/placeholder/40/40"
-                  alt={currentContact.name}
-                  className={s.chatAvatar}
-                />
+                <div className={s.chatAvatar}>
+                  {/* Placeholder for chat avatar, can be an image or initial */}
+                  {currentContact.name ? currentContact.name.charAt(0).toUpperCase() : ""}
+                </div>
                 <div>
                   <h3>{currentContact.name}</h3>
                   <p>{currentContact.lastActive}</p>
                 </div>
               </div>
-
               {productData && (
                 <div className={s.productInfo}>
                   <img
@@ -261,11 +210,10 @@ const ChatPage = () => {
                   </div>
                 </div>
               )}
-
               <button className={s.moreButton}>⋮</button>
             </div>
 
-            {/* Messages Area */}
+            {/* Messages */}
             <div className={s.messagesContainer}>
               {isLoading ? (
                 <div className={s.loadingMessage}>Đang tải tin nhắn...</div>
@@ -280,53 +228,33 @@ const ChatPage = () => {
                     >
                       <div className={s.messageContent}>
                         <p>{message.content}</p>
-                        <span className={s.messageTime}>
-                          {formatTime(message.sentAt)}
-                        </span>
                       </div>
+                      <span className={s.messageTime}>
+                        {formatTime(message.sentAt)}
+                      </span>
                       {message.isMine && (
                         <button
                           className={s.deleteButton}
                           onClick={() => deleteMessage(message.id)}
+                          title="Xóa tin nhắn"
                         >
                           ×
                         </button>
                       )}
                     </div>
                   ))}
-                  <div ref={messagesEndRef} />
                 </>
               )}
             </div>
 
-            {/* Quick Actions */}
-            <div className={s.quickActions}>
-              <button className={s.quickActionButton}>
-                Điện thoại này còn không?
-              </button>
-              <button className={s.quickActionButton}>
-                Bạn có ship hàng không?
-              </button>
-              <button className={s.quickActionButton}>
-                Sản phẩm còn bảo hành không?
-              </button>
-            </div>
-
             {/* Message Input */}
             <div className={s.messageInput}>
-              <div className={s.inputActions}>
-                <button className={s.actionButton}>🖼️</button>
-                <button className={s.actionButton}>🎥</button>
-                <button className={s.actionButton}>📍</button>
-                <button className={s.actionButton}>💬</button>
-              </div>
-
               <form onSubmit={sendMessage} className={s.inputForm}>
                 <input
                   type="text"
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
-                  placeholder="Nhập tin nhắn"
+                  placeholder="Aa"
                   className={s.textInput}
                   disabled={isLoading}
                 />
@@ -335,7 +263,7 @@ const ChatPage = () => {
                   className={s.sendButton}
                   disabled={isLoading || !newMessage.trim()}
                 >
-                  Gửi
+                  ➤
                 </button>
               </form>
             </div>

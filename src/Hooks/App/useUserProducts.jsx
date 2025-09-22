@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateLoadingState } from "src/Features/loadingSlice";
+import productService from "src/Services/productService";
 
 const useUserProducts = () => {
   const [userProducts, setUserProducts] = useState([]);
@@ -64,16 +65,9 @@ const useUserProducts = () => {
     });
   };
 
-  // Function to fetch user's products
+  // Function to fetch user's products using ProductService
   const fetchUserProducts = async () => {
-    // Get token from both sources for reliability
-    const reduxToken = loginInfo.token;
-    const localStorageToken = localStorage.getItem("token");
-
-    // Use localStorage token as fallback if Redux token is missing
-    const token = reduxToken || localStorageToken;
-
-    if (!token || !loginInfo.isSignIn) {
+    if (!loginInfo.isSignIn || !loginInfo.token) {
       setError("Bạn cần đăng nhập để xem sản phẩm của mình");
       return;
     }
@@ -82,85 +76,20 @@ const useUserProducts = () => {
     setError(null);
 
     try {
-      // First, try to fetch user-specific products if endpoint exists
-      let response;
-      let url = "/api/Product/user"; // Try user-specific endpoint first
+      console.log("Fetching user products with loginInfo:", loginInfo);
 
-      response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      // Use ProductService to get user products
+      const rawProducts = await productService.getUserProducts(loginInfo);
+      console.log("Raw user products:", rawProducts);
 
-      // If user-specific endpoint returns 400/404, fall back to all products
-      if (
-        !response.ok &&
-        (response.status === 400 || response.status === 404)
-      ) {
-        console.log(
-          "User-specific endpoint not available, fetching all products"
-        );
-        url = "/api/Product";
-
-        response = await fetch(url, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-      }
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          throw new Error(
-            "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại."
-          );
-        } else if (response.status === 403) {
-          throw new Error("Bạn không có quyền truy cập thông tin này.");
-        } else if (response.status === 400) {
-          throw new Error(
-            "Yêu cầu không hợp lệ. Vui lòng kiểm tra thông tin đăng nhập."
-          );
-        } else {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-      }
-
-      const data = await response.json();
-
-      // Map API data to component format
-      let mappedProducts = mapApiDataToComponentFormat(
-        Array.isArray(data) ? data : []
+      // Format products for display
+      const formattedProducts = rawProducts.map((product) =>
+        productService.formatProductForDisplay(product)
       );
+      console.log("Formatted user products:", formattedProducts);
 
-      // If we fetched all products, filter by current user
-      if (url.includes("/Product") && !url.includes("/user")) {
-        // Filter products by user email or user ID
-        mappedProducts = mappedProducts.filter((product) => {
-          // Try to match by email first (most reliable)
-          if (product.userEmail && loginInfo.emailOrPhone) {
-            return (
-              product.userEmail.toLowerCase() ===
-              loginInfo.emailOrPhone.toLowerCase()
-            );
-          }
-
-          // Try to match by user name
-          if (product.userName && loginInfo.username) {
-            return (
-              product.userName.toLowerCase() ===
-              loginInfo.username.toLowerCase()
-            );
-          }
-
-          // If no user info in product, we can't determine ownership
-          // In a real app, you'd want to ensure products have user association
-          return false;
-        });
-      }
+      // Map to component format
+      const mappedProducts = mapApiDataToComponentFormat(formattedProducts);
 
       // Sort by newest first
       mappedProducts.sort((a, b) => {

@@ -7,7 +7,7 @@ import useGetSearchParam from "src/Hooks/Helper/useGetSearchParam";
 import { useEffect, useState } from "react";
 import useOnlineStatus from "src/Hooks/Helper/useOnlineStatus";
 import CategoriesSection from "../Home/CategoriesSection/CategoriesSection";
-import PagesHistory from "../Shared/MiniComponents/PagesHistory/PagesHistory";
+import BreadcrumbWrapper from "../Shared/MiniComponents/PagesHistory/BreadcrumbWrapper";
 import SkeletonCards from "../Shared/SkeletonLoaders/ProductCard/SkeletonCards";
 import ProductsCategory from "./ProductsCategory";
 import s from "./ProductsCategoryPage.module.scss";
@@ -16,7 +16,7 @@ const ProductsCategoryPage = () => {
   const { t } = useTranslation();
   const categoryId = useGetSearchParam("id");
   const categoryName = useGetSearchParam("name");
-  const categoryTypeTrans = t(`categoriesData.${categoryName}`);
+  const categoryTypeTrans = t(`${categoryName}`);
   const isWebsiteOnline = useOnlineStatus();
 
   const [allProducts, setAllProducts] = useState([]);
@@ -28,10 +28,9 @@ const ProductsCategoryPage = () => {
   // Helper function to map categoryName to categoryId
   const getCategoryIdFromCategoryName = (categoryName, categories) => {
     if (!categoryName || !categories.length) return null;
-
-    // Find matching category by name (case insensitive)
-    const matchingCategory = categories.find(
-      (cat) => cat.name && cat.name.toLowerCase() === categoryName.toLowerCase()
+    
+    const matchingCategory = categories.find(cat =>
+      cat.name && cat.name.toLowerCase() === categoryName.toLowerCase()
     );
 
     return matchingCategory ? matchingCategory.id : null;
@@ -44,12 +43,11 @@ const ProductsCategoryPage = () => {
       setLoadingError(null);
 
       try {
-        // Fetch categories and products in parallel
-        const [categoriesResponse, productsResponse] = await Promise.allSettled(
-          [fetch("/api/Category"), fetch("/api/Product")]
-        );
+        const [categoriesResponse, productsResponse] = await Promise.allSettled([
+          fetch("https://localhost:7235/api/Category"),
+          fetch("https://localhost:7235/api/Product")
+        ]);
 
-        // Handle categories response
         let categoriesData = [];
         if (
           categoriesResponse.status === "fulfilled" &&
@@ -64,7 +62,6 @@ const ProductsCategoryPage = () => {
           );
         }
 
-        // Handle products response
         let productsData = [];
         if (
           productsResponse.status === "fulfilled" &&
@@ -90,7 +87,7 @@ const ProductsCategoryPage = () => {
     };
 
     fetchAllData();
-  }, []); // Empty dependency array - only run once on mount
+  }, []);
 
   // Filter products when categoryId or allProducts change
   useEffect(() => {
@@ -105,22 +102,18 @@ const ProductsCategoryPage = () => {
     }
 
     const filtered = allProducts.filter((product) => {
-      // First try to get categoryId directly
-      let productCategoryId =
-        product.categoryId ||
-        product.category_id ||
-        product.CategoryId ||
-        product.category?.id;
-
-      // If no direct categoryId, map from categoryName using categories data
+      let productCategoryId = product.categoryId ||
+                             product.category_id ||
+                             product.CategoryId ||
+                             product.category?.id;
+      
       if (!productCategoryId && product.categoryName && allCategories.length) {
         productCategoryId = getCategoryIdFromCategoryName(
           product.categoryName,
           allCategories
         );
       }
-
-      // Convert both to numbers for comparison
+      
       const targetCategoryId = Number(categoryId);
       const currentCategoryId = Number(productCategoryId);
 
@@ -146,59 +139,103 @@ const ProductsCategoryPage = () => {
       </Helmet>
       <div className="container">
         <main className={s.categoryPage}>
-          <PagesHistory
-            history={["/", categoryTypeTrans || categoryName || "Products"]}
-          />
+          <div className={s.headerSection}>
+            <BreadcrumbWrapper 
+              history={["/", categoryTypeTrans || categoryName || 'Products']} 
+              historyPaths={[
+                { path: "/", label: t("nav.home") || "Home" },
+                { path: `/category/${categoryName}`, label: categoryTypeTrans || categoryName || 'Products' }
+              ]}
+              pageType="productsCategory"
+              variant="clean"
+            />
+            <div className={s.categoryHeader}>
+
+              {!isLoading && filteredProducts.length > 0 && (
+                <div className={s.resultsInfo}>
+                  <span className={s.productCount}>{filteredProducts.length} sản phẩm</span>
+                </div>
+              )}
+            </div>
+          </div>
+
           <section className={s.categoryContent} id="category-page">
-            {/* Show error message if loading failed */}
-            {loadingError && (
-              <div className={s.errorMessage}>
-                <p>❌ Error loading products: {loadingError}</p>
-                <button onClick={() => window.location.reload()}>
-                  🔄 Retry
-                </button>
+            {/* Loading State */}
+            {(isLoading || !isWebsiteOnline) && (
+              <div className={s.loadingContainer}>
+                <div className={s.loadingHeader}>
+                  <div className={s.loadingTitle}></div>
+                  <div className={s.loadingSubtitle}></div>
+                </div>
+                <div className={s.skeletonGrid}>
+                  <SkeletonCards numberOfCards={8} />
+                </div>
               </div>
             )}
 
-            {/* Show products when loaded and online */}
+            {/* Error State */}
+            {loadingError && (
+              <div className={s.errorContainer}>
+                <div className={s.errorIcon}>⚠️</div>
+                <h3 className={s.errorTitle}>Oops! Có lỗi xảy ra</h3>
+                <p className={s.errorMessage}>
+                  Không thể tải danh sách sản phẩm. Vui lòng thử lại sau.
+                </p>
+                <button 
+                  onClick={() => window.location.reload()}
+                  className={s.retryButton}
+                >
+                  <span>🔄</span>
+                  Thử lại
+                </button>
+              </div>
+            )}
+            
+            {/* Products Display */}
             {!isLoading && isWebsiteOnline && !loadingError && (
               <>
                 {filteredProducts.length > 0 ? (
-                  <ProductsCategory
-                    products={filteredProducts}
-                    customization={productCardCustomizations.categoryProducts}
-                  />
+                  <div className={s.productsContainer}>
+                    <ProductsCategory
+                      products={filteredProducts}
+                      customization={productCardCustomizations.categoryProducts}
+                    />
+                  </div>
                 ) : (
-                  <div className={s.noProducts}>
-                    <h3>🔍 No products found</h3>
-                    <p>
-                      {categoryId
-                        ? `No products found in category "${
-                            categoryName || categoryId
-                          }"`
-                        : "No products available"}
+                  <div className={s.emptyState}>
+                    <div className={s.emptyIcon}>🔍</div>
+                    <h3 className={s.emptyTitle}>Không tìm thấy sản phẩm</h3>
+                    <p className={s.emptyDescription}>
+                      {categoryId 
+                        ? `Hiện tại chưa có sản phẩm nào trong danh mục "${categoryName || categoryId}"` 
+                        : "Không có sản phẩm nào khả dụng"
+                      }
                     </p>
-                    {categoryId && (
-                      <button
-                        onClick={() => (window.location.href = "/products")}
+                    <div className={s.emptyActions}>
+                      <button 
+                        onClick={() => window.location.href = '/products'}
                         className={s.viewAllButton}
                       >
-                        View All Products
+                        <span>🛍️</span>
+                        Xem tất cả sản phẩm
                       </button>
-                    )}
+                      <button 
+                        onClick={() => window.history.back()}
+                        className={s.backButton}
+                      >
+                        <span>↩️</span>
+                        Quay lại
+                      </button>
+                    </div>
                   </div>
                 )}
               </>
             )}
-
-            {/* Show loading skeleton */}
-            {(isLoading || !isWebsiteOnline) && (
-              <div className={s.skeletonCards}>
-                <SkeletonCards numberOfCards={4} />
-              </div>
-            )}
           </section>
-          <CategoriesSection />
+          
+          <div className={s.categoriesWrapper}>
+            <CategoriesSection />
+          </div>
         </main>
       </div>
     </>

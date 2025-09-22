@@ -163,7 +163,42 @@
     "resultsNotFound": "No results found.",
     "weDontHaveProducts": "Sorry We don't have any products in this category",
     "backTo": "Back to",
-    "home": "Home page"
+    "home": "Home page",
+    "back": "Back",
+    "viewAllProducts": "View All Products",
+    "more": "more"
+  },
+  "search": {
+    "resultsFor": "Search results for",
+    "productsFound": "products found",
+    "noResultsTitle": "No products found",
+    "noResultsMessage": "We couldn't find any products matching '{{query}}'",
+    "tryDifferentKeywords": "Try searching with different keywords or browse our categories.",
+    "popularSearches": "Popular searches",
+    "filtered": "filtered from"
+  },
+  "filter": {
+    "filterSort": "Filter & Sort",
+    "clear": "Clear",
+    "category": "Category",
+    "allCategories": "All Categories",
+    "priceRange": "Price Range",
+    "allPrices": "All Prices",
+    "customRange": "Custom Range",
+    "minPrice": "Min Price",
+    "maxPrice": "Max Price",
+    "sortBy": "Sort By",
+    "activeFilters": "Active Filters",
+    "price": "Price",
+    "sort": "Sort"
+  },
+  "sort": {
+    "default": "Default",
+    "nameAsc": "Name A-Z",
+    "nameDesc": "Name Z-A",
+    "priceAsc": "Price Low to High",
+    "priceDesc": "Price High to Low",
+    "newest": "Newest First"
   },
   "history": {
     "account": "Account",
@@ -445,7 +480,8 @@
       "addressBook": "Address Book",
       "paymentOptions": "My Payment Options",
       "returns": "My Returns",
-      "my_reports": "My Reports"
+      "my_reports": "My Reports",
+      "changePassword": "Change Password"
     }
   },
   "cartPage": {

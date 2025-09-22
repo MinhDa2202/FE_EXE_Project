@@ -169,8 +169,12 @@ export function getSubTotal(cartProducts, key = "quantity") {
 }
 
 export function isQueryContainedInItem(query, item) {
-  const formattedQuery = query?.trim().toLowerCase();
-  const formattedItem = item?.toLowerCase();
+  if (!query || !item) return false;
+  
+  const formattedQuery = query.trim().toLowerCase();
+  const formattedItem = String(item).toLowerCase();
+
+  if (!formattedQuery || !formattedItem) return false;
 
   return (
     formattedItem.includes(formattedQuery) ||
@@ -180,7 +184,12 @@ export function isQueryContainedInItem(query, item) {
 }
 
 export function searchByObjectKey({ data, key, query }) {
-  return data.filter((item) => isQueryContainedInItem(query, item?.[key]));
+  if (!data || !Array.isArray(data) || !query) return [];
+  
+  return data.filter((item) => {
+    if (!item || typeof item !== 'object') return false;
+    return isQueryContainedInItem(query, item[key]);
+  });
 }
 
 export function getRandomItem(arr) {

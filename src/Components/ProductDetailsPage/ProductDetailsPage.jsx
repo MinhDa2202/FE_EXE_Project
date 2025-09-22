@@ -8,7 +8,7 @@ import { WEBSITE_NAME } from "src/Data/constants";
 import useSingleProduct from "src/Hooks/App/useSingleProduct";
 import useScrollOnMount from "src/Hooks/App/useScrollOnMount";
 import useGetSearchParam from "src/Hooks/Helper/useGetSearchParam";
-import PagesHistory from "../Shared/MiniComponents/PagesHistory/PagesHistory";
+import BreadcrumbWrapper from "../Shared/MiniComponents/PagesHistory/BreadcrumbWrapper";
 import ProductDetails from "./ProductDetails/ProductDetails";
 import RelatedItemsSection from "./RelatedItemsSection/RelatedItemsSection";
 import s from "./ProductDetailsPage.module.scss";
@@ -107,7 +107,11 @@ const ProductDetailsPage = () => {
 
         <div className="container">
           <main className={s.detailsPage}>
-            <PagesHistory history={["/"]} />
+            <BreadcrumbWrapper 
+              history={["/"]} 
+              pageType="productDetails"
+              variant="clean"
+            />
             <div className={s.errorContainer}>
               <div className={s.errorMessage}>
                 <h2>Không tìm thấy sản phẩm</h2>
@@ -152,7 +156,12 @@ const ProductDetailsPage = () => {
 
       <div className="container">
         <main className={s.detailsPage}>
-          <PagesHistory history={history} historyPaths={historyPaths} />
+          <BreadcrumbWrapper 
+            history={history} 
+            historyPaths={historyPaths}
+            pageType="productDetails"
+            variant="clean"
+          />
           <ProductDetails 
             productData={PRODUCT_DATA} 
             onReportProduct={() => setIsReportModalOpen(true)}

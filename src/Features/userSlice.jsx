@@ -10,6 +10,8 @@ const initialState = initialStateLocal
         emailOrPhone: "",
         token: "",
         address: "",
+        gender: "",
+        dateOfBirth: "",
         isSignIn: false,
       },
       signedUpUsers: [],
@@ -28,6 +30,8 @@ const userSlice = createSlice({
         emailOrPhone: "",
         token: "",
         address: "",
+        gender: "",
+        dateOfBirth: "",
         isSignIn: false,
       };
       localStorage.removeItem("token");
