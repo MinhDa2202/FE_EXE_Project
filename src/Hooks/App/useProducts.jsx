@@ -14,11 +14,11 @@ const useProducts = (loadingKey = "loadingProducts") => {
   const fetchSingleProduct = async (identifier, searchBy = "name") => {
     dispatch(updateLoadingState({ key: loadingKey, value: true }));
     try {
-      let url = "/api/Product";
+      let url = "https://schand20250922153400.azurewebsites.net/api/Product";
       let product = null;
 
       if (searchBy === "id") {
-        url = `/api/Product/${identifier}`;
+        url = `https://schand20250922153400.azurewebsites.net/api/Product/${identifier}`;
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -152,7 +152,7 @@ const useProducts = (loadingKey = "loadingProducts") => {
   const fetchProducts = async () => {
     dispatch(updateLoadingState({ key: loadingKey, value: true }));
     try {
-      const response = await fetch("/api/Product");
+      const response = await fetch("https://schand20250922153400.azurewebsites.net/api/Product");
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
