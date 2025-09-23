@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://localhost:7235/api/Wallet';
+const BASE_URL = 'https://schand20250922153400.azurewebsites.net/api/Wallet';
 
 // Create axios instance with default config
 const walletApi = axios.create({

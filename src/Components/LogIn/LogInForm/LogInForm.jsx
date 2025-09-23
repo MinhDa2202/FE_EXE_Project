@@ -40,7 +40,7 @@ const LogInForm = () => {
     };
 
     try {
-      const response = await fetch("/api/Auth/login", {
+      const response = await fetch("https://schand20250922153400.azurewebsites.net/api/Auth/login", {
         method: "POST",
         headers: {
           Accept: "*/*",
@@ -126,7 +126,7 @@ const LogInForm = () => {
 
     try {
       setOtpLoading(true);
-      const response = await fetch("/api/Auth/verify-email", {
+      const response = await fetch("https://schand20250922153400.azurewebsites.net/api/Auth/verify-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -161,7 +161,7 @@ const LogInForm = () => {
 
   async function loginWithVerifiedEmail(payload) {
     try {
-      const response = await fetch("/api/Auth/login", {
+      const response = await fetch("https://schand20250922153400.azurewebsites.net/api/Auth/login", {
         method: "POST",
         headers: {
           Accept: "*/*",

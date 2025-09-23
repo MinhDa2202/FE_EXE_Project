@@ -90,7 +90,7 @@ const productsSlice = createSlice({
 export const fetchProducts = createAsyncThunk(
   "productsSlice/fetchProducts",
   async () => {
-    const response = await fetch("https://localhost:7235/api/Product");
+    const response = await fetch("https://schand20250922153400.azurewebsites.net/api/Product");
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

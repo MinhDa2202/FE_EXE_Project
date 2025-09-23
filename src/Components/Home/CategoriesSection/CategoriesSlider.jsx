@@ -27,7 +27,7 @@ const CategoriesSlider = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("https://localhost:7235/api/Category");
+        const response = await fetch("https://schand20250922153400.azurewebsites.net/api/Category");
         const data = await response.json();
         const combinedData = data.map((category) => {
           const iconName = categoryToIconMap[category.name] || "questionMark";
