@@ -458,9 +458,12 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
                   onChange={handleInputChange}
                 >
                   <option value="">Chọn danh mục</option>
-                  <option value="1">💻 Laptop</option>
-                  <option value="2">⌚ Smartwatch</option>
+                  <option value="7">💻 Laptop</option>
+                  <option value="8">⌚ Smartwatch</option>
                   <option value="3">📱 Phone</option>
+                  <option value="4">📷 Camera</option>
+                  <option value="6">🎧 Headphones</option>
+                  <option value="5">🎮 Gaming</option>
                 </select>
               </div>
             </div>
