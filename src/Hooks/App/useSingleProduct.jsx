@@ -93,12 +93,12 @@ const useSingleProduct = (
 
     dispatch(updateLoadingState({ key: loadingKey, value: true }));
     try {
-      let url = "/api/Product";
+      let url = "https://schand20250922153400.azurewebsites.net/api/Product";
       let foundProduct = null;
 
       if (actualSearchBy === "id") {
         // Fetch by ID
-        url = `/api/Product/${identifier}`;
+        url = `https://schand20250922153400.azurewebsites.net/api/Product/${identifier}`;
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
