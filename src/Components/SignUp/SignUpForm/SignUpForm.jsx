@@ -125,7 +125,7 @@ const SignUpForm = () => {
     try {
       setOtpLoading(true);
 
-      const response = await fetch("/api/Auth/register", {
+      const response = await fetch("https://schand20250922153400.azurewebsites.net/api/Auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(signupPayload),
@@ -197,7 +197,7 @@ const SignUpForm = () => {
 
     try {
       setOtpLoading(true);
-      const otpResponse = await fetch("/api/Auth/verify-email", {
+      const otpResponse = await fetch("https://schand20250922153400.azurewebsites.net/api/Auth/verify-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: signupData.email, otp: otp.trim() }),
@@ -233,7 +233,7 @@ const SignUpForm = () => {
     try {
       setOtpLoading(true);
       setOtp("");
-      const response = await fetch("/api/Auth/resend-otp", {
+      const response = await fetch("https://schand20250922153400.azurewebsites.net/api/Auth/resend-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: signupData.email }),

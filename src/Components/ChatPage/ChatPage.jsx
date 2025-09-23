@@ -14,7 +14,7 @@ const ChatPage = () => {
   const [contacts, setContacts] = useState([]);
   const [currentContact, setCurrentContact] = useState(null);
 
-  const API_BASE_URL = "https://localhost:7235";
+  const API_BASE_URL = "https://schand20250922153400.azurewebsites.net";
 
   useEffect(() => {
     loadMessages();

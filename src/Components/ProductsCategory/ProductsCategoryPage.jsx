@@ -44,8 +44,8 @@ const ProductsCategoryPage = () => {
 
       try {
         const [categoriesResponse, productsResponse] = await Promise.allSettled([
-          fetch("https://localhost:7235/api/Category"),
-          fetch("https://localhost:7235/api/Product")
+          fetch("https://schand20250922153400.azurewebsites.net/api/Category"),
+          fetch("https://schand20250922153400.azurewebsites.net/api/Product")
         ]);
 
         let categoriesData = [];
