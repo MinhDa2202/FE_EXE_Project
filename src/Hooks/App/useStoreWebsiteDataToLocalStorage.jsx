@@ -8,7 +8,13 @@ const useStoreWebsiteDataToLocalStorage = () => {
   const localStorageData = useSelector((state) => state.localStorage);
 
   useEffect(() => {
-    setItemToLocalStorage("productsSliceData", productsData);
+    // Create a copy of productsData without the 'products' array to avoid localStorage conflicts
+    const productsDataForStorage = {
+      ...productsData,
+      products: [], // Don't store products array in localStorage to prevent conflicts
+    };
+
+    setItemToLocalStorage("productsSliceData", productsDataForStorage);
     setItemToLocalStorage("userSliceData", userData);
     setItemToLocalStorage("storageSliceData", localStorageData);
   }, [userData, productsData, localStorageData]);

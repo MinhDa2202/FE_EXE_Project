@@ -113,6 +113,8 @@ const useUserProducts = () => {
 
   // Refetch function
   const refetch = () => {
+    // Clear cache before refetching to ensure fresh data
+    productService.clearUserProductsCache();
     fetchUserProducts();
   };
 

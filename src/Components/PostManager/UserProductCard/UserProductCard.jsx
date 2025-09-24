@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import s from "./UserProductCard.module.scss";
 
-const UserProductCard = ({ product, approvalStatus }) => {
+const UserProductCard = ({ product, approvalStatus, compact = false }) => {
   // Format price
   const formatPrice = (price) => {
     if (!price) return "0 ₫";
@@ -19,9 +19,15 @@ const UserProductCard = ({ product, approvalStatus }) => {
 
   // Get product image
   const getProductImage = () => {
+    // Check for imageUrls array (from API)
+    if (product.imageUrls && product.imageUrls.length > 0) {
+      return product.imageUrls[0];
+    }
+    // Check for images array (legacy format)
     if (product.images && product.images.length > 0) {
       return product.images[0].imageUrl || product.images[0];
     }
+    // Check for single imageUrl
     if (product.imageUrl) {
       return product.imageUrl;
     }
@@ -30,7 +36,7 @@ const UserProductCard = ({ product, approvalStatus }) => {
   };
 
   return (
-    <div className={s.userProductCard}>
+    <div className={`${s.userProductCard} ${compact ? s.compact : ""}`}>
       {/* Product Image */}
       <div className={s.imageContainer}>
         {getProductImage() ? (
@@ -265,22 +271,32 @@ const UserProductCard = ({ product, approvalStatus }) => {
           </div>
         </div>
 
-        <div className={s.productDetails}>
-          <p className={s.condition}>
-            <strong>Tình trạng:</strong>{" "}
-            {product.Condition || product.condition || "N/A"}
-          </p>
-          <p className={s.location}>
-            <strong>Địa điểm:</strong>{" "}
-            {product.Locations || product.location || "N/A"}
-          </p>
-          <p className={s.date}>
-            <strong>Đăng ngày:</strong>{" "}
-            {formatDate(product.AddedDate || product.createdAt)}
-          </p>
-        </div>
+        {!compact && (
+          <div className={s.productDetails}>
+            <p className={s.condition}>
+              <strong>Tình trạng:</strong>{" "}
+              {product.Condition || product.condition || "N/A"}
+            </p>
+            <p className={s.location}>
+              <strong>Địa điểm:</strong>{" "}
+              {product.Locations || product.location || "N/A"}
+            </p>
+            <p className={s.date}>
+              <strong>Đăng ngày:</strong>{" "}
+              {formatDate(product.AddedDate || product.createdAt)}
+            </p>
+          </div>
+        )}
 
-        {product.Descriptions && (
+        {compact && (
+          <div className={s.compactDetails}>
+            <p className={s.date}>
+              {formatDate(product.AddedDate || product.createdAt)}
+            </p>
+          </div>
+        )}
+
+        {!compact && product.Descriptions && (
           <p className={s.description}>
             {product.Descriptions.length > 100
               ? `${product.Descriptions.substring(0, 100)}...`

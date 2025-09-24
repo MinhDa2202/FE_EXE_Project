@@ -1,7 +1,15 @@
 const BASE_URL = "/api/Product";
 
+// Cache for user products to avoid repeated API calls
+let userProductsCache = {
+  userId: null,
+  products: [],
+  timestamp: null,
+  cacheTimeout: 5 * 60 * 1000, // 5 minutes cache
+};
+
 const productService = {
-  // Get all products for the current user
+  // Get all products for the current user using Post API only
   getUserProducts: async (userInfo) => {
     try {
       console.log(
@@ -18,260 +26,258 @@ const productService = {
         return [];
       }
 
-      // Collect all user products from multiple sources
-      const allUserProducts = [];
+      // Check cache first
+      const now = Date.now();
+      if (
+        userProductsCache.userId === userId &&
+        userProductsCache.timestamp &&
+        now - userProductsCache.timestamp < userProductsCache.cacheTimeout
+      ) {
+        console.log(
+          "ProductService - Returning cached products for user:",
+          userId
+        );
+        return userProductsCache.products.map((product) =>
+          productService.formatProductForDisplay(product)
+        );
+      }
 
-      // Get all products from Product API and check each one dynamically
       console.log(
-        "ProductService - Getting all products to find user's products..."
+        "ProductService - Using optimized Post API to get user's products..."
       );
-      try {
-        // Get all products from Product API first
-        const allProductsResponse = await fetch("/api/Product", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-            "Content-Type": "application/json",
-          },
-        });
 
-        if (allProductsResponse.ok) {
-          const allProducts = await allProductsResponse.json();
-          console.log(
-            "ProductService - All products from Product API:",
-            allProducts
+      // Optimized approach: Use batch requests and smart scanning
+      const foundProducts = [];
+      const processedProductIds = new Set(); // Track processed product IDs to avoid duplicates
+      const maxProductId = 50; // Scan up to product ID 50
+      const batchSize = 5; // Process 5 products at a time
+      let consecutiveNotFound = 0;
+      const maxConsecutiveNotFound = 20; // Stop if 20 consecutive products not found (increased to find products 13, 16)
+
+      // Process products in batches for better performance
+      for (let startId = 1; startId <= maxProductId; startId += batchSize) {
+        const endId = Math.min(startId + batchSize - 1, maxProductId);
+        console.log(`ProductService - Processing batch ${startId}-${endId}`);
+
+        // Create batch of promises for both approved and pending
+        const batchPromises = [];
+
+        for (let productId = startId; productId <= endId; productId++) {
+          // Add approved product promise
+          batchPromises.push(
+            fetch(`/api/Post/${productId}/is-approved`, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+                "Content-Type": "application/json",
+              },
+            })
+              .then(async (response) => {
+                if (response.ok) {
+                  const product = await response.json();
+                  return { type: "approved", productId, product };
+                }
+                return null;
+              })
+              .catch(() => null)
           );
 
-          // Check each product to see if it belongs to current user
-          for (const product of allProducts) {
-            try {
-              const productId = product.id || product.Id;
-              console.log(`ProductService - Checking product ${productId}...`);
-
-              const detailResponse = await fetch(`/api/Product/${productId}`, {
-                method: "GET",
-                headers: {
-                  Authorization: `Bearer ${userInfo.token}`,
-                  "Content-Type": "application/json",
-                },
-              });
-
-              if (detailResponse.ok) {
-                const productDetail = await detailResponse.json();
-
-                // Check if this product belongs to current user
-                if (productDetail.sellerName && userInfo.username) {
-                  const sellerNameMatch =
-                    productDetail.sellerName.toLowerCase() ===
-                    userInfo.username.toLowerCase();
-
-                  if (sellerNameMatch) {
-                    console.log(
-                      `ProductService - Product ${productId} belongs to user, checking Post API...`
-                    );
-
-                    // Try to get Post API data for accurate approval status
-                    try {
-                      const postResponse = await fetch(
-                        `/api/Post/${productId}/is-pending`,
-                        {
-                          method: "GET",
-                          headers: {
-                            Authorization: `Bearer ${userInfo.token}`,
-                            "Content-Type": "application/json",
-                          },
-                        }
-                      );
-
-                      if (postResponse.ok) {
-                        const postData = await postResponse.json();
-                        console.log(
-                          `ProductService - Post data for product ${productId}:`,
-                          postData
-                        );
-
-                        // Use Post API data (has accurate isApproved)
-                        allUserProducts.push(postData);
-                      } else {
-                        console.log(
-                          `ProductService - Post API failed for product ${productId}, using Product data`
-                        );
-                        // Fallback to Product API data
-                        allUserProducts.push({
-                          ...productDetail,
-                          sellerId: userId,
-                          isApproved: productDetail.isActive, // Use isActive as fallback
-                        });
-                      }
-                    } catch (postError) {
-                      console.log(
-                        `ProductService - Post API error for product ${productId}:`,
-                        postError
-                      );
-                      // Fallback to Product API data
-                      allUserProducts.push({
-                        ...productDetail,
-                        sellerId: userId,
-                        isApproved: productDetail.isActive, // Use isActive as fallback
-                      });
-                    }
-                  }
+          // Add pending product promise
+          batchPromises.push(
+            fetch(`/api/Post/${productId}/is-pending`, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+                "Content-Type": "application/json",
+              },
+            })
+              .then(async (response) => {
+                if (response.ok) {
+                  const product = await response.json();
+                  return { type: "pending", productId, product };
                 }
-              }
-            } catch (error) {
-              console.error(
-                `ProductService - Error processing product ${product.id}:`,
-                error
-              );
-            }
-          }
+                return null;
+              })
+              .catch(() => null)
+          );
         }
-      } catch (error) {
-        console.error("ProductService - Error getting all products:", error);
-      }
 
-      // Use Post API to get both approved and pending products
-      console.log("ProductService - Using Post API to get user's products...");
+        // Wait for all batch promises to complete
+        const batchResults = await Promise.all(batchPromises);
 
-      try {
-        // Get all products from Product API first (these are approved products)
-        const approvedProductIds = allUserProducts.map((p) => p.id);
-        console.log(
-          "ProductService - Already found approved products:",
-          approvedProductIds
-        );
+        // Process results and fetch full product details
+        let foundInBatch = false;
+        for (const result of batchResults) {
+          if (result && result.product) {
+            const { type, productId, product } = result;
 
-        // Now scan through product IDs to find both approved and pending products using Post API
-        const maxProductId = 50; // Scan up to product ID 50
-        const foundProducts = [];
+            // Skip if this product ID has already been processed
+            if (processedProductIds.has(productId)) {
+              console.log(
+                `ProductService - Product ${productId} already processed, skipping duplicate`
+              );
+              continue;
+            }
 
-        for (let productId = 1; productId <= maxProductId; productId++) {
-          try {
-            // Try to get approved product first
-            const approvedResponse = await fetch(
-              `/api/Post/${productId}/is-approved`,
-              {
-                method: "GET",
-                headers: {
-                  Authorization: `Bearer ${userInfo.token}`,
-                  "Content-Type": "application/json",
-                },
-              }
+            console.log(
+              `ProductService - Found ${type} product ${productId}:`,
+              product
+            );
+            console.log(
+              `ProductService - ${type} product ${productId} sellerId: ${product.sellerId}, current userId: ${userId}`
             );
 
-            if (approvedResponse.ok) {
-              const isApproved = await approvedResponse.json();
-              if (isApproved === true) {
-                console.log(
-                  `ProductService - Product ${productId} is approved and belongs to user`
-                );
+            // Only add product if it belongs to the current user
+            if (
+              product.sellerId &&
+              product.sellerId.toString() === userId.toString()
+            ) {
+              console.log(
+                `ProductService - ${type} product ${productId} belongs to user ${userId}, fetching full details`
+              );
 
-                // Get full product data
-                const productResponse = await fetch(
-                  `/api/Product/${productId}`,
-                  {
-                    method: "GET",
-                    headers: {
-                      Authorization: `Bearer ${userInfo.token}`,
-                      "Content-Type": "application/json",
-                    },
-                  }
-                );
+              // Mark this product ID as processed
+              processedProductIds.add(productId);
 
-                if (productResponse.ok) {
-                  const productData = await productResponse.json();
+              // Fetch full product details including images
+              try {
+                const productDetailResponse = await fetch(
+                  `/api/Product/${productId}`
+                );
+                if (productDetailResponse.ok) {
+                  const fullProductData = await productDetailResponse.json();
+                  console.log(
+                    `ProductService - Full product ${productId} data:`,
+                    fullProductData
+                  );
+
+                  // Merge approval status with full product data
+                  const productWithImages = {
+                    ...fullProductData,
+                    approvalStatus: type,
+                    imageUrls:
+                      fullProductData.imageUrls ||
+                      fullProductData.ImageUrls ||
+                      [],
+                  };
+
+                  console.log(
+                    `ProductService - Product ${productId} final imageUrls:`,
+                    productWithImages.imageUrls
+                  );
+
+                  foundProducts.push(productWithImages);
+                } else {
+                  // Fallback to original product data if detail fetch fails
                   foundProducts.push({
-                    ...productData,
-                    sellerId: userId,
-                    isApproved: true,
+                    ...product,
+                    approvalStatus: type,
+                    imageUrls: product.imageUrls || product.ImageUrls || [],
                   });
                 }
+              } catch (error) {
+                console.error(
+                  `ProductService - Error fetching full details for product ${productId}:`,
+                  error
+                );
+                // Fallback to original product data
+                foundProducts.push({
+                  ...product,
+                  approvalStatus: type,
+                  imageUrls: product.imageUrls || product.ImageUrls || [],
+                });
               }
-            }
 
-            // Try to get pending product
-            const pendingResponse = await fetch(
-              `/api/Post/${productId}/is-pending`,
-              {
-                method: "GET",
-                headers: {
-                  Authorization: `Bearer ${userInfo.token}`,
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-
-            if (pendingResponse.ok) {
-              const pendingProduct = await pendingResponse.json();
+              foundInBatch = true;
+              consecutiveNotFound = 0; // Reset counter
+            } else {
               console.log(
-                `ProductService - Product ${productId} is pending and belongs to user:`,
-                pendingProduct
+                `ProductService - ${type} product ${productId} belongs to user ${product.sellerId}, skipping (current user: ${userId})`
               );
-
-              foundProducts.push({
-                ...pendingProduct,
-                sellerId: userId,
-                isApproved: false,
-              });
             }
-          } catch (error) {
-            // Ignore errors for individual products
-            console.log(
-              `ProductService - No product ${productId} for user or error:`,
-              error.message
-            );
           }
         }
 
-        console.log(
-          "ProductService - Found products via Post API:",
-          foundProducts
-        );
+        // Update consecutive not found counter
+        if (!foundInBatch) {
+          consecutiveNotFound += batchSize;
+          console.log(
+            `ProductService - No products found in batch ${startId}-${endId}, consecutive not found: ${consecutiveNotFound}`
+          );
 
-        // Add new products to collection (avoid duplicates)
-        const existingProductIds = allUserProducts.map((p) => p.id);
-        const newProducts = foundProducts.filter(
-          (p) => !existingProductIds.includes(p.id)
-        );
+          // Early termination if too many consecutive products not found
+          if (consecutiveNotFound >= maxConsecutiveNotFound) {
+            console.log(
+              `ProductService - Early termination: ${consecutiveNotFound} consecutive products not found`
+            );
+            break;
+          }
+        }
 
-        console.log(
-          `ProductService - Adding ${newProducts.length} new products from Post API`
-        );
-        allUserProducts.push(...newProducts);
-      } catch (error) {
-        console.log("ProductService - Error using Post API:", error);
+        // Small delay between batches to avoid overwhelming the server
+        if (startId + batchSize <= maxProductId) {
+          await new Promise((resolve) => setTimeout(resolve, 50));
+        }
       }
 
       console.log(
-        "ProductService - Final user products collection:",
-        allUserProducts
-      );
-      console.log(
-        "ProductService - Total user products found:",
-        allUserProducts.length
+        "ProductService - Found products via optimized Post API:",
+        foundProducts
       );
 
-      return allUserProducts;
+      console.log(
+        "ProductService - Total user products found:",
+        foundProducts.length
+      );
+
+      // Update cache
+      userProductsCache = {
+        userId: userId,
+        products: foundProducts,
+        timestamp: Date.now(),
+        cacheTimeout: userProductsCache.cacheTimeout,
+      };
+      console.log("ProductService - Updated cache for user:", userId);
+
+      return foundProducts.map((product) =>
+        productService.formatProductForDisplay(product)
+      );
     } catch (error) {
-      console.error("Error fetching user products:", error);
-      throw error;
+      console.error("ProductService - Error in getUserProducts:", error);
+      return [];
     }
   },
 
-  // Extract userId from JWT token
+  // Clear user products cache
+  clearUserProductsCache: () => {
+    console.log("ProductService - Clearing user products cache");
+    userProductsCache = {
+      userId: null,
+      products: [],
+      timestamp: null,
+      cacheTimeout: 5 * 60 * 1000, // 5 minutes cache
+    };
+  },
+
+  // Extract user ID from JWT token
   extractUserIdFromToken: (token) => {
     try {
-      if (!token) return null;
+      if (!token) {
+        console.log("ProductService - No token provided");
+        return null;
+      }
 
-      // JWT tokens have 3 parts separated by dots
+      // Decode JWT token (simple base64 decode of payload)
       const parts = token.split(".");
-      if (parts.length !== 3) return null;
+      if (parts.length !== 3) {
+        console.log("ProductService - Invalid token format");
+        return null;
+      }
 
-      // Decode the payload (second part)
       const payload = JSON.parse(atob(parts[1]));
       console.log("ProductService - JWT payload:", payload);
 
-      // Extract userId from the payload
+      // Try different possible field names for user ID
       const userId = payload.UserId || payload.userId || payload.sub;
       console.log("ProductService - Extracted userId:", userId);
 
@@ -307,119 +313,46 @@ const productService = {
       boostedUntil: product.boostedUntil,
       imageUrls: product.imageUrls || [],
       sellerName: product.sellerName,
-    };
-  },
-
-  // Determine approval status based on product data
-  determineApprovalStatus: (product) => {
-    console.log("ProductService - determineApprovalStatus for product:", {
-      id: product.id,
-      isActive: product.isActive,
-      isApproved: product.isApproved,
-      createdAt: product.createdAt,
-    });
-
-    // If isApproved is explicitly set, use it
-    if (product.isApproved !== undefined && product.isApproved !== null) {
-      const status = product.isApproved ? "approved" : "pending";
-      console.log(
-        `ProductService - Product isApproved = ${product.isApproved} , status: ${status}`
-      );
-      return status;
-    }
-
-    // Fallback logic based on isActive and creation time
-    if (product.isActive === false) {
-      console.log(
-        "ProductService - Product isActive = false, status: rejected"
-      );
-      return "rejected";
-    }
-
-    // If created recently (within last 24 hours) and no explicit approval status
-    const createdAt = new Date(product.createdAt);
-    const now = new Date();
-    const hoursSinceCreation = (now - createdAt) / (1000 * 60 * 60);
-
-    if (hoursSinceCreation < 24) {
-      console.log(
-        `ProductService - Product created ${hoursSinceCreation.toFixed(
-          1
-        )} hours ago, status: pending`
-      );
-      return "pending";
-    }
-
-    // Default to approved for older products that are active
-    console.log("ProductService - Default status: approved");
-    return "approved";
-  },
-
-  // Format product data for display
-  formatProductForDisplay: (product) => {
-    return {
-      id: product.id || product.Id,
-      title: product.title || product.Title,
-      description: product.descriptions || product.Description,
-      price: product.price || product.Price,
-      condition: product.condition || product.Condition,
-      location: product.locations || product.Location,
-      categoryId: product.categoryId || product.CategoryId,
-      categoryName: product.categoryName,
-      sellerId: product.sellerId,
-      userId: product.sellerId || product.userId || product.UserId,
-      userName: product.sellerName || product.userName || product.UserName,
-      userEmail: product.userEmail || product.UserEmail,
-      createdAt: product.createdAt || product.CreatedAt,
-      updatedAt: product.updatedAt || product.UpdatedAt,
-      isActive: product.isActive,
-      isApproved: product.isApproved,
-      approvedAt: product.approvedAt,
-      rejectedReason: product.rejectedReason,
-      isSold: product.isSold,
-      soldAt: product.soldAt,
-      expireAt: product.expireAt,
-      boostedUntil: product.boostedUntil,
-      imageUrls: product.imageUrls || product.productImages || [],
       // Add approval status based on product properties
       approvalStatus: productService.determineApprovalStatus(product),
     };
   },
 
-  // Determine approval status based on product data
+  // Determine approval status based on product properties
   determineApprovalStatus: (product) => {
-    console.log("ProductService - determineApprovalStatus for product:", {
-      id: product.id,
-      isActive: product.isActive,
-      isApproved: product.isApproved,
-      createdAt: product.createdAt,
-    });
+    try {
+      console.log("ProductService - determineApprovalStatus for product:", {
+        id: product.id,
+        isActive: product.isActive,
+        isApproved: product.isApproved,
+        createdAt: product.createdAt,
+      });
 
-    // If isApproved field exists, use it directly
-    if (typeof product.isApproved === "boolean") {
-      const status = product.isApproved ? "approved" : "pending";
-      console.log(
-        "ProductService - Product isApproved =",
-        product.isApproved,
-        ", status:",
-        status
+      if (product.isApproved === true) {
+        console.log(
+          `ProductService - Product isApproved = true , status: approved`
+        );
+        return "approved";
+      } else if (product.isApproved === false) {
+        console.log(
+          `ProductService - Product isApproved = false , status: pending`
+        );
+        return "pending";
+      } else {
+        // Fallback logic
+        const defaultStatus = product.isActive ? "approved" : "pending";
+        console.log("ProductService - Using fallback status:", defaultStatus);
+        return defaultStatus;
+      }
+    } catch (error) {
+      console.error(
+        "ProductService - Error determining approval status:",
+        error
       );
-      return status;
+      const defaultStatus = "pending";
+      console.log("ProductService - Using default status:", defaultStatus);
+      return defaultStatus;
     }
-
-    // Fallback logic based on isActive and other fields
-    if (product.isActive === true) {
-      console.log("ProductService - Product isActive = true, status: approved");
-      return "approved";
-    } else if (product.isActive === false) {
-      console.log("ProductService - Product isActive = false, status: pending");
-      return "pending";
-    }
-
-    // Default fallback
-    const defaultStatus = "pending";
-    console.log("ProductService - Using default status:", defaultStatus);
-    return defaultStatus;
   },
 };
 
