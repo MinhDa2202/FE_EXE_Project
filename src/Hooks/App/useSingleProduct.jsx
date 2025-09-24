@@ -95,12 +95,14 @@ const useSingleProduct = (
 
     dispatch(updateLoadingState({ key: loadingKey, value: true }));
     try {
-      let url = "/api/Product";
+      let url = "https://schand20250922153400.azurewebsites.net/api/Product";
       let foundProduct = null;
 
       if (actualSearchBy === "id") {
-        // First try to fetch from approved products
-        url = `/api/Product/${identifier}`;
+
+        // Fetch by ID
+        url = `https://schand20250922153400.azurewebsites.net/api/Product/${identifier}`;
+
         const response = await fetch(url);
 
         if (response.ok) {

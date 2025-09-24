@@ -1,4 +1,4 @@
-const BASE_URL = "/api/Product";
+const BASE_URL = "https://schand20250922153400.azurewebsites.net/api/Product";
 
 // Cache for user products to avoid repeated API calls
 let userProductsCache = {
@@ -46,55 +46,97 @@ const productService = {
         "ProductService - Using optimized Post API to get user's products..."
       );
 
-      // Optimized approach: Use batch requests and smart scanning
-      const foundProducts = [];
-      const processedProductIds = new Set(); // Track processed product IDs to avoid duplicates
-      const maxProductId = 50; // Scan up to product ID 50
-      const batchSize = 5; // Process 5 products at a time
-      let consecutiveNotFound = 0;
-      const maxConsecutiveNotFound = 20; // Stop if 20 consecutive products not found (increased to find products 13, 16)
+      try {
+        // Get all products from Product API first
+        const allProductsResponse = await fetch("https://schand20250922153400.azurewebsites.net/api/Product", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+            "Content-Type": "application/json",
+          },
+        });
 
-      // Process products in batches for better performance
-      for (let startId = 1; startId <= maxProductId; startId += batchSize) {
-        const endId = Math.min(startId + batchSize - 1, maxProductId);
-        console.log(`ProductService - Processing batch ${startId}-${endId}`);
-
-        // Create batch of promises for both approved and pending
-        const batchPromises = [];
-
-        for (let productId = startId; productId <= endId; productId++) {
-          // Add approved product promise
-          batchPromises.push(
-            fetch(`/api/Post/${productId}/is-approved`, {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${userInfo.token}`,
-                "Content-Type": "application/json",
-              },
-            })
-              .then(async (response) => {
-                if (response.ok) {
-                  const product = await response.json();
-                  return { type: "approved", productId, product };
-                }
-                return null;
-              })
-              .catch(() => null)
+        if (allProductsResponse.ok) {
+          const allProducts = await allProductsResponse.json();
+          console.log(
+            "ProductService - All products from Product API:",
+            allProducts
           );
 
-          // Add pending product promise
-          batchPromises.push(
-            fetch(`/api/Post/${productId}/is-pending`, {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${userInfo.token}`,
-                "Content-Type": "application/json",
-              },
-            })
-              .then(async (response) => {
-                if (response.ok) {
-                  const product = await response.json();
-                  return { type: "pending", productId, product };
+          // Check each product to see if it belongs to current user
+          for (const product of allProducts) {
+            try {
+              const productId = product.id || product.Id;
+              console.log(`ProductService - Checking product ${productId}...`);
+
+              const detailResponse = await fetch(`https://schand20250922153400.azurewebsites.net/api/Product/${productId}`, {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${userInfo.token}`,
+                  "Content-Type": "application/json",
+                },
+              });
+
+              if (detailResponse.ok) {
+                const productDetail = await detailResponse.json();
+
+                // Check if this product belongs to current user
+                if (productDetail.sellerName && userInfo.username) {
+                  const sellerNameMatch =
+                    productDetail.sellerName.toLowerCase() ===
+                    userInfo.username.toLowerCase();
+
+                  if (sellerNameMatch) {
+                    console.log(
+                      `ProductService - Product ${productId} belongs to user, checking Post API...`
+                    );
+
+                    // Try to get Post API data for accurate approval status
+                    try {
+                      const postResponse = await fetch(
+                        `/api/Post/${productId}/is-pending`,
+                        {
+                          method: "GET",
+                          headers: {
+                            Authorization: `Bearer ${userInfo.token}`,
+                            "Content-Type": "application/json",
+                          },
+                        }
+                      );
+
+                      if (postResponse.ok) {
+                        const postData = await postResponse.json();
+                        console.log(
+                          `ProductService - Post data for product ${productId}:`,
+                          postData
+                        );
+
+                        // Use Post API data (has accurate isApproved)
+                        allUserProducts.push(postData);
+                      } else {
+                        console.log(
+                          `ProductService - Post API failed for product ${productId}, using Product data`
+                        );
+                        // Fallback to Product API data
+                        allUserProducts.push({
+                          ...productDetail,
+                          sellerId: userId,
+                          isApproved: productDetail.isActive, // Use isActive as fallback
+                        });
+                      }
+                    } catch (postError) {
+                      console.log(
+                        `ProductService - Post API error for product ${productId}:`,
+                        postError
+                      );
+                      // Fallback to Product API data
+                      allUserProducts.push({
+                        ...productDetail,
+                        sellerId: userId,
+                        isApproved: productDetail.isActive, // Use isActive as fallback
+                      });
+                    }
+                  }
                 }
                 return null;
               })
@@ -136,8 +178,17 @@ const productService = {
                 `ProductService - ${type} product ${productId} belongs to user ${userId}, fetching full details`
               );
 
-              // Mark this product ID as processed
-              processedProductIds.add(productId);
+                // Get full product data
+                const productResponse = await fetch(
+                  `https://schand20250922153400.azurewebsites.net/api/Product/${productId}`,
+                  {
+                    method: "GET",
+                    headers: {
+                      Authorization: `Bearer ${userInfo.token}`,
+                      "Content-Type": "application/json",
+                    },
+                  }
+                );
 
               // Fetch full product details including images
               try {

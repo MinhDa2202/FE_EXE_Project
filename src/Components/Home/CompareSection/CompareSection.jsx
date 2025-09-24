@@ -15,7 +15,7 @@ const CompareSection = () => {
     try {
       setIsLoading(true);
       const token = localStorage.getItem("token"); // Lấy token từ localStorage
-      const response = await fetch("/api/Product", {
+      const response = await fetch("https://schand20250922153400.azurewebsites.net/api/Product", {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const CompareSection = () => {
       setIsLoading(true);
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `/api/Product/compare/${selectedProducts[0].id}/${selectedProducts[1].id}`,
+        `https://schand20250922153400.azurewebsites.net/api/Product/compare/${selectedProducts[0].id}/${selectedProducts[1].id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -168,7 +168,7 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
 
     try {
       const response = await fetch(
-        `/api/ProductImage/upload-to-cloud/${productId}`,
+        `https://schand20250922153400.azurewebsites.net/api/ProductImage/upload-to-cloud/${productId}`,
         {
           method: "POST",
           headers: {
@@ -255,7 +255,7 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
 
       console.log("Sending payload to API:", JSON.stringify(payload, null, 2));
 
-      const productResponse = await fetch("/api/Product", {
+      const productResponse = await fetch("https://schand20250922153400.azurewebsites.net/api/Product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -458,9 +458,12 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
                   onChange={handleInputChange}
                 >
                   <option value="">Chọn danh mục</option>
-                  <option value="1">💻 Laptop</option>
-                  <option value="2">⌚ Smartwatch</option>
+                  <option value="7">💻 Laptop</option>
+                  <option value="8">⌚ Smartwatch</option>
                   <option value="3">📱 Phone</option>
+                  <option value="4">📷 Camera</option>
+                  <option value="6">🎧 Headphones</option>
+                  <option value="5">🎮 Gaming</option>
                 </select>
               </div>
             </div>
