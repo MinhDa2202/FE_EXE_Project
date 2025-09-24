@@ -1,4 +1,4 @@
-const BASE_URL = "/api/Product";
+const BASE_URL = "https://schand20250922153400.azurewebsites.net/api/Product";
 
 const productService = {
   // Get all products for the current user
@@ -27,7 +27,7 @@ const productService = {
       );
       try {
         // Get all products from Product API first
-        const allProductsResponse = await fetch("/api/Product", {
+        const allProductsResponse = await fetch("https://schand20250922153400.azurewebsites.net/api/Product", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${userInfo.token}`,
@@ -48,7 +48,7 @@ const productService = {
               const productId = product.id || product.Id;
               console.log(`ProductService - Checking product ${productId}...`);
 
-              const detailResponse = await fetch(`/api/Product/${productId}`, {
+              const detailResponse = await fetch(`https://schand20250922153400.azurewebsites.net/api/Product/${productId}`, {
                 method: "GET",
                 headers: {
                   Authorization: `Bearer ${userInfo.token}`,
@@ -168,7 +168,7 @@ const productService = {
 
                 // Get full product data
                 const productResponse = await fetch(
-                  `/api/Product/${productId}`,
+                  `https://schand20250922153400.azurewebsites.net/api/Product/${productId}`,
                   {
                     method: "GET",
                     headers: {

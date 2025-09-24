@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "/api/ProductComment";
+const BASE_URL = "https://schand20250922153400.azurewebsites.net/api/ProductComment";
 
 // Helper function to get auth token
 const getAuthToken = () => {

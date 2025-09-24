@@ -14,7 +14,7 @@ const ProductAnalyzerSection = () => {
     try {
       setIsLoading(true);
       const token = localStorage.getItem("token");
-      const response = await fetch("/api/Product", {
+      const response = await fetch("https://schand20250922153400.azurewebsites.net/api/Product", {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -64,7 +64,7 @@ const ProductAnalyzerSection = () => {
     try {
       setIsLoading(true);
       const token = localStorage.getItem("token");
-      const response = await fetch(`/api/ProductAnalyzer/analyze`, {
+      const response = await fetch(`https://schand20250922153400.azurewebsites.net/api/ProductAnalyzer/analyze`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
