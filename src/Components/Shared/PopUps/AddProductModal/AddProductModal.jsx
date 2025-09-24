@@ -168,7 +168,7 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
 
     try {
       const response = await fetch(
-        `/api/ProductImage/upload-to-cloud/${productId}`,
+        `https://schand20250922153400.azurewebsites.net/api/ProductImage/upload-to-cloud/${productId}`,
         {
           method: "POST",
           headers: {
@@ -255,7 +255,7 @@ const AddProductModal = ({ onClose, onProductAdded }) => {
 
       console.log("Sending payload to API:", JSON.stringify(payload, null, 2));
 
-      const productResponse = await fetch("/api/Product", {
+      const productResponse = await fetch("https://schand20250922153400.azurewebsites.net/api/Product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
