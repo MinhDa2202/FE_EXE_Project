@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { useState, useMemo } from "react";
 import { WEBSITE_NAME } from "src/Data/constants";
 import useScrollOnMount from "src/Hooks/App/useScrollOnMount";
 import useUserProducts from "src/Hooks/App/useUserProducts";
@@ -17,12 +18,74 @@ const PostManager = () => {
   const {
     approvalStatuses,
     loading: statusLoading,
-    error: statusError,
     approvedCount,
     pendingCount,
   } = usePostApprovalStatus(userProducts);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState("newest");
+  const [filterBy, setFilterBy] = useState("all");
+  const PRODUCTS_PER_PAGE = 8;
+
   useScrollOnMount();
+
+  // Filter and sort products
+  const filteredAndSortedProducts = useMemo(() => {
+    let filtered = [...userProducts];
+
+    // Apply filter
+    if (filterBy !== "all") {
+      filtered = filtered.filter((product) => {
+        const status = approvalStatuses[product.Id || product.id];
+        return status === filterBy;
+      });
+    }
+
+    // Apply sort
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case "oldest":
+          return new Date(a.AddedDate || 0) - new Date(b.AddedDate || 0);
+        case "approved":
+          const statusA = approvalStatuses[a.Id || a.id];
+          const statusB = approvalStatuses[b.Id || b.id];
+          if (statusA === "approved" && statusB !== "approved") return -1;
+          if (statusA !== "approved" && statusB === "approved") return 1;
+          return 0;
+        case "pending":
+          const statusA2 = approvalStatuses[a.Id || a.id];
+          const statusB2 = approvalStatuses[b.Id || b.id];
+          if (statusA2 === "pending" && statusB2 !== "pending") return -1;
+          if (statusA2 !== "pending" && statusB2 === "pending") return 1;
+          return 0;
+        case "newest":
+        default:
+          return new Date(b.AddedDate || 0) - new Date(a.AddedDate || 0);
+      }
+    });
+
+    return filtered;
+  }, [userProducts, approvalStatuses, sortBy, filterBy]);
+
+  // Pagination calculations
+  const totalPages = Math.ceil(
+    filteredAndSortedProducts.length / PRODUCTS_PER_PAGE
+  );
+  const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+  const endIndex = startIndex + PRODUCTS_PER_PAGE;
+  const currentProducts = filteredAndSortedProducts.slice(startIndex, endIndex);
+
+  // Reset to page 1 when filters change
+  const handleFilterChange = (newFilter) => {
+    setFilterBy(newFilter);
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (newSort) => {
+    setSortBy(newSort);
+    setCurrentPage(1);
+  };
 
   // Define history paths for navigation
   const historyPaths = [
@@ -224,35 +287,98 @@ const PostManager = () => {
               <>
                 <div className={s.sectionHeader}>
                   <h2 className={s.sectionTitle}>
-                    Bài đăng của bạn ({userProducts.length})
+                    Bài đăng của bạn ({filteredAndSortedProducts.length})
                   </h2>
                   <div className={s.filterControls}>
-                    <select className={s.sortSelect}>
+                    <select
+                      className={s.filterSelect}
+                      value={filterBy}
+                      onChange={(e) => handleFilterChange(e.target.value)}
+                    >
+                      <option value="all">Tất cả</option>
+                      <option value="approved">Đã duyệt</option>
+                      <option value="pending">Chờ duyệt</option>
+                    </select>
+                    <select
+                      className={s.sortSelect}
+                      value={sortBy}
+                      onChange={(e) => handleSortChange(e.target.value)}
+                    >
                       <option value="newest">Mới nhất</option>
                       <option value="oldest">Cũ nhất</option>
                       <option value="approved">Đã duyệt</option>
                       <option value="pending">Chờ duyệt</option>
-                      <option value="rejected">Bị từ chối</option>
                     </select>
                   </div>
                 </div>
 
                 <div className={s.productsGrid}>
-                  {userProducts.length > 0 ? (
-                    userProducts.map((product) => (
+                  {currentProducts.length > 0 ? (
+                    currentProducts.map((product) => (
                       <UserProductCard
                         key={product.Id || product.id}
                         product={product}
                         approvalStatus={
                           approvalStatuses[product.Id || product.id]
                         }
+                        compact={true}
                       />
                     ))
                   ) : (
                     <div className={s.emptyMessage}>
-                      <p>Chưa có bài đăng nào</p>
+                      <p>Không tìm thấy bài đăng nào</p>
                     </div>
                   )}
+                </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className={s.pagination}>
+                    <button
+                      className={`${s.pageBtn} ${
+                        currentPage === 1 ? s.disabled : ""
+                      }`}
+                      onClick={() => setCurrentPage(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      ‹ Trước
+                    </button>
+
+                    <div className={s.pageNumbers}>
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                        (page) => (
+                          <button
+                            key={page}
+                            className={`${s.pageBtn} ${
+                              currentPage === page ? s.active : ""
+                            }`}
+                            onClick={() => setCurrentPage(page)}
+                          >
+                            {page}
+                          </button>
+                        )
+                      )}
+                    </div>
+
+                    <button
+                      className={`${s.pageBtn} ${
+                        currentPage === totalPages ? s.disabled : ""
+                      }`}
+                      onClick={() => setCurrentPage(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                    >
+                      Sau ›
+                    </button>
+                  </div>
+                )}
+
+                {/* Results info */}
+                <div className={s.resultsInfo}>
+                  <p>
+                    Hiển thị {startIndex + 1}-
+                    {Math.min(endIndex, filteredAndSortedProducts.length)}
+                    trong tổng số {filteredAndSortedProducts.length} bài đăng
+                  </p>
                 </div>
               </>
             )}

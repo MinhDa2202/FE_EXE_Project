@@ -58,6 +58,8 @@ const useSingleProduct = (
       condition: apiProduct.condition || "best",
       location: apiProduct.locations || "",
       isActive: apiProduct.isActive || true,
+      isApproved: apiProduct.isApproved || false,
+      approvalStatus: apiProduct.isApproved === true ? "approved" : "pending",
     };
 
     // Tính toán giá sau discount nếu chưa có
@@ -97,13 +99,46 @@ const useSingleProduct = (
       let foundProduct = null;
 
       if (actualSearchBy === "id") {
+
         // Fetch by ID
         url = `https://schand20250922153400.azurewebsites.net/api/Product/${identifier}`;
+
         const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+
+        if (response.ok) {
+          foundProduct = await response.json();
+        } else {
+          // If not found in approved products, try pending products
+          console.log(
+            `Product ${identifier} not found in approved products, checking pending...`
+          );
+          const token = localStorage.getItem("token");
+
+          if (token) {
+            try {
+              const pendingResponse = await fetch(
+                `/api/Post/${identifier}/is-pending`,
+                {
+                  method: "GET",
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+
+              if (pendingResponse.ok) {
+                foundProduct = await pendingResponse.json();
+                console.log(
+                  `Found pending product ${identifier}:`,
+                  foundProduct
+                );
+              }
+            } catch (pendingError) {
+              console.log(`Product ${identifier} not found in pending either`);
+            }
+          }
         }
-        foundProduct = await response.json();
       } else {
         // Search by name - fetch all products and filter
         const response = await fetch(url);

@@ -58,7 +58,12 @@ const ProductDetails = ({
         })
       );
     }
-  }, [productData]);
+
+    // Nếu sản phẩm chưa được duyệt và đang ở tab reviews, chuyển về description
+    if (!productData?.isApproved && activeTab === "reviews") {
+      setActiveTab("description");
+    }
+  }, [productData, activeTab]);
 
   return (
     <>
@@ -150,14 +155,17 @@ const ProductDetails = ({
               >
                 Mô tả chi tiết
               </button>
-              <button
-                className={`${s.tabBtn} ${
-                  activeTab === "reviews" ? s.active : ""
-                }`}
-                onClick={() => setActiveTab("reviews")}
-              >
-                Đánh giá & Bình luận
-              </button>
+              {/* Chỉ hiển thị tab reviews cho sản phẩm đã duyệt */}
+              {productData?.isApproved && (
+                <button
+                  className={`${s.tabBtn} ${
+                    activeTab === "reviews" ? s.active : ""
+                  }`}
+                  onClick={() => setActiveTab("reviews")}
+                >
+                  Đánh giá & Bình luận
+                </button>
+              )}
               <button
                 className={`${s.tabBtn} ${
                   activeTab === "specifications" ? s.active : ""
@@ -182,7 +190,8 @@ const ProductDetails = ({
                 </div>
               )}
 
-              {activeTab === "reviews" && (
+              {/* Chỉ hiển thị nội dung reviews cho sản phẩm đã duyệt */}
+              {activeTab === "reviews" && productData?.isApproved && (
                 <div className={s.reviewsTab}>
                   <ProductReviews productId={productData?.id} />
                 </div>
