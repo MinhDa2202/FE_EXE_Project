@@ -13,8 +13,8 @@ const FirstHeader = () => {
 
         <div className={s.headerContent}>
           <p className={s.discount}>
-            <span>{t("firstHeader.saleMessage")}</span>
-            <Link to="/products">{t("firstHeader.shopNow")}</Link>
+            <span>Giảm giá lớn cho tất cả các sản phẩm</span>
+            <Link to="/products">Mua ngay</Link>
           </p>
 
           <LanguageSelector />

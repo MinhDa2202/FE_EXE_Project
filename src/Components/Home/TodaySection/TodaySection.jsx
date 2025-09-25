@@ -30,16 +30,16 @@ const TodaySection = () => {
               <span className={s.badgeText}>FLASH SALE</span>
             </div>
             <h2 className={s.sectionTitle}>
-              Limited Time Offers
-              <span className={s.highlightText}> Up to 70% Off</span>
+              Ưu đãi có hạn
+              <span className={s.highlightText}> Giảm giá tới 70%</span>
             </h2>
             <p className={s.sectionDescription}>
-              Don't miss out on these incredible deals! Shop now before they're gone.
+              Đừng bỏ lỡ những ưu đãi tuyệt vời này! Mua sắm ngay trước khi hết hàng.
             </p>
           </div>
           
           <div className={s.countdownSection}>
-            <div className={s.countdownLabel}>Sale Ends In:</div>
+            <div className={s.countdownLabel}>Ưu đãi kết thúc sau:</div>
             <EventCounter eventName="flash-sales" timeEvent="3 23 19 56" />
           </div>
         </div>
@@ -88,22 +88,22 @@ const TodaySection = () => {
 
       <div className={s.actionSection}>
         <Link to="/products" className={s.viewProductsBtn}>
-          <span className={s.buttonText}>View All Flash Sales</span>
+          <span className={s.buttonText}>Xem tất cả ưu đãi Flash Sale</span>
           <span className={s.buttonIcon}>→</span>
         </Link>
         
         <div className={s.saleInfo}>
           <div className={s.infoItem}>
             <span className={s.infoIcon}>🚚</span>
-            <span className={s.infoText}>Free Shipping</span>
+            <span className={s.infoText}>Miễn phí vận chuyển</span>
           </div>
           <div className={s.infoItem}>
             <span className={s.infoIcon}>🔄</span>
-            <span className={s.infoText}>Easy Returns</span>
+            <span className={s.infoText}>Đổi trả dễ dàng</span>
           </div>
           <div className={s.infoItem}>
             <span className={s.infoIcon}>🛡️</span>
-            <span className={s.infoText}>2 Year Warranty</span>
+            <span className={s.infoText}>Bảo hành 2 năm</span>
           </div>
         </div>
       </div>

@@ -22,7 +22,7 @@ const AuthSideBarButtons = () => {
           tabIndex={isMobileMenuActive ? 0 : -1}
         >
           <SvgIcon name="boxArrowRight" />
-          <span>{t("mobileNav.signOut")}</span>
+          <span>Đăng xuất</span>
         </button>
       )}
 
@@ -34,7 +34,7 @@ const AuthSideBarButtons = () => {
           tabIndex={isMobileMenuActive ? 0 : -1}
         >
           <SvgIcon name="boxArrowRight" />
-          <span>{t("mobileNav.signIn")}</span>
+          <span>Đăng nhập</span>
         </Link>
       )}
     </>
