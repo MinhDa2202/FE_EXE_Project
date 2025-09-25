@@ -10,7 +10,7 @@ const LanguageSelector = () => {
   const currentLangRef = useRef();
   const langSelectorRef = useRef();
   const { t } = useTranslation();
-  const currLang = i18next.language || "en";
+  const currLang = i18next.language || "vi";
 
   useEventListener(document, "click", (event) => {
     const isLangMenuClicked = langSelectorRef?.current.contains(event.target);
@@ -71,7 +71,7 @@ const LanguageSelector = () => {
     >
       <div className={s.currentOption} ref={currentLangRef}>
         <span aria-live="polite" />
-        <img src={LANGUAGES[0]?.flag} alt={"country flag"} />
+        <img src={LANGUAGES[0]?.flag} alt={"cờ quốc gia"} />
       </div>
 
       <div className={`${s.menu} ${isLangMenuActive ? s.active : ""}`}>
@@ -87,7 +87,7 @@ const LanguageSelector = () => {
               onClick={() => selectLanguage(index, code)}
             >
               <span>{langTrans}</span>
-              <img src={flag} alt={`${flagName} flag`} />
+              <img src={flag} alt={`Cờ ${flagName}`} />
             </button>
           );
         })}

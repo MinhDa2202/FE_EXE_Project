@@ -31,7 +31,7 @@ const RestNavLinks = () => {
             visibility: loginInfo.isSignIn,
             routePath: routePath,
             countLength: countLength,
-            text: t(`mobileNav.${camelCase(text)}`),
+            text: text === "my order" ? "đơn hàng của tôi" : text === "favorite" ? "yêu thích" : "danh sách yêu thích",
             ariaHidden: !isMobileMenuActive,
             tabIndex: isMobileMenuActive ? 0 : -1,
           }}

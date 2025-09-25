@@ -342,8 +342,8 @@
       "flashSales": "Flash Sales"
     },
     "categoriesSection": {
-      "title": "Categories",
-      "browseByCategory": "Browse By Category"
+      "title": "Danh mục",
+      "browseByCategory": "Duyệt theo danh mục"
     },
     "thisMonthSection": {
       "title": "This Month",
@@ -504,12 +504,12 @@
     "hasNoProducts": "Your cart is currently empty."
   },
   "userMenuItems": {
-    "profile": "Manage My Account",
-    "cart": "My Order",
-    "my_reports": "My Reports",
-    "reviews": "My Reviews",
-    "wishlist": "Wishlist",
-    "logout": "Logout"
+    "profile": "Quản lý tài khoản",
+    "cart": "Đơn hàng của tôi",
+    "my_reports": "Báo cáo của tôi",
+    "reviews": "Đánh giá của tôi",
+    "wishlist": "Danh sách yêu thích",
+    "logout": "Đăng xuất"
   },
 
   "toastAlert": {

@@ -175,7 +175,7 @@ const FlashSaleBanner = () => {
               marginBottom: '1.5rem',
             }}>
               <span>⚡</span>
-              <span>Featured Products</span>
+              <span>Sản phẩm nổi bật</span>
             </div>
             
             <h2 style={{
@@ -185,8 +185,7 @@ const FlashSaleBanner = () => {
               margin: '0 0 1rem 0',
               lineHeight: 1.1,
             }}>
-              Discover Amazing
-              <span style={{ color: '#3b82f6', marginLeft: '0.5rem' }}>Products</span>
+              Khám phá điều tuyệt vời
             </h2>
             
             <p style={{
@@ -195,7 +194,7 @@ const FlashSaleBanner = () => {
               lineHeight: 1.6,
               margin: 0,
             }}>
-              Explore our curated collection of premium products with exclusive deals and discounts.
+              Khám phá bộ sưu tập sản phẩm cao cấp của chúng tôi với các ưu đãi và giảm giá độc quyền.
             </p>
           </div>
 
@@ -215,7 +214,7 @@ const FlashSaleBanner = () => {
               letterSpacing: '1px',
               textAlign: 'center',
             }}>
-              Flash Sale Ends In:
+              Khuyến mãi Flash kết thúc vào:
             </div>
             
             <div style={{
@@ -266,7 +265,7 @@ const FlashSaleBanner = () => {
               color: '#1f2937',
               margin: 0,
             }}>
-              Featured Products
+              Sản phẩm nổi bật
             </h3>
             
             <Link to="/products" style={{
@@ -292,7 +291,7 @@ const FlashSaleBanner = () => {
               e.target.style.boxShadow = '0 10px 30px rgba(59, 130, 246, 0.3)';
             }}
             >
-              View All Products
+              Xem tất cả sản phẩm
               <span>→</span>
             </Link>
           </div>
@@ -477,7 +476,7 @@ const FlashSaleBanner = () => {
                     e.target.style.transform = 'scale(1)';
                   }}
                   >
-                    Add to Cart
+                    Thêm vào giỏ hàng
                   </button>
                 </div>
               </div>

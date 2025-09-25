@@ -12,28 +12,28 @@ const Nav = () => {
     <nav className={s.nav} dir={navDirection}>
       <ul>
         <li>
-          <NavLink to="/">{t("nav.home")}</NavLink>
+          <NavLink to="/">Trang chủ</NavLink>
         </li>
 
         <li>
-          <NavLink to="/products">{t("nav.products", "Products")}</NavLink>
+          <NavLink to="/products">Sản phẩm</NavLink>
         </li>
 
         {/* Post Manager - chỉ hiển thị khi đã đăng nhập */}
         {isSignIn && (
           <li>
             <NavLink to="/post-manager">
-              {t("nav.postManager", "Post Manager")}
+              Quản lý bài đăng
             </NavLink>
           </li>
         )}
 
         <li>
-          <NavLink to="/about">{t("nav.about")}</NavLink>
+          <NavLink to="/about">Về chúng tôi</NavLink>
         </li>
 
         <li>
-          <NavLink to="/contact">{t("nav.contact")}</NavLink>
+          <NavLink to="/contact">Liên hệ</NavLink>
         </li>
       </ul>
     </nav>

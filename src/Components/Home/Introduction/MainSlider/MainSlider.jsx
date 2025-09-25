@@ -17,38 +17,38 @@ function MainSlider() {
           </div>
           
           <h1 className={s.heroTitle}>
-            Discover Amazing
+            Khám phá điều tuyệt vời
             <span className={s.highlightText}> Tech Products</span>
           </h1>
           
           <p className={s.heroDescription}>
-            Find everything you need at unbeatable prices.
+            Tìm mọi thứ bạn cần với mức giá không thể tốt hơn.
           </p>
           
           <div className={s.heroActions}>
             <Link to="/products" className={s.ctaButton}>
-              <span className={s.buttonText}>Shop Now</span>
+              <span className={s.buttonText}>Mua ngay</span>
               <span className={s.buttonIcon}>→</span>
             </Link>
             
             <button className={s.secondaryButton}>
               <span className={s.buttonIcon}>▶</span>
-              <span className={s.buttonText}>Watch Demo</span>
+              <span className={s.buttonText}>Xem video</span>
             </button>
           </div>
           
           <div className={s.heroStats}>
             <div className={s.statItem}>
               <span className={s.statNumber}>10K+</span>
-              <span className={s.statLabel}>Happy Customers</span>
+              <span className={s.statLabel}>Khách hàng hài lòng</span>
             </div>
             <div className={s.statItem}>
               <span className={s.statNumber}>500+</span>
-              <span className={s.statLabel}>Products</span>
+              <span className={s.statLabel}>Sản phẩm</span>
             </div>
             <div className={s.statItem}>
               <span className={s.statNumber}>24/7</span>
-              <span className={s.statLabel}>Support</span>
+              <span className={s.statLabel}>Hỗ trợ</span>
             </div>
           </div>
         </div>

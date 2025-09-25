@@ -28,24 +28,24 @@ import { regexPatterns } from "./globalVariables";
 
 export const introductionSliderData = [
   {
-    productName: "Gaming Laptop Pro",
+    productName: "Máy tính xách tay chơi game Pro",
     productImg: gamingLaptop,
     logoImg: appleLogo,
-    discountText: "Up to 30% off Voucher",
+    discountText: "Giảm giá tới 30% Voucher",
     id: 1,
   },
   {
     productName: "Canon EOS 5D MkII",
     productImg: productImg2,
     logoImg: canonLogo,
-    discountText: "Up to 30% off Voucher",
+    discountText: "Giảm giá tới 30% Voucher",
     id: 2,
   },
   {
     productName: "MacBook Pro 16",
     productImg: productImg3,
     logoImg: appleLogo,
-    discountText: "Up to 15% off Voucher",
+    discountText: "Giảm giá tới 15% Voucher",
     id: 3,
   },
 ];
@@ -54,28 +54,28 @@ export const aboutCardsInfo = [
   {
     iconName: "shop",
     number: "10.5k",
-    text: "Sallers active our site",
+    text: "Người bán hoạt động trên trang web của chúng tôi",
     translationKey: "aboutCardsInfo1",
     id: 1,
   },
   {
     iconName: "dollarSign",
     number: "33k",
-    text: "Mopnthly Produduct Sale",
+    text: "Doanh số sản phẩm hàng tháng",
     translationKey: "aboutCardsInfo2",
     id: 2,
   },
   {
     iconName: "shoppingBag",
     number: "45.5k",
-    text: "Customer active in our site",
+    text: "Khách hàng hoạt động trên trang web của chúng tôi",
     translationKey: "aboutCardsInfo3",
     id: 3,
   },
   {
     iconName: "moneyBag",
     number: "25k",
-    text: "Anual gross sale in our site",
+    text: "Tổng doanh thu hàng năm trên trang web của chúng tôi",
     translationKey: "aboutCardsInfo4",
     id: 4,
   },
@@ -84,7 +84,7 @@ export const aboutCardsInfo = [
 export const ourMembersData = [
   {
     name: "Tom Cruise",
-    jobTitle: "Founder & Chairman",
+    jobTitle: "Người sáng lập & Chủ tịch",
     img: member1Img,
     socialMedia: {
       twitter: "https://twitter.com/",
@@ -96,7 +96,7 @@ export const ourMembersData = [
 
   {
     name: "Emma Watson",
-    jobTitle: "Managing Director",
+    jobTitle: "Giám đốc điều hành",
     img: member2Img,
     socialMedia: {
       twitter: "https://twitter.com/",
@@ -108,7 +108,7 @@ export const ourMembersData = [
 
   {
     name: "Will Smith",
-    jobTitle: "Product Designer",
+    jobTitle: "Thiết kế sản phẩm",
     img: member3Img,
     socialMedia: {
       twitter: "https://twitter.com/",
@@ -122,25 +122,25 @@ export const ourMembersData = [
 export const paymentCards = [
   {
     img: bkashCard,
-    alt: "Bkash card",
+    alt: "Thẻ Bkash",
     link: "https://www.bkash.com/en/products-services/visa-card-to-bkash",
     id: 1,
   },
   {
     img: visaCard,
-    alt: "Visa card",
+    alt: "Thẻ Visa",
     link: "https://usa.visa.com/pay-with-visa/find-card/apply-credit-card",
     id: 2,
   },
   {
     img: mastercard,
-    alt: "Mastercard",
+    alt: "Thẻ Mastercard",
     link: "https://www.mastercard.us/en-us.html",
     id: 3,
   },
   {
     img: nagadCard,
-    alt: "Nagad card",
+    alt: "Thẻ Nagad",
     link: "https://www.nagad.com.bd/services/?service=add-money-from-card",
     id: 4,
   },
@@ -148,51 +148,51 @@ export const paymentCards = [
 
 export const LANGUAGES = [
   {
-    lang: "English",
+    lang: "Tiếng Việt",
     flag: usaFlag,
-    flagName: "USA",
-    code: "en",
+    flagName: "Việt Nam",
+    code: "vi",
     id: 1,
   },
   {
-    lang: "Russian",
+    lang: "Tiếng Nga",
     flag: russiaFlag,
-    flagName: "Russia",
+    flagName: "Nga",
     code: "ru",
     id: 2,
   },
   {
-    lang: "Arabic",
+    lang: "Tiếng Ả Rập",
     flag: saudiFlag,
-    flagName: "Saudi Arabia",
+    flagName: "Ả Rập Xê Út",
     code: "ar",
     id: 3,
   },
   {
-    lang: "French",
+    lang: "Tiếng Pháp",
     flag: franceFlag,
-    flagName: "France",
+    flagName: "Pháp",
     code: "fr",
     id: 4,
   },
   {
-    lang: "hungarian",
+    lang: "Tiếng Hungary",
     flag: hungaryFlag,
     flagName: "Hungary",
     code: "hu",
     id: 5,
   },
   {
-    lang: "Japanese",
+    lang: "Tiếng Nhật",
     flag: japanFlag,
-    flagName: "Japan",
+    flagName: "Nhật Bản",
     code: "ja",
     id: 6,
   },
   {
-    lang: "Hindi",
+    lang: "Tiếng Hindi",
     flag: indiaFlag,
-    flagName: "India",
+    flagName: "Ấn Độ",
     code: "hi",
     id: 7,
   },
@@ -234,25 +234,25 @@ export const productCardCustomizations = {
 
 export const mobileNavData = [
   {
-    name: "Home",
+    name: "Trang chủ",
     link: "/",
     icon: "home",
     requiteSignIn: false,
   },
   {
-    name: "About",
+    name: "Về chúng tôi",
     link: "/about",
     icon: "filePaper",
     requiteSignIn: false,
   },
   {
-    name: "Post Manager",
+    name: "Quản lý bài đăng",
     link: "/post-manager",
     icon: "filePaper",
     requiteSignIn: true,
   },
   {
-    name: "Profile",
+    name: "Hồ sơ",
     link: "/profile",
     icon: "user",
     requiteSignIn: true,
@@ -268,21 +268,21 @@ export const getRestMobileNavData = ({
     {
       iconName: "cart",
       routePath: "/order",
-      text: "my order",
+      text: "đơn hàng của tôi",
       countLength: orderProducts?.length || 0,
       id: mobileNavData.length + 2,
     },
     {
       iconName: "heart",
       routePath: "/favorites",
-      text: "favorite",
+      text: "yêu thích",
       countLength: favoritesProducts?.length || 0,
       id: mobileNavData.length + 3,
     },
     {
       iconName: "save",
       routePath: "/wishlist",
-      text: "wishlist",
+      text: "danh sách yêu thích",
       countLength: wishList?.length || 0,
       id: mobileNavData.length + 4,
     },
@@ -290,29 +290,29 @@ export const getRestMobileNavData = ({
 };
 
 export const womenFashionMenuItems = [
-  { name: "Elegant Dress", url: "/#" },
-  { name: "Chic Blouse", url: "/#" },
-  { name: "Statement Handbag", url: "/#" },
-  { name: "Versatile Jacket", url: "/#" },
-  { name: "Comfortable", url: "/#" },
+  { name: "Đầm thanh lịch", url: "/#" },
+  { name: "Áo kiểu sang trọng", url: "/#" },
+  { name: "Túi xách nổi bật", url: "/#" },
+  { name: "Áo khoác đa năng", url: "/#" },
+  { name: "Thoải mái", url: "/#" },
 ];
 
 export const menFashionMenuItems = [
-  { name: "Tailored Suit", url: "/#" },
-  { name: "Casual Shirts", url: "/#" },
-  { name: "Slim-Fit Jeans", url: "/#" },
-  { name: "Leather Accessories", url: "/#" },
-  { name: "Modern Sneakers", url: "/#" },
+  { name: "Bộ vest may đo", url: "/#" },
+  { name: "Áo sơ mi thường ngày", url: "/#" },
+  { name: "Quần jean ôm", url: "/#" },
+  { name: "Phụ kiện da", url: "/#" },
+  { name: "Giày thể thao hiện đại", url: "/#" },
 ];
 
 export const otherSectionsMenuItems = [
-  { name: "Electronics", url: "/#" },
-  { name: "Home & Lifestyle", url: "/#" },
-  { name: "Medicine", url: "/#" },
-  { name: "Sports & Outdoor", url: "/#" },
-  { name: "Baby's & Toys", url: "/#" },
-  { name: "Groceries & Pets", url: "/#" },
-  { name: "Health & Beauty", url: "/#" },
+  { name: "Điện tử", url: "/#" },
+  { name: "Nhà cửa & Phong cách sống", url: "/#" },
+  { name: "Y tế", url: "/#" },
+  { name: "Thể thao & Ngoài trời", url: "/#" },
+  { name: "Đồ dùng cho bé & Đồ chơi", url: "/#" },
+  { name: "Thực phẩm & Thú cưng", url: "/#" },
+  { name: "Sức khỏe & Sắc đẹp", url: "/#" },
 ];
 
 export const mySocialMedia = [
@@ -345,20 +345,20 @@ export const mySocialMedia = [
 export const billingInputsData = [
   {
     translationKey: "firstName",
-    label: "First Name",
+    label: "Tên",
     name: "firstName",
     required: true,
     id: 1,
   },
   {
     translationKey: "companyName",
-    label: "Company Name",
+    label: "Tên công ty",
     name: "companyName",
     id: 2,
   },
   {
     translationKey: "streetAddress",
-    label: "Street Address",
+    label: "Địa chỉ đường",
     name: "streetAddress",
     required: true,
     autoComplete: true,
@@ -366,14 +366,14 @@ export const billingInputsData = [
   },
   {
     translationKey: "apartment",
-    label: "Apartment, floor, etc. (optional)",
+    label: "Căn hộ, tầng, v.v. (tùy chọn)",
     name: "address",
     autoComplete: true,
     id: 4,
   },
   {
     translationKey: "cityOrTown",
-    label: "Town/City",
+    label: "Thị trấn/Thành phố",
     name: "cityOrTown",
     required: true,
     autoComplete: true,
@@ -381,7 +381,7 @@ export const billingInputsData = [
   },
   {
     translationKey: "phoneNumber",
-    label: "Phone Number",
+    label: "Số điện thoại",
     name: "phoneNumber",
     required: true,
     type: "tel",
@@ -391,7 +391,7 @@ export const billingInputsData = [
   },
   {
     translationKey: "email",
-    label: "Email Address",
+    label: "Địa chỉ email",
     name: "email",
     required: true,
     type: "email",

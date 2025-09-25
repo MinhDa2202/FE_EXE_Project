@@ -60,11 +60,11 @@ const Header = () => {
             className={s.addButton}
             onClick={handleAddProduct}
             type="button"
-            title={t("products.addProduct", "Add Product")}
+            title="Thêm sản phẩm"
           >
             <span className={s.addIcon}>+</span>
             <span className={s.addText}>
-              {t("products.addProduct", "Add Product")}
+              Thêm sản phẩm
             </span>
           </button>
 
@@ -73,10 +73,10 @@ const Header = () => {
             type="button"
             className={s.aiButton}
             onClick={() => window.dispatchEvent(new Event("chat:toggle"))}
-            title={t("nav.aiAssistant", "Trợ lý AI")}
+            title="Trợ lý AI"
           >
             <span className={s.aiIcon}>🤖</span>
-            <span className={s.aiText}>{t("nav.aiAssistant", "AI")}</span>
+            <span className={s.aiText}>AI</span>
           </button>
         </div>
 
@@ -86,10 +86,10 @@ const Header = () => {
           {!isSignIn && (
             <>
               <Link to="/login" className={authStyles.loginLink}>
-                {t("nav.logIn", "Login")}
+                Đăng nhập
               </Link>
               <Link to="/signup" className={authStyles.signUpLink}>
-                {t("nav.signUp", "Signup")}
+                Đăng ký
               </Link>
             </>
           )}
