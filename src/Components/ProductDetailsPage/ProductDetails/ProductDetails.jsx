@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { updateProductsState } from "src/Features/productsSlice";
@@ -11,8 +11,13 @@ import s from "./ProductDetails.module.scss";
 import ProductFirstInfos from "./ProductFirstInfos/ProductFirstInfos";
 import ProductSizes from "./ProductSizes/ProductSizes";
 
-const ProductDetails = ({ productData: originalProductData, onReportProduct }) => {
+const ProductDetails = ({
+  productData: originalProductData,
+  onReportProduct,
+}) => {
   if (!originalProductData) return <Navigate to="product-not-found" />;
+
+  const [activeTab, setActiveTab] = useState("description");
 
   const productData = useMemo(() => {
     return {
@@ -75,9 +80,19 @@ const ProductDetails = ({ productData: originalProductData, onReportProduct }) =
       updateProductsState({ key: "selectedProduct", value: productData })
     );
     if (productData.otherImages && productData.otherImages.length > 0) {
-      dispatch(updateProductsState({ key: "previewImg", value: productData.otherImages[0] }));
+      dispatch(
+        updateProductsState({
+          key: "previewImg",
+          value: productData.otherImages[0],
+        })
+      );
     }
-  }, [productData]);
+
+    // Nếu sản phẩm chưa được duyệt và đang ở tab reviews, chuyển về description
+    if (!productData?.isApproved && activeTab === "reviews") {
+      setActiveTab("description");
+    }
+  }, [productData, activeTab]);
 
   return (
     <>
@@ -90,7 +105,7 @@ const ProductDetails = ({ productData: originalProductData, onReportProduct }) =
                 productData={productData}
                 handleZoomInEffect={handleZoomInEffect}
               />
-              
+
               {/* 360° View Button */}
               <div className={s.view360Button}>
                 <button className={s.view360Btn}>
@@ -183,11 +198,35 @@ const ProductDetails = ({ productData: originalProductData, onReportProduct }) =
           {/* Product Details Tabs */}
           <div className={s.productTabs}>
             <div className={s.tabButtons}>
-              <button className={`${s.tabBtn} ${s.active}`}>Mô tả chi tiết</button>
-              <button className={s.tabBtn}>Đánh giá khách hàng</button>
-              <button className={s.tabBtn}>Thông số kỹ thuật</button>
+              <button
+                className={`${s.tabBtn} ${
+                  activeTab === "description" ? s.active : ""
+                }`}
+                onClick={() => setActiveTab("description")}
+              >
+                Mô tả chi tiết
+              </button>
+              {/* Chỉ hiển thị tab reviews cho sản phẩm đã duyệt */}
+              {productData?.isApproved && (
+                <button
+                  className={`${s.tabBtn} ${
+                    activeTab === "reviews" ? s.active : ""
+                  }`}
+                  onClick={() => setActiveTab("reviews")}
+                >
+                  Đánh giá & Bình luận
+                </button>
+              )}
+              <button
+                className={`${s.tabBtn} ${
+                  activeTab === "specifications" ? s.active : ""
+                }`}
+                onClick={() => setActiveTab("specifications")}
+              >
+                Thông số kỹ thuật
+              </button>
             </div>
-            
+
             <div className={s.tabContent}>
               <div className={s.descriptionTab}>
                 <ProductColorsSection productData={productData} />

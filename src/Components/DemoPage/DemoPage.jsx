@@ -67,7 +67,7 @@ const DemoPage = () => {
 
               <div className={s.featureCard}>
                 <div className={s.featureIcon}>💡</div>
-                <h3>Đề xuất thông minh</h3>
+                <h3>Đề xuất cho bạn</h3>
                 <p>Gợi ý sản phẩm dựa trên lịch sử xem và sở thích cá nhân</p>
                 <div className={s.featureStatus}>
                   <span className={s.statusActive}>✅ Đã tích hợp</span>
@@ -138,7 +138,7 @@ const DemoPage = () => {
               </div>
 
               <div className={s.instructionCard}>
-                <h4>💡 Đề xuất thông minh</h4>
+                <h4>💡 Đề xuất cho bạn</h4>
                 <ol>
                   <li>Đăng nhập để có đề xuất cá nhân hóa</li>
                   <li>Xem sản phẩm để cải thiện gợi ý</li>
