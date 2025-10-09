@@ -30,7 +30,7 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'https://localhost:7235',
+        target: 'https://schand20250922153400.azurewebsites.net',
         changeOrigin: true,
         secure: false,
         ws: true,

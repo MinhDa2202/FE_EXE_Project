@@ -22,16 +22,25 @@ const ProductDetailsPage = () => {
 
   // Fallback data while loading or if error
   const productCategory = PRODUCT_DATA?.category?.toLowerCase() || "unknown";
-  const productCategoryTrans = t(`categoriesData.${productCategory}`, productCategory);
-  const productName = PRODUCT_DATA?.shortName?.replaceAll(" ", "") || PRODUCT_DATA?.name?.replaceAll(" ", "") || "unknown";
-  const productNameTrans = t(`products.${productName}.name`, PRODUCT_DATA?.shortName || PRODUCT_DATA?.name || "Product");
-  
+  const productCategoryTrans = t(
+    `categoriesData.${productCategory}`,
+    productCategory
+  );
+  const productName =
+    PRODUCT_DATA?.shortName?.replaceAll(" ", "") ||
+    PRODUCT_DATA?.name?.replaceAll(" ", "") ||
+    "unknown";
+  const productNameTrans = t(
+    `products.${productName}.name`,
+    PRODUCT_DATA?.shortName || PRODUCT_DATA?.name || "Product"
+  );
+
   const history = [
     t("history.account"),
     productCategoryTrans,
     productNameTrans,
   ];
-  
+
   const historyPaths = [
     {
       index: 0,
@@ -47,25 +56,29 @@ const ProductDetailsPage = () => {
 
   // Function to parse description into table data
   const parseDescriptionToTableData = (descriptionString) => {
-    const lines = descriptionString.split('\\n').filter(line => line.trim() !== '');
+    const lines = descriptionString
+      .split("\\n")
+      .filter((line) => line.trim() !== "");
     const data = [];
-    let currentCategory = '';
+    let currentCategory = "";
 
-    lines.forEach(line => {
-      const parts = line.split(':');
+    lines.forEach((line) => {
+      const parts = line.split(":");
       if (parts.length > 1) {
         const key = parts[0].trim();
-        const value = parts.slice(1).join(':').trim();
+        const value = parts.slice(1).join(":").trim();
         data.push({ key, value, isCategory: false });
       } else {
         // Treat as a category if no colon is found
-        data.push({ key: line.trim(), value: '', isCategory: true });
+        data.push({ key: line.trim(), value: "", isCategory: true });
       }
     });
     return data;
   };
 
-  const descriptionTableData = PRODUCT_DATA?.Descriptions ? parseDescriptionToTableData(PRODUCT_DATA.Descriptions) : [];
+  const descriptionTableData = PRODUCT_DATA?.Descriptions
+    ? parseDescriptionToTableData(PRODUCT_DATA.Descriptions)
+    : [];
 
   // Loading state
   if (loadingProductDetails) {
@@ -107,15 +120,18 @@ const ProductDetailsPage = () => {
 
         <div className="container">
           <main className={s.detailsPage}>
-            <BreadcrumbWrapper 
-              history={["/"]} 
+            <BreadcrumbWrapper
+              history={["/"]}
               pageType="productDetails"
               variant="clean"
             />
             <div className={s.errorContainer}>
               <div className={s.errorMessage}>
                 <h2>Không tìm thấy sản phẩm</h2>
-                <p>{error || "Sản phẩm bạn đang tìm kiếm không tồn tại hoặc đã bị xóa."}</p>
+                <p>
+                  {error ||
+                    "Sản phẩm bạn đang tìm kiếm không tồn tại hoặc đã bị xóa."}
+                </p>
                 <div className={s.errorActions}>
                   <button
                     onClick={() => window.history.back()}
@@ -124,7 +140,7 @@ const ProductDetailsPage = () => {
                     Quay lại
                   </button>
                   <button
-                    onClick={() => window.location.href = "/products"}
+                    onClick={() => (window.location.href = "/products")}
                     className={s.browseButton}
                   >
                     Xem tất cả sản phẩm
@@ -145,10 +161,26 @@ const ProductDetailsPage = () => {
         <title>{PRODUCT_DATA.shortName || PRODUCT_DATA.name}</title>
         <meta
           name="description"
-          content={`${PRODUCT_DATA.description || `Explore the details and specifications of ${PRODUCT_DATA.shortName || PRODUCT_DATA.name} on ${WEBSITE_NAME}. Find everything you need to know, from features to customer reviews, before making your purchase.`}`}
+          content={`${
+            PRODUCT_DATA.description ||
+            `Explore the details and specifications of ${
+              PRODUCT_DATA.shortName || PRODUCT_DATA.name
+            } on ${WEBSITE_NAME}. Find everything you need to know, from features to customer reviews, before making your purchase.`
+          }`}
         />
-        <meta property="og:title" content={PRODUCT_DATA.shortName || PRODUCT_DATA.name} />
-        <meta property="og:description" content={PRODUCT_DATA.description || `Check out ${PRODUCT_DATA.shortName || PRODUCT_DATA.name} on ${WEBSITE_NAME}`} />
+        <meta
+          property="og:title"
+          content={PRODUCT_DATA.shortName || PRODUCT_DATA.name}
+        />
+        <meta
+          property="og:description"
+          content={
+            PRODUCT_DATA.description ||
+            `Check out ${
+              PRODUCT_DATA.shortName || PRODUCT_DATA.name
+            } on ${WEBSITE_NAME}`
+          }
+        />
         {PRODUCT_DATA.ImageUrls && PRODUCT_DATA.ImageUrls.length > 0 && (
           <meta property="og:image" content={PRODUCT_DATA.ImageUrls[0]} />
         )}
@@ -156,17 +188,17 @@ const ProductDetailsPage = () => {
 
       <div className="container">
         <main className={s.detailsPage}>
-          <BreadcrumbWrapper 
-            history={history} 
+          <BreadcrumbWrapper
+            history={history}
             historyPaths={historyPaths}
             pageType="productDetails"
             variant="clean"
           />
-          <ProductDetails 
-            productData={PRODUCT_DATA} 
+          <ProductDetails
+            productData={PRODUCT_DATA}
             onReportProduct={() => setIsReportModalOpen(true)}
           />
-          
+
           {/* Phần thông tin bổ sung và bình luận */}
           <div className={s.additionalInfo}>
             {/* Mô tả chi tiết */}
@@ -178,10 +210,12 @@ const ProductDetailsPage = () => {
                 <div className={s.cardContent}>
                   <table className={s.descriptionTable}>
                     <tbody>
-                      {descriptionTableData.map((item, index) => (
+                      {descriptionTableData.map((item, index) =>
                         item.isCategory ? (
                           <tr key={index} className={s.tableCategoryRow}>
-                            <td colSpan="2"><strong>{item.key}</strong></td>
+                            <td colSpan="2">
+                              <strong>{item.key}</strong>
+                            </td>
                           </tr>
                         ) : (
                           <tr key={index}>
@@ -189,30 +223,32 @@ const ProductDetailsPage = () => {
                             <td className={s.tableValue}>{item.value}</td>
                           </tr>
                         )
-                      ))}
+                      )}
                     </tbody>
                   </table>
                 </div>
               </div>
             )}
 
-            {/* Phần bình luận */}
-            <div className={s.commentsCard}>
-              <div className={s.cardHeader}>
-                <h3>💬 Bình luận & Đánh giá</h3>
-                <span className={s.badge}>0</span>
-              </div>
-              <div className={s.cardContent}>
-                <div className={s.emptyComments}>
-                  <div className={s.emptyIcon}>💭</div>
-                  <h4>Chưa có bình luận nào</h4>
-                  <p>Hãy là người đầu tiên bình luận về sản phẩm này!</p>
-                  <button className={s.addCommentBtn}>
-                    ✍️ Viết bình luận
-                  </button>
+            {/* Phần bình luận - chỉ hiển thị cho sản phẩm đã duyệt */}
+            {PRODUCT_DATA?.isApproved && (
+              <div className={s.commentsCard}>
+                <div className={s.cardHeader}>
+                  <h3>💬 Bình luận & Đánh giá</h3>
+                  <span className={s.badge}>0</span>
+                </div>
+                <div className={s.cardContent}>
+                  <div className={s.emptyComments}>
+                    <div className={s.emptyIcon}>💭</div>
+                    <h4>Chưa có bình luận nào</h4>
+                    <p>Hãy là người đầu tiên bình luận về sản phẩm này!</p>
+                    <button className={s.addCommentBtn}>
+                      ✍️ Viết bình luận
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
 
           <RelatedItemsSection

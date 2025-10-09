@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = '/api/Report';
+const API_URL = 'https://schand20250922153400.azurewebsites.net/api/Report';
 
 // Function to get the auth token from wherever it's stored
 const getAuthToken = () => {

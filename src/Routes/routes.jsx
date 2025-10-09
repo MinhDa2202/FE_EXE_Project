@@ -5,8 +5,6 @@ import ChatPage from "../Components/ChatPage/ChatPage";
 // import CheckoutPage from "../Components/CheckoutPage/CheckoutPage";
 import Contact from "../Components/Contact/Contact";
 import DemoPage from "../Components/DemoPage/DemoPage";
-import DonBan from "../Components/DonBan/DonBan";
-import DonMua from "../Components/DonMua/DonMua";
 import FavoritePage from "../Components/FavoritePage/FavoritePage";
 import Home from "../Components/Home/Home";
 import LogIn from "../Components/LogIn/LogIn";

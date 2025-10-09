@@ -5,7 +5,8 @@ const getInitialState = () => {
     const productsDataLocal = localStorage.getItem("productsSliceData");
     if (productsDataLocal) {
       const parsed = JSON.parse(productsDataLocal);
-      // Ensure all required arrays exist
+      // Ensure all required arrays exist, but DON'T restore products from localStorage
+      // to avoid conflicts with fresh API data
       return {
         saveBillingInfoToLocal: parsed.saveBillingInfoToLocal || false,
         favoritesProducts: Array.isArray(parsed.favoritesProducts) ? parsed.favoritesProducts : [],
@@ -14,7 +15,7 @@ const getInitialState = () => {
         wishList: Array.isArray(parsed.wishList) ? parsed.wishList : [],
         selectedProduct: parsed.selectedProduct || null,
         refetchFlag: parsed.refetchFlag || false,
-        products: Array.isArray(parsed.products) ? parsed.products : [], // Add products to initial state
+        products: [], // Always start with empty array, will be populated from API
       };
     }
   } catch (error) {
@@ -85,7 +86,7 @@ const productsSlice = createSlice({
 export const fetchProducts = createAsyncThunk(
   "productsSlice/fetchProducts",
   async () => {
-    const response = await fetch("https://localhost:7235/api/Product");
+    const response = await fetch("https://schand20250922153400.azurewebsites.net/api/Product");
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -95,21 +96,39 @@ export const fetchProducts = createAsyncThunk(
     const mappedProducts = data.map((product) => ({
       Id: product.id || product.Id || product.productId,
       id: product.id || product.Id || product.productId,
-      Title: product.name || product.title || product.Title || product.productName,
-      name: product.name || product.title || product.Title || product.productName,
+      Title:
+        product.name || product.title || product.Title || product.productName,
+      name:
+        product.name || product.title || product.Title || product.productName,
       Price: product.price || product.Price || product.originalPrice,
-      Discount: product.discount || product.Discount || product.discountPercent || 0,
-      AfterDiscount: product.afterDiscount || product.AfterDiscount || product.salePrice,
-      ImageUrls: product.imageUrls || product.ImageUrls || product.images || (product.imageUrl ? [product.imageUrl] : []),
+      Discount:
+        product.discount || product.Discount || product.discountPercent || 0,
+      AfterDiscount:
+        product.afterDiscount || product.AfterDiscount || product.salePrice,
+      ImageUrls:
+        product.imageUrls ||
+        product.ImageUrls ||
+        product.images ||
+        (product.imageUrl ? [product.imageUrl] : []),
       category: product.category || product.Category || product.categoryName,
-      shortName: product.shortName || product.name || product.title || product.Title || product.productName,
-      description: product.description || product.Description || product.productDescription || "",
+      shortName:
+        product.shortName ||
+        product.name ||
+        product.title ||
+        product.Title ||
+        product.productName,
+      description:
+        product.description ||
+        product.Description ||
+        product.productDescription ||
+        "",
       brand: product.brand || product.Brand || product.brandName || "",
-      Condition: product.condition || product.Condition || product.productCondition,
+      Condition:
+        product.condition || product.Condition || product.productCondition,
       locations: product.location || product.locations || product.address || "",
       rating: product.rating || product.rate || product.averageRating || 0,
       reviews: product.reviewCount || product.voteCount || product.votes || 0,
-      isActive: product.isActive !== undefined ? product.isActive : true
+      isActive: product.isActive !== undefined ? product.isActive : true,
     }));
 
     return mappedProducts;
