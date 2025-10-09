@@ -8,10 +8,9 @@ export const useReduxStore = () => {
   const productsState = useSelector((state) => state?.products);
   
   useEffect(() => {
-    if (productsState && 
-        Array.isArray(productsState.wishList) && 
-        Array.isArray(productsState.orderProducts) && 
-        Array.isArray(productsState.favoritesProducts) && 
+    if (productsState &&
+        Array.isArray(productsState.wishList) &&
+        Array.isArray(productsState.favoritesProducts) &&
         Array.isArray(productsState.searchProducts)) {
       setIsStoreReady(true);
     }
@@ -21,7 +20,6 @@ export const useReduxStore = () => {
     isStoreReady,
     productsState,
     wishList: productsState?.wishList || [],
-    orderProducts: productsState?.orderProducts || [],
     favoritesProducts: productsState?.favoritesProducts || [],
     searchProducts: productsState?.searchProducts || [],
   };

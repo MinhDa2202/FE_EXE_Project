@@ -8,7 +8,7 @@ import IconWithCountAndLabel from "../../NavTools/IconWithCountAndLabel/IconWith
 const RestNavLinks = () => {
   const { isMobileMenuActive } = useSelector((state) => state.global);
   const { loginInfo } = useSelector((state) => state.user);
-  const { favoritesProducts, orderProducts, wishList, isStoreReady } = useReduxStore();
+  const { favoritesProducts, wishList, isStoreReady } = useReduxStore();
   const { t } = useTranslation();
 
   // Don't render until store is ready
@@ -17,7 +17,6 @@ const RestNavLinks = () => {
   }
 
   const restMobileNavData = getRestMobileNavData({
-    orderProducts,
     favoritesProducts,
     wishList,
   });

@@ -27,8 +27,6 @@ export const pagesRequireSignIn = [
   "/checkout",
   "/profile",
   "/wishlist",
-  "/order",
-  "/payment",
 ];
 export const PRODUCT_SIZES = [
   {
@@ -85,6 +83,5 @@ export const NAV_PROPS = {
 export const arraysToEmpty = [
   "favoritesProducts",
   "searchProducts",
-  "orderProducts",
   "wishList",
 ];

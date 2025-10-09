@@ -260,31 +260,23 @@ export const mobileNavData = [
 ];
 
 export const getRestMobileNavData = ({
-  orderProducts = [],
   favoritesProducts = [],
   wishList = [],
 }) => {
   return [
     {
-      iconName: "cart",
-      routePath: "/order",
-      text: "đơn hàng của tôi",
-      countLength: orderProducts?.length || 0,
-      id: mobileNavData.length + 2,
-    },
-    {
       iconName: "heart",
       routePath: "/favorites",
       text: "yêu thích",
       countLength: favoritesProducts?.length || 0,
-      id: mobileNavData.length + 3,
+      id: mobileNavData.length + 2,
     },
     {
       iconName: "save",
       routePath: "/wishlist",
       text: "danh sách yêu thích",
       countLength: wishList?.length || 0,
-      id: mobileNavData.length + 4,
+      id: mobileNavData.length + 3,
     },
   ];
 };
