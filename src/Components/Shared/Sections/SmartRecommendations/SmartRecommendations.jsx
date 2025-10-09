@@ -76,164 +76,15 @@ const SmartRecommendations = ({ title = "Đề xuất cho bạn", maxItems = 6 }
   };
 
   const generatePersonalizedRecommendations = (interests) => {
-    // Mock personalized recommendations based on user interests
-    const mockProducts = [
-      {
-        id: 1,
-        name: 'Máy tính xách tay chơi game Pro',
-        price: 25000000,
-        originalPrice: 30000000,
-        discount: 17,
-        image: '/src/Assets/Products/gaming-laptop/gaming-laptop-thum1.webp',
-        category: 'Điện tử',
-        brand: 'Gaming',
-        rating: 4.8,
-        reviews: 156,
-        isNew: false,
-        isHot: true
-      },
-      {
-        id: 2,
-        name: 'Chuột chơi game không dây',
-        price: 1200000,
-        originalPrice: 1500000,
-        discount: 20,
-        image: '/src/Assets/Products/wired-keyboard/wired-keyboard-thum1.webp',
-        category: 'Điện tử',
-        brand: 'Gaming',
-        rating: 4.6,
-        reviews: 89,
-        isNew: true,
-        isHot: false
-      },
-      {
-        id: 3,
-        name: 'Màn hình chơi game 4K',
-        price: 8500000,
-        originalPrice: 10000000,
-        discount: 15,
-        image: '/src/Assets/Products/gaming-monitor/gaming-monitor-thum1.webp',
-        category: 'Điện tử',
-        brand: 'Gaming',
-        rating: 4.9,
-        reviews: 234,
-        isNew: false,
-        isHot: true
-      },
-      {
-        id: 4,
-        name: 'Bàn phím cơ RGB',
-        price: 2800000,
-        originalPrice: 3500000,
-        discount: 20,
-        image: '/src/Assets/Products/wired-keyboard/wired-keyboard-thum2.webp',
-        category: 'Điện tử',
-        brand: 'Gaming',
-        rating: 4.7,
-        reviews: 167,
-        isNew: true,
-        isHot: false
-      },
-      {
-        id: 5,
-        name: 'Tai nghe chơi game Pro',
-        price: 1800000,
-        originalPrice: 2200000,
-        discount: 18,
-        image: '/src/Assets/Products/ps5-gamepad/ps5-gamepad-thum1.webp',
-        category: 'Điện tử',
-        brand: 'Gaming',
-        rating: 4.5,
-        reviews: 98,
-        isNew: false,
-        isHot: true
-      },
-      {
-        id: 6,
-        name: 'Ghế chơi game RGB',
-        price: 4500000,
-        originalPrice: 5500000,
-        discount: 18,
-        image: '/src/Assets/Products/comfort-chair/comfort-chair-thum1.webp',
-        category: 'Nội thất',
-        brand: 'Gaming',
-        rating: 4.6,
-        reviews: 76,
-        isNew: true,
-        isHot: false
-      }
-    ];
-
-    // Sort by relevance score (mock algorithm)
-    return mockProducts.sort((a, b) => {
-      let scoreA = 0, scoreB = 0;
-      
-      // Category preference
-      if (interests.categories[a.category]) scoreA += interests.categories[a.category] * 10;
-      if (interests.categories[b.category]) scoreB += interests.categories[b.category] * 10;
-      
-      // Brand preference
-      if (interests.brands[a.brand]) scoreA += interests.brands[a.brand] * 5;
-      if (interests.brands[b.brand]) scoreB += interests.brands[b.brand] * 5;
-      
-      // Price range preference
-      if (a.price >= interests.priceRange.min && a.price <= interests.priceRange.max) scoreA += 3;
-      if (b.price >= interests.priceRange.min && b.price <= interests.priceRange.max) scoreB += 3;
-      
-      // Popularity factors
-      scoreA += a.rating + (a.reviews / 100) + (a.isHot ? 2 : 0) + (a.isNew ? 1 : 0);
-      scoreB += b.rating + (b.reviews / 100) + (b.isHot ? 2 : 0) + (b.isNew ? 1 : 0);
-      
-      return scoreB - scoreA;
-    });
+    // TODO: Replace with real API call to get personalized recommendations
+    // For now, return empty array to indicate no mock data
+    return [];
   };
 
   const generateTrendingRecommendations = () => {
-    // Mock trending products for anonymous users
-    return [
-      {
-        id: 1,
-        name: 'iPhone 15 Pro Max',
-        price: 35000000,
-        originalPrice: 40000000,
-        discount: 12,
-        image: '/src/Assets/Products/gaming-laptop/gaming-laptop-thum2.webp',
-        category: 'Điện tử',
-        brand: 'Apple',
-        rating: 4.9,
-        reviews: 342,
-        isNew: true,
-        isHot: true
-      },
-      {
-        id: 2,
-        name: 'Samsung Galaxy S24',
-        price: 28000000,
-        originalPrice: 32000000,
-        discount: 12,
-        image: '/src/Assets/Products/canon-camera/canon-camera-thum1.webp',
-        category: 'Điện tử',
-        brand: 'Samsung',
-        rating: 4.8,
-        reviews: 289,
-        isNew: true,
-        isHot: true
-      },
-      {
-        id: 3,
-        name: 'MacBook Air M3',
-        price: 42000000,
-        originalPrice: 48000000,
-        discount: 12,
-        image: '/src/Assets/Products/gaming-laptop/gaming-laptop-thum3.webp',
-        category: 'Điện tử',
-        brand: 'Apple',
-        rating: 4.9,
-        reviews: 198,
-        isNew: true,
-        isHot: false
-      }
-    ];
+    // TODO: Replace with real API call to get trending products
+    // For now, return empty array to indicate no mock data
+    return [];
   };
 
   const handleProductClick = (productId) => {
@@ -353,9 +204,9 @@ const SmartRecommendations = ({ title = "Đề xuất cho bạn", maxItems = 6 }
         
         {recommendations.length === 0 && (
           <div className={s.emptyState}>
-            <div className={s.emptyIcon}>🔍</div>
-            <h3>Chưa có đề xuất</h3>
-            <p>Hãy xem thêm sản phẩm để nhận đề xuất phù hợp</p>
+            <div className={s.emptyIcon}>✨</div>
+            <h3>Đang chuẩn bị đề xuất cho bạn</h3>
+            <p>Hãy khám phá thêm sản phẩm để nhận đề xuất phù hợp nhất</p>
           </div>
         )}
       </div>
