@@ -11,7 +11,6 @@ import ProductAnalyzerSection from "./ProductAnalyzerSection/ProductAnalyzerSect
 import SmartRecommendations from "../Shared/Sections/SmartRecommendations/SmartRecommendations";
 import FlashSaleBanner from "./FlashSaleBanner";
 
-
 const Home = () => {
   useScrollOnMount();
 
@@ -28,13 +27,11 @@ const Home = () => {
 
       <main className={s.home}>
         <div className={s.container}>
-
-
           <TodaySection />
           <FlashSaleBanner />
           <CategoriesSection />
           <ProductPoster />
-          
+
           <div className={s.featuresContainer}>
             <CompareSection />
             <ProductAnalyzerSection />

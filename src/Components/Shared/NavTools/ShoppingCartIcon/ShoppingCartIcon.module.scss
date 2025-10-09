@@ -1,0 +1,127 @@
+@use "src/Styles/mixins" as m;
+
+.cartContainer {
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  padding: 6px;
+  cursor: pointer;
+  outline-offset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 4px;
+  text-decoration: none;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(102, 126, 234, 0.1);
+    transform: scale(1.05);
+  }
+
+  &:focus-visible {
+    transition: opacity .3s, var(--outline-transition);
+    outline: 2px dashed var(--very-dark-gray);
+    outline-offset: 3px;
+    color: var(--very-dark-gray);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.iconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartContainer > .iconWrapper > svg {
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease;
+  stroke: var(--very-dark-gray);
+  stroke-width: 0.25;
+  fill: var(--very-dark-gray);
+  display: block;
+}
+
+.cartContainer:hover > .iconWrapper > svg {
+  fill: var(--primary-purple);
+  stroke: var(--primary-purple);
+  transform: scale(1.1);
+}
+
+.itemCount {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(135deg, var(--red) 0%, #ff4757 100%);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-shadow: 0 2px 6px rgba(255, 71, 87, 0.3);
+  animation: pulse 2s infinite;
+  border: 2px solid var(--white);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Responsive design
+@include m.small {
+  .cartContainer {
+    padding: 4px;
+    margin: 0 2px;
+  }
+  
+  .cartContainer > .iconWrapper > svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .itemCount {
+    font-size: 0.65rem;
+    min-width: 16px;
+    height: 16px;
+    top: -6px;
+    right: -6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cartContainer {
+    padding: 3px;
+  }
+  
+  .cartContainer > .iconWrapper > svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .itemCount {
+    font-size: 0.6rem;
+    min-width: 14px;
+    height: 14px;
+    top: -5px;
+    right: -5px;
+  }
+}

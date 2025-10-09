@@ -23,12 +23,12 @@ const ThisMonthSection = () => {
     <section className={s.thisMonthSection}>
       <div className={s.wrapper}>
         <SectionTitle
-          eventName={t(`${thisMonthSection}.title`)}
-          sectionName={t(`${thisMonthSection}.bestSelling`)}
+          eventName="Tháng này"
+          sectionName="Sản phẩm bán chạy nhất"
         />
 
         <Link to="/products" className={s.viewAllBtn}>
-          {t("buttons.viewAll")}
+          Xem tất cả
         </Link>
       </div>
 

@@ -1,0 +1,232 @@
+@use "src/Styles/mixins" as m;
+
+.paymentSummary {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  height: fit-content;
+}
+
+.summaryHeader {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--light-gray);
+
+  h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--very-dark-gray);
+    margin: 0;
+  }
+}
+
+.summaryContent {
+  margin-bottom: 24px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  font-size: 1rem;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  span:first-child {
+    color: var(--gray);
+    font-weight: 400;
+  }
+
+  span:last-child {
+    color: var(--very-dark-gray);
+    font-weight: 500;
+  }
+
+  &.discount {
+    span:last-child {
+      color: var(--green);
+      font-weight: 600;
+    }
+  }
+
+  &.total {
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 16px 0;
+
+    span {
+      color: var(--primary-purple);
+      font-weight: 700;
+    }
+  }
+
+  &.walletBalance {
+    background: rgba(34, 197, 94, 0.1);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+
+    span:first-child {
+      color: var(--very-dark-gray);
+      font-weight: 500;
+    }
+
+    span:last-child {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .loading {
+      color: var(--gray) !important;
+      font-weight: 400 !important;
+    }
+  }
+
+  .free {
+    color: var(--green) !important;
+    font-weight: 600 !important;
+  }
+}
+
+.divider {
+  height: 2px;
+  background: var(--light-gray);
+  margin: 16px 0;
+}
+
+.paymentMethodInfo {
+  background: rgba(102, 126, 234, 0.05);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+
+  .methodLabel {
+    font-size: 0.9rem;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+
+  .methodValue {
+    font-weight: 600;
+    color: var(--primary-purple);
+    font-size: 1rem;
+  }
+}
+
+.checkoutButton {
+  width: 100%;
+  background: linear-gradient(
+    135deg,
+    var(--primary-purple) 0%,
+    var(--secondary-purple) 100%
+  );
+  color: var(--white);
+  border: none;
+  padding: 16px 24px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: var(--gray);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &.processing {
+    background: var(--gray);
+    cursor: not-allowed;
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--white);
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 8px;
+    }
+  }
+}
+
+.securityInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 6px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+
+  .securityIcon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  p {
+    font-size: 0.85rem;
+    color: var(--gray);
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+// Responsive design
+@include m.small {
+  .paymentSummary {
+    padding: 16px;
+  }
+
+  .summaryHeader h3 {
+    font-size: 1.2rem;
+  }
+
+  .summaryRow {
+    font-size: 0.95rem;
+
+    &.total {
+      font-size: 1.1rem;
+    }
+  }
+
+  .checkoutButton {
+    font-size: 1rem;
+    padding: 14px 20px;
+  }
+
+  .securityInfo {
+    padding: 10px;
+
+    p {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
