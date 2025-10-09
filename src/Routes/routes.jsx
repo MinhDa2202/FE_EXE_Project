@@ -13,7 +13,7 @@ import LogIn from "../Components/LogIn/LogIn";
 import LuckySpinPage from "../Components/DemoPage/LuckySpinPage";
 import MyReportsPage from "../Components/MyReportsPage/MyReportsPage";
 import NotFoundPage from "../Components/NotFoundPage/NotFoundPage";
-import OrderPage from "../Components/OrderPage/OrderPage";
+// import OrderPage from "../Components/OrderPage/OrderPage";
 import ProductDetailsPage from "../Components/ProductDetailsPage/ProductDetailsPage";
 import ProductsCategoryPage from "../Components/ProductsCategory/ProductsCategoryPage";
 import ProductsPage from "../Components/ProductsPage/ProductsPage";
@@ -39,7 +39,7 @@ export const ROUTES_CONFIG = [
   { path: "/favorites", element: <FavoritePage /> },
   { path: "/wishlist", element: <WishList /> },
   // { path: "/checkout", element: <CheckoutPage /> },
-  { path: "/order", element: <OrderPage /> },
+  // { path: "/order", element: <OrderPage /> },
   { path: "/signup", element: <SignUp /> },
   { path: "/login", element: <LogIn /> },
   { path: "/profile", element: <AccountPage /> },

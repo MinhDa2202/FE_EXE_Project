@@ -1,98 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  gamingLaptop, 
-  productImg1, 
-  productImg2, 
-  productImg3, 
-  ps5, 
-  stereo 
-} from 'src/Assets/Images/Images';
 
 const FlashSaleBanner = () => {
-  // Featured Products Data - 6 products with available images
-  const featuredProducts = [
-    {
-      id: 1,
-      name: "Gaming Laptop Pro",
-      brand: "GamingTech",
-      price: "35.000.000₫",
-      originalPrice: "60.000.000₫",
-      discount: "-50%",
-      image: gamingLaptop,
-      rating: 4.8,
-      reviews: 542,
-      badge: "New"
-    },
-    {
-      id: 2,
-      name: "Premium Product 1",
-      brand: "Brand A",
-      price: "28.000.000₫",
-      originalPrice: "56.000.000₫",
-      discount: "-50%",
-      image: productImg1,
-      rating: 4.8,
-      reviews: 289,
-      badge: "Hot"
-    },
-    {
-      id: 3,
-      name: "Premium Product 2",
-      brand: "Brand B",
-      price: "8.500.000₫",
-      originalPrice: "17.000.000₫",
-      discount: "-50%",
-      image: productImg2,
-      rating: 4.8,
-      reviews: 198,
-      badge: "Sale"
-    },
-    {
-      id: 4,
-      name: "Premium Product 3",
-      brand: "Brand C",
-      price: "2.500.000₫",
-      originalPrice: "5.000.000₫",
-      discount: "-50%",
-      image: productImg3,
-      rating: 4.9,
-      reviews: 156,
-      badge: "Best"
-    },
-    {
-      id: 5,
-      name: "PlayStation 5",
-      brand: "Sony",
-      price: "12.000.000₫",
-      originalPrice: "24.000.000₫",
-      discount: "-50%",
-      image: ps5,
-      rating: 4.7,
-      reviews: 89,
-      badge: "Hot"
-    },
-    {
-      id: 6,
-      name: "Premium Audio System",
-      brand: "AudioTech",
-      price: "45.000.000₫",
-      originalPrice: "90.000.000₫",
-      discount: "-50%",
-      image: stereo,
-      rating: 4.9,
-      reviews: 234,
-      badge: "Premium"
-    }
-  ];
-
-  // Product Categories
-  const categories = [
-    { name: "Smartphones", icon: "📱", count: "150+", color: "#3b82f6" },
-    { name: "Laptops", icon: "💻", count: "80+", color: "#10b981" },
-    { name: "Audio", icon: "🎧", count: "120+", color: "#f59e0b" },
-    { name: "Gaming", icon: "🎮", count: "95+", color: "#ef4444" }
-  ];
 
   const [timeLeft, setTimeLeft] = useState({
     days: 3,
@@ -134,8 +42,8 @@ const FlashSaleBanner = () => {
   return (
     <div style={{
       width: '100%',
-      padding: '2rem 0', /* Giảm padding để cân đối */
-      margin: '3rem 0', /* Giảm margin để phù hợp */
+      padding: '2rem 0',
+      margin: '3rem 0',
       position: 'relative',
     }}>
       {/* Main Container */}
@@ -175,9 +83,9 @@ const FlashSaleBanner = () => {
               marginBottom: '1.5rem',
             }}>
               <span>⚡</span>
-              <span>Featured Products</span>
+              <span>Flash Sale</span>
             </div>
-            
+
             <h2 style={{
               fontSize: '2.5rem',
               fontWeight: 900,
@@ -185,17 +93,17 @@ const FlashSaleBanner = () => {
               margin: '0 0 1rem 0',
               lineHeight: 1.1,
             }}>
-              Discover Amazing
-              <span style={{ color: '#3b82f6', marginLeft: '0.5rem' }}>Products</span>
+              Limited Time
+              <span style={{ color: '#3b82f6', marginLeft: '0.5rem' }}>Offers</span>
             </h2>
-            
+
             <p style={{
               fontSize: '1.1rem',
               color: '#6b7280',
               lineHeight: 1.6,
               margin: 0,
             }}>
-              Explore our curated collection of premium products with exclusive deals and discounts.
+              Don't miss out on these incredible deals! Shop now before they're gone.
             </p>
           </div>
 
@@ -215,9 +123,9 @@ const FlashSaleBanner = () => {
               letterSpacing: '1px',
               textAlign: 'center',
             }}>
-              Flash Sale Ends In:
+              Sale Ends In:
             </div>
-            
+
             <div style={{
               display: 'flex',
               gap: '0.5rem',
@@ -252,237 +160,29 @@ const FlashSaleBanner = () => {
           </div>
         </div>
 
-        {/* Featured Products Grid Section */}
-        <div>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '2rem',
+        {/* Flash Sale Info Section */}
+        <div style={{
+          textAlign: 'center',
+          padding: '2rem',
+          background: 'rgba(255, 107, 53, 0.05)',
+          borderRadius: '16px',
+          border: '2px dashed #ff6b35',
+        }}>
+          <h3 style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#1f2937',
+            marginBottom: '1rem',
           }}>
-            <h3 style={{
-              fontSize: '1.5rem',
-              fontWeight: 700,
-              color: '#1f2937',
-              margin: 0,
-            }}>
-              Featured Products
-            </h3>
-            
-            <Link to="/products" style={{
-              background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-              color: 'white',
-              textDecoration: 'none',
-              padding: '0.75rem 1.5rem',
-              borderRadius: '25px',
-              fontSize: '0.9rem',
-              fontWeight: 600,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
-              transition: 'all 0.3s ease',
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 15px 40px rgba(59, 130, 246, 0.4)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 10px 30px rgba(59, 130, 246, 0.3)';
-            }}
-            >
-              View All Products
-              <span>→</span>
-            </Link>
-          </div>
-          
-          {/* Products Grid */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2rem',
+            🔥 Flash Sale Active!
+          </h3>
+          <p style={{
+            fontSize: '1.1rem',
+            color: '#6b7280',
+            margin: 0,
           }}>
-            {featuredProducts.map((product) => (
-              <div key={product.id} style={{
-                background: 'white',
-                borderRadius: '20px',
-                padding: '2rem',
-                boxShadow: '0 15px 40px rgba(0, 0, 0, 0.1)',
-                border: '1px solid rgba(0, 0, 0, 0.05)',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-5px)';
-                e.target.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.1)';
-              }}
-              >
-                {/* Product Badges */}
-                <div style={{
-                  position: 'absolute',
-                  top: '1rem',
-                  left: '1rem',
-                  display: 'flex',
-                  gap: '0.5rem',
-                  zIndex: 10,
-                }}>
-                  <div style={{
-                    background: '#ef4444',
-                    color: 'white',
-                    padding: '0.25rem 0.75rem',
-                    borderRadius: '12px',
-                    fontSize: '0.8rem',
-                    fontWeight: 700,
-                  }}>
-                    {product.discount}
-                  </div>
-                  <div style={{
-                    background: '#10b981',
-                    color: 'white',
-                    padding: '0.25rem 0.75rem',
-                    borderRadius: '12px',
-                    fontSize: '0.8rem',
-                    fontWeight: 700,
-                  }}>
-                    {product.badge}
-                  </div>
-                </div>
-
-                {/* Product Image */}
-                <div style={{
-                  textAlign: 'center',
-                  marginBottom: '1.5rem',
-                  marginTop: '2rem',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  borderRadius: '16px',
-                  height: '200px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      borderRadius: '16px',
-                      transition: 'transform 0.3s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'scale(1.05)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'scale(1)';
-                    }}
-                  />
-                </div>
-
-                {/* Product Info */}
-                <div style={{ textAlign: 'center', width: '100%' }}>
-                  <div style={{
-                    fontSize: '1.2rem',
-                    fontWeight: 700,
-                    color: '#1f2937',
-                    marginBottom: '0.5rem',
-                  }}>
-                    {product.name}
-                  </div>
-                  
-                  <div style={{
-                    fontSize: '1rem',
-                    color: '#6b7280',
-                    marginBottom: '1rem',
-                  }}>
-                    {product.brand}
-                  </div>
-                  
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.5rem',
-                    marginBottom: '1rem',
-                  }}>
-                    <div style={{
-                      display: 'flex',
-                      gap: '0.25rem',
-                    }}>
-                      {[...Array(5)].map((_, i) => (
-                        <span key={i} style={{
-                          color: i < Math.floor(product.rating) ? '#fbbf24' : '#d1d5db',
-                          fontSize: '1rem',
-                        }}>
-                          ★
-                        </span>
-                      ))}
-                    </div>
-                    <span style={{
-                      fontSize: '0.9rem',
-                      color: '#6b7280',
-                    }}>
-                      {product.rating} ({product.reviews})
-                    </span>
-                  </div>
-                  
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '1rem',
-                    marginBottom: '1.5rem',
-                  }}>
-                    <span style={{
-                      fontSize: '1.3rem',
-                      fontWeight: 900,
-                      color: '#ef4444',
-                    }}>
-                      {product.price}
-                    </span>
-                    <span style={{
-                      fontSize: '1rem',
-                      color: '#9ca3af',
-                      textDecoration: 'line-through',
-                    }}>
-                      {product.originalPrice}
-                    </span>
-                  </div>
-                  
-                  <button style={{
-                    background: 'linear-gradient(135deg, #ff6b35 0%, #f7931e 100%)',
-                    color: 'white',
-                    border: 'none',
-                    padding: '0.75rem 1.5rem',
-                    borderRadius: '25px',
-                    fontSize: '0.9rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    width: '100%',
-                    maxWidth: '200px',
-                    transition: 'all 0.3s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'scale(1.02)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = 'scale(1)';
-                  }}
-                  >
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+            Check out our Products page for the latest flash sale deals and discounts.
+          </p>
         </div>
       </div>
     </div>

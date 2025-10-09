@@ -10,11 +10,9 @@ const getInitialState = () => {
         saveBillingInfoToLocal: parsed.saveBillingInfoToLocal || false,
         favoritesProducts: Array.isArray(parsed.favoritesProducts) ? parsed.favoritesProducts : [],
         searchProducts: Array.isArray(parsed.searchProducts) ? parsed.searchProducts : [],
-        orderProducts: Array.isArray(parsed.orderProducts) ? parsed.orderProducts : [],
+
         wishList: Array.isArray(parsed.wishList) ? parsed.wishList : [],
-        productQuantity: parsed.productQuantity || 1,
         selectedProduct: parsed.selectedProduct || null,
-        removeOrderProduct: parsed.removeOrderProduct || "",
         refetchFlag: parsed.refetchFlag || false,
         products: Array.isArray(parsed.products) ? parsed.products : [], // Add products to initial state
       };
@@ -28,11 +26,8 @@ const getInitialState = () => {
     saveBillingInfoToLocal: false,
     favoritesProducts: [],
     searchProducts: [],
-    orderProducts: [],
     wishList: [],
-    productQuantity: 1,
     selectedProduct: null,
-    removeOrderProduct: "",
     refetchFlag: false,
     products: [], // Start with empty array, will be populated from API
   };

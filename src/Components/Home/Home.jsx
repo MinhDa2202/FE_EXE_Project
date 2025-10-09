@@ -5,7 +5,6 @@ import CategoriesSection from "./CategoriesSection/CategoriesSection";
 import s from "./Home.module.scss";
 
 import ProductPoster from "./ProductPoster/ProductPoster";
-import ThisMonthSection from "./ThisMonthSection/ThisMonthSection";
 import TodaySection from "./TodaySection/TodaySection";
 import CompareSection from "./CompareSection/CompareSection";
 import ProductAnalyzerSection from "./ProductAnalyzerSection/ProductAnalyzerSection";
@@ -34,7 +33,6 @@ const Home = () => {
           <TodaySection />
           <FlashSaleBanner />
           <CategoriesSection />
-          <ThisMonthSection />
           <ProductPoster />
           
           <div className={s.featuresContainer}>

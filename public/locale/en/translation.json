@@ -126,10 +126,6 @@
     }
   },
   "productCard": {
-    "buttonText": {
-      "addToCart": "Add to cart",
-      "removeFromCart": "Remove from cart"
-    },
     "icons": {
       "details": "Details",
       "remove": "Remove",
@@ -202,8 +198,6 @@
   "history": {
     "account": "Account",
     "products": "Products",
-    "cart": "Cart",
-    "checkout": "Checkout",
     "results": "Results",
     "404Error": "404 Error",
     "orders": "orders"
@@ -279,7 +273,6 @@
     "profile": "Profile",
     "home": "Home",
     "about": "About",
-    "myCart": "My Cart",
     "myOrder": "My Order",
     "favorite": "Favorite",
     "wishlist": "Wishlist",
@@ -484,28 +477,9 @@
       "changePassword": "Change Password"
     }
   },
-  "cartPage": {
-    "productsTable": {
-      "product": "Product",
-      "price": "Price",
-      "quantity": "Quantity",
-      "subtotal": "Subtotal"
-    },
-    "cartInfoMenu": {
-      "cartTotal": "Cart Total",
-      "subTotal": "Subtotal",
-      "shipping": "Shipping",
-      "free": "Free",
-      "total": "Total",
-      "processToCheckout": "Proceed to Checkout"
-    }
-  },
-  "checkoutPage": {
-    "hasNoProducts": "Your cart is currently empty."
-  },
   "userMenuItems": {
     "profile": "Manage My Account",
-    "cart": "My Order",
+    "products": "Products",
     "my_reports": "My Reports",
     "reviews": "My Reviews",
     "wishlist": "Wishlist",
@@ -522,15 +496,12 @@
     "subscriptionFailed": "Failed to subscribe, Please check your internet connection.",
     "loginSuccess": "You logged in successfully, Welcome back!",
     "loginFailed": "Failed to login, Please check your internet connection.",
-    "addToCart": "Please sign in to add product to cart.",
     "addToFavorite": "Please sign in to add/remove product to favorites.",
     "addToWishList": "Please sign in to add/remove product to wishlist.",
     "signInSuccess": "You signed in successfully, Welcome!",
     "signOutSuccess": "You Signed out of your account.",
     "pageRequiringSignIn": "Please sign in to visit this page.",
     "signInToPerformAction": "You have to sign in to do this action.",
-    "cartEmpty": "Please add some items to cart first.",
-    "productAlreadyInCart": "You have already added this product to cart",
     "productAlreadyInOrder": "You have already added this product to orders",
     "removeOrderProduct": "Remove {{translatedProduct}} from your order?",
     "confirmOrderProduct": "Did you receive {{translatedProduct}}?",

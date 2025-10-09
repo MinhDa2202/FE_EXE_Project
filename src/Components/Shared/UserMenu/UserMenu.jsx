@@ -7,9 +7,8 @@ import s from "./UserMenu.module.scss";
 import UserMenuItemWithCount from "./UserMenuItemWithCount";
 
 const UserMenu = ({ isActive, toggler }) => {
-  const { wishList, orderProducts, isStoreReady } = useReduxStore();
+  const { wishList, isStoreReady } = useReduxStore();
   const wishListLength = wishList.length;
-  const orderProductsLength = orderProducts.length;
   const activeClass = isActive ? s.active : "";
   const navigateTo = useNavigate();
   const { t } = useTranslation();
@@ -32,14 +31,9 @@ const UserMenu = ({ isActive, toggler }) => {
         <span>{t("userMenuItems.profile")}</span>
       </NavLink>
 
-      <NavLink to="/order" aria-label="Order page">
-        <UserMenuItemWithCount
-          props={{
-            iconName: "bag",
-            title: t("accountPage.accountMenuSection.myOrders"),
-            countLength: orderProductsLength,
-          }}
-        />
+      <NavLink to="/products" aria-label="Products page">
+        <SvgIcon name="bag" />
+        <span>{t("userMenuItems.products")}</span>
       </NavLink>
 
       <NavLink to="/my-reports" aria-label="My Reports page">

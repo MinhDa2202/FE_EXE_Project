@@ -254,31 +254,23 @@ export const mobileNavData = [
 ];
 
 export const getRestMobileNavData = ({
-  orderProducts = [],
   favoritesProducts = [],
   wishList = [],
 }) => {
   return [
     {
-      iconName: "cart",
-      routePath: "/order",
-      text: "my order",
-      countLength: orderProducts?.length || 0,
-      id: mobileNavData.length + 2,
-    },
-    {
       iconName: "heart",
       routePath: "/favorites",
       text: "favorite",
       countLength: favoritesProducts?.length || 0,
-      id: mobileNavData.length + 3,
+      id: mobileNavData.length + 2,
     },
     {
       iconName: "save",
       routePath: "/wishlist",
       text: "wishlist",
       countLength: wishList?.length || 0,
-      id: mobileNavData.length + 4,
+      id: mobileNavData.length + 3,
     },
   ];
 };
@@ -396,5 +388,3 @@ export const billingInputsData = [
     regex: regexPatterns.email,
   },
 ];
-
-

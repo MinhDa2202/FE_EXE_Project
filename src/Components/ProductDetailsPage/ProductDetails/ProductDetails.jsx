@@ -74,30 +74,11 @@ const ProductDetails = ({ productData: originalProductData, onReportProduct }) =
             <div className={s.productInfoSection}>
               <ProductFirstInfos productData={productData} />
               
-              {/* Quick Buy Section */}
-              <div className={s.quickBuySection}>
-                <div className={s.quantitySelector}>
-                  <label>Số lượng:</label>
-                  <div className={s.quantityControls}>
-                    <button className={s.quantityBtn}>-</button>
-                    <input type="number" value="1" min="1" className={s.quantityInput} />
-                    <button className={s.quantityBtn}>+</button>
-                  </div>
-                </div>
-                
-                <div className={s.actionButtons}>
-                  <button className={s.quickBuyBtn}>
-                    <span className={s.btnIcon}>⚡</span>
-                    Mua ngay
-                  </button>
-                  <button className={s.addToCartBtn}>
-                    <span className={s.btnIcon}>🛒</span>
-                    Thêm vào giỏ
-                  </button>
-                  <button className={s.wishlistBtn}>
-                    <span className={s.btnIcon}>❤️</span>
-                  </button>
-                </div>
+              {/* Action Buttons */}
+              <div className={s.actionButtons}>
+                <button className={s.wishlistBtn}>
+                  <span className={s.btnIcon}>❤️</span>
+                </button>
               </div>
 
               {/* Product Highlights */}
