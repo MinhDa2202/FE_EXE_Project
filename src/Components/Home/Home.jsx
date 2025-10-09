@@ -6,8 +6,6 @@ import s from "./Home.module.scss";
 
 import ProductPoster from "./ProductPoster/ProductPoster";
 import TodaySection from "./TodaySection/TodaySection";
-import CompareSection from "./CompareSection/CompareSection";
-import ProductAnalyzerSection from "./ProductAnalyzerSection/ProductAnalyzerSection";
 import SmartRecommendations from "../Shared/Sections/SmartRecommendations/SmartRecommendations";
 import FlashSaleBanner from "./FlashSaleBanner";
 
@@ -31,11 +29,7 @@ const Home = () => {
           <FlashSaleBanner />
           <CategoriesSection />
           <ProductPoster />
-
-          <div className={s.featuresContainer}>
-            <CompareSection />
-            <ProductAnalyzerSection />
-          </div>
+          
 
           {/* Smart Recommendations for User Retention */}
           <SmartRecommendations />
