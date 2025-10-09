@@ -390,23 +390,473 @@
     gap: 2rem;
   }
 }
-
 @include m.small {
   .zoomInPreview {
     display: none;
   }
-  
+
   .actionButtons {
     flex-direction: column;
   }
-  
+
   .tabButtons {
     flex-wrap: wrap;
   }
-  
+
   .tabBtn {
     flex: 1;
     min-width: 120px;
   }
 }
+
+// Seller Actions & Info Section (moved from ProductDealingControls)
+.sellerActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.primaryActions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.messageSellerButton,
+.callSellerButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.messageSellerButton {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+
+  &:hover {
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+  }
+}
+
+.callSellerButton {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  color: #667eea;
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+    border-color: rgba(102, 126, 234, 0.5);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+  }
+}
+
+.secondaryActions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.shareButton,
+.reportButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.shareButton {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border: 1px solid rgba(102, 126, 234, 0.15);
+  color: #667eea;
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border-color: rgba(102, 126, 234, 0.25);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+  }
+}
+
+.reportButton {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
+    border-color: rgba(239, 68, 68, 0.25);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.1);
+  }
+}
+
+.buttonIcon {
+  font-size: 1.1rem;
+}
+
+.buttonText {
+  font-weight: inherit;
+}
+
+// Seller Info Section
+.sellerInfo {
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(118, 75, 162, 0.03) 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.05);
+}
+
+.sellerHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+
+  h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.sellerIcon {
+  font-size: 1rem;
+}
+
+.sellerDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sellerItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #cbd5e1;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.sellerLabel {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.sellerValue {
+  font-size: 0.8rem;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+// Responsive Design for Seller Actions
+@media (max-width: 768px) {
+  .sellerActions {
+    padding: 0.6rem;
+    gap: 0.6rem;
+  }
+
+  .primaryActions {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .messageSellerButton,
+  .callSellerButton {
+    padding: 0.7rem;
+  }
+
+  .secondaryActions {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .sellerInfo {
+    padding: 0.8rem;
+  }
+
+  .sellerItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sellerActions {
+    padding: 0.5rem;
+  }
+
+  .buttonText {
+    font-size: 0.75rem;
+  }
+
+  .buttonIcon {
+    font-size: 0.9rem;
+  }
+}
+
+// 🎨 AddToFavButton - Premium Heart Button Design
+.addToFavButton {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow:
+    0 4px 20px rgba(255, 107, 157, 0.3),
+    0 2px 8px rgba(196, 69, 105, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow:
+      0 8px 30px rgba(255, 107, 157, 0.4),
+      0 4px 12px rgba(196, 69, 105, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+
+    &::before {
+      left: 100%;
+    }
+
+    &::after {
+      width: 300px;
+      height: 300px;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(1.02);
+    transition: all 0.1s ease;
+  }
+
+  // Heart icon animation
+  .favIcon {
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 12px;
+      height: 20px;
+      background: currentColor;
+      border-radius: 12px 12px 0 0;
+      transform: rotate(-45deg) translateX(-50%) translateY(-50%);
+      transform-origin: 0 100%;
+    }
+
+    &::after {
+      left: 25%;
+      transform: rotate(45deg) translateX(-50%) translateY(-50%);
+      transform-origin: 100% 100%;
+    }
+  }
+
+  // Pulsing animation when favorited
+  &.favorited {
+    background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+    animation: favoritePulse 2s infinite;
+    box-shadow:
+      0 0 0 0 rgba(255, 71, 87, 0.7),
+      0 4px 20px rgba(255, 71, 87, 0.3);
+
+    .favIcon {
+      animation: heartBeat 1.5s ease-in-out infinite;
+    }
+  }
+
+  // Sparkle effect
+  .sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: sparkle 3s infinite ease-in-out;
+  }
+
+  .sparkle:nth-child(1) {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+  }
+
+  .sparkle:nth-child(2) {
+    top: 20%;
+    right: 20%;
+    animation-delay: 0.5s;
+  }
+
+  .sparkle:nth-child(3) {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 1s;
+  }
+
+  .sparkle:nth-child(4) {
+    bottom: 20%;
+    right: 20%;
+    animation-delay: 1.5s;
+  }
+}
+
+// Animations
+@keyframes favoritePulse {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(255, 71, 87, 0.7),
+      0 4px 20px rgba(255, 71, 87, 0.3);
+  }
+  70% {
+    box-shadow:
+      0 0 0 10px rgba(255, 71, 87, 0),
+      0 4px 20px rgba(255, 71, 87, 0.3);
+  }
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(255, 71, 87, 0),
+      0 4px 20px rgba(255, 71, 87, 0.3);
+  }
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.3);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Enhanced secondary actions layout
+.secondaryActions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+
+  // Make AddToFavButton more prominent
+  .addToFavButton {
+    order: -1; // Put favorite button first
+    flex: none; // Don't grow, maintain size
+  }
+}
+
  

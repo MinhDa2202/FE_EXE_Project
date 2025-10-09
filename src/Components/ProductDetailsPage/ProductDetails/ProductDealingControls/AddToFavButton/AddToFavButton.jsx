@@ -47,6 +47,10 @@ const AddToFavButton = ({ productData }) => {
       onClick={addProductToFavorite}
     >
       <div className={s.heartBackground} />
+      <div className={s.sparkle} />
+      <div className={s.sparkle} />
+      <div className={s.sparkle} />
+      <div className={s.sparkle} />
       <SvgIcon name="heart" />
       <ToolTip left="50%" top="60px" content={t("detailsPage.addToFav")} />
     </button>
