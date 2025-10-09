@@ -14,7 +14,7 @@ const FavoriteProducts = () => {
   useScrollOnMount(160);
 
   // API Base URL
-  const API_BASE_URL = "https://localhost:7235/api";
+  const API_BASE_URL = "/api";
 
   // Get auth token from localStorage or Redux state
   const getAuthToken = () => {

@@ -3,77 +3,86 @@ import { useDispatch } from "react-redux";
 import { updateLoadingState } from "src/Features/loadingSlice";
 import { setAfterDiscountKey, setFormattedPrice } from "src/Functions/helper";
 
-const useSingleProduct = (productName, loadingKey = "loadingProductDetails") => {
+const useSingleProduct = (
+  productName,
+  loadingKey = "loadingProductDetails"
+) => {
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
 
+  const mapApiDataToComponentFormat = (apiProduct) => {
+    const mappedProduct = {
+      // Primary identifiers
+      Id: apiProduct.id,
+      id: apiProduct.id,
 
-const mapApiDataToComponentFormat = (apiProduct) => {
-  
-  const mappedProduct = {
-    // Primary identifiers
-    Id: apiProduct.id,
-    id: apiProduct.id,
-    
-    // Product names
-    Title: apiProduct.title,
-    name: apiProduct.title,
-    shortName: apiProduct.title,
-    
-    // Pricing
-    Price: apiProduct.price,
-    Discount: apiProduct.discount || 0,
-    AfterDiscount: apiProduct.afterDiscount || apiProduct.price,
-    
-    // Images
-    ImageUrls: apiProduct.imageUrls || [],
-    
-    // Dates
-    AddedDate: apiProduct.createdAt,
-    
-    // Ratings
-    Rate: apiProduct.rating || 0,
-    Votes: apiProduct.reviewCount || 0,
-    
-    // Product details
-    Descriptions: apiProduct.descriptions,
-    category: apiProduct.categoryName || "Unknown",
-    
-    // Additional fields
-    Colors: apiProduct.colors || [],
-    sold: apiProduct.sold || Math.floor(Math.random() * 2000) + 50,
-    specifications: apiProduct.specifications || [],
-    reviews: apiProduct.reviews || [],
-    stock: apiProduct.stock || 100,
-    brand: apiProduct.brand || "",
-    tags: apiProduct.tags || [],
-    sizes: apiProduct.sizes || [],
-    weight: apiProduct.weight || "",
-    dimensions: apiProduct.dimensions || "",
-    warranty: apiProduct.warranty || "",
-    
-    // Additional API fields
-    condition: apiProduct.condition || "best",
-    location: apiProduct.locations || "",
-    isActive: apiProduct.isActive || true,
+      // Product names
+      Title: apiProduct.title,
+      name: apiProduct.title,
+      shortName: apiProduct.title,
+
+      // Pricing
+      Price: apiProduct.price,
+      Discount: apiProduct.discount || 0,
+      AfterDiscount: apiProduct.afterDiscount || apiProduct.price,
+
+      // Images
+      ImageUrls: apiProduct.imageUrls || [],
+
+      // Dates
+      AddedDate: apiProduct.createdAt,
+
+      // Ratings
+      Rate: apiProduct.rating || 0,
+      Votes: apiProduct.reviewCount || 0,
+
+      // Product details
+      Descriptions: apiProduct.descriptions,
+      category: apiProduct.categoryName || "Unknown",
+
+      // Additional fields
+      Colors: apiProduct.colors || [],
+      sold: apiProduct.sold || Math.floor(Math.random() * 2000) + 50,
+      specifications: apiProduct.specifications || [],
+      reviews: apiProduct.reviews || [],
+      stock: apiProduct.stock || 100,
+      brand: apiProduct.brand || "",
+      tags: apiProduct.tags || [],
+      sizes: apiProduct.sizes || [],
+      weight: apiProduct.weight || "",
+      dimensions: apiProduct.dimensions || "",
+      warranty: apiProduct.warranty || "",
+
+      // Additional API fields
+      condition: apiProduct.condition || "best",
+      location: apiProduct.locations || "",
+      isActive: apiProduct.isActive || true,
+      isApproved: apiProduct.isApproved || false,
+      approvalStatus: apiProduct.isApproved === true ? "approved" : "pending",
+    };
+
+    // Tính toán giá sau discount nếu chưa có
+    if (
+      !mappedProduct.AfterDiscount &&
+      mappedProduct.Price &&
+      mappedProduct.Discount > 0
+    ) {
+      mappedProduct.AfterDiscount =
+        mappedProduct.Price -
+        (mappedProduct.Price * mappedProduct.Discount) / 100;
+    } else if (!mappedProduct.AfterDiscount) {
+      mappedProduct.AfterDiscount = mappedProduct.Price;
+    }
+
+    // Apply helper functions
+    setAfterDiscountKey(mappedProduct);
+    setFormattedPrice(mappedProduct);
+
+    return mappedProduct;
   };
 
-  // Tính toán giá sau discount nếu chưa có
-  if (!mappedProduct.AfterDiscount && mappedProduct.Price && mappedProduct.Discount > 0) {
-    mappedProduct.AfterDiscount = mappedProduct.Price - (mappedProduct.Price * mappedProduct.Discount / 100);
-  } else if (!mappedProduct.AfterDiscount) {
-    mappedProduct.AfterDiscount = mappedProduct.Price;
-  }
-
-  // Apply helper functions
-  setAfterDiscountKey(mappedProduct);
-  setFormattedPrice(mappedProduct);
-  
-  return mappedProduct;
-};
-
-    const fetchSingleProduct = async (identifier, searchBy = "auto") => {
+  const fetchSingleProduct = async (identifier, searchBy = "auto") => {
     if (!identifier) {
       setError("Product identifier is required");
       return;
@@ -86,17 +95,50 @@ const mapApiDataToComponentFormat = (apiProduct) => {
 
     dispatch(updateLoadingState({ key: loadingKey, value: true }));
     try {
-      let url = "https://localhost:7235/api/Product";
+      let url = "https://schand20250922153400.azurewebsites.net/api/Product";
       let foundProduct = null;
 
       if (actualSearchBy === "id") {
+
         // Fetch by ID
-        url = `https://localhost:7235/api/Product/${identifier}`;
+        url = `https://schand20250922153400.azurewebsites.net/api/Product/${identifier}`;
+
         const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+
+        if (response.ok) {
+          foundProduct = await response.json();
+        } else {
+          // If not found in approved products, try pending products
+          console.log(
+            `Product ${identifier} not found in approved products, checking pending...`
+          );
+          const token = localStorage.getItem("token");
+
+          if (token) {
+            try {
+              const pendingResponse = await fetch(
+                `/api/Post/${identifier}/is-pending`,
+                {
+                  method: "GET",
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+
+              if (pendingResponse.ok) {
+                foundProduct = await pendingResponse.json();
+                console.log(
+                  `Found pending product ${identifier}:`,
+                  foundProduct
+                );
+              }
+            } catch (pendingError) {
+              console.log(`Product ${identifier} not found in pending either`);
+            }
+          }
         }
-        foundProduct = await response.json();
       } else {
         // Search by name - fetch all products and filter
         const response = await fetch(url);
@@ -105,8 +147,9 @@ const mapApiDataToComponentFormat = (apiProduct) => {
         }
         const data = await response.json();
         foundProduct = data.find(
-          (p) => 
-            (p.name || p.title || p.Title || p.productName)?.toLowerCase() === identifier?.toLowerCase()
+          (p) =>
+            (p.name || p.title || p.Title || p.productName)?.toLowerCase() ===
+            identifier?.toLowerCase()
         );
       }
 

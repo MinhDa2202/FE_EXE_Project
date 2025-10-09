@@ -10,9 +10,9 @@ const ForYouSection = () => {
   return (
     <section className={s.forYou}>
       <header>
-        <SectionTitle eventName={t("sectionTitles.forYou")} type={2} />
+        <SectionTitle eventName="Dành cho bạn" type={2} />
 
-        <Link to="/products">{t("buttons.seeAll")}</Link>
+        <Link to="/products">Xem tất cả</Link>
       </header>
 
       <ForYouProducts loading="lazy" />

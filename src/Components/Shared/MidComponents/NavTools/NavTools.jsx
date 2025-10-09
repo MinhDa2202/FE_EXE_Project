@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import IconWithCount from "../../NavTools/IconWithCount/IconWithCount";
-import OrderMenuIcon from "../../NavTools/OrderMenuIcon/OrderMenuIcon";
+import ShoppingCartIcon from "../../NavTools/ShoppingCartIcon/ShoppingCartIcon";
 import SearchProductsInput from "../../NavTools/SearchInput/SearchProductsInput";
 import UserMenuIcon from "../../NavTools/UserMenuIcon/UserMenuIcon";
 import { useReduxStore } from "../../../../Hooks/App/useReduxStore";
@@ -31,14 +31,10 @@ const NavTools = ({ showHeart = true, showUser = true }) => {
             }}
           />
 
-
-
-          <OrderMenuIcon visibility={showUser} />
+          <ShoppingCartIcon visibility={showUser} />
           <UserMenuIcon visibility={showUser} />
         </div>
       </div>
-
-
     </>
   );
 };
