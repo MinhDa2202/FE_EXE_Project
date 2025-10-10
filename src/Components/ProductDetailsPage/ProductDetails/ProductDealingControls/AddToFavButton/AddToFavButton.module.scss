@@ -1,80 +1,213 @@
+// 🎨 AddToFavButton - Premium Heart Button Design
 .addToFav {
   -webkit-tap-highlight-color: transparent;
-  width: 40px;
-  height: 40px;
-  padding: 4px;
-  border-radius: 4px;
-  background-color: transparent;
-  border: 1px solid #00000080;
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  position: relative;
+  font-size: 1.5rem;
+  color: white;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow:
+    0 4px 20px rgba(255, 107, 157, 0.3),
+    0 2px 8px rgba(196, 69, 105, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
 
   &:hover {
-    border-color: var(--tomato);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow:
+      0 8px 30px rgba(255, 107, 157, 0.4),
+      0 4px 12px rgba(196, 69, 105, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+
+    &::before {
+      left: 100%;
+    }
+
+    &::after {
+      width: 300px;
+      height: 300px;
+    }
   }
 
-  &.active>svg {
-    fill: var(--tomato);
+  &:active {
+    transform: translateY(-1px) scale(1.02);
+    transition: all 0.1s ease;
   }
 
-  &:focus-visible {
-    border-color: var(--orange-degree2);
+  // Enhanced heart icon
+  .heartBackground {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &.active .heartBackground {
+    opacity: 1;
+  }
+
+  // Premium heart SVG styling
+  & > svg {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: all 0.3s ease;
+
+    path {
+      fill: currentColor;
+      stroke: rgba(255, 255, 255, 0.3);
+      stroke-width: 1;
+    }
+  }
+
+  // Pulsing animation when favorited
+  &.active {
+    background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+    animation: favoritePulse 2s infinite;
+    box-shadow:
+      0 0 0 0 rgba(255, 71, 87, 0.7),
+      0 4px 20px rgba(255, 71, 87, 0.3);
+
+    & > svg {
+      animation: heartBeat 1.5s ease-in-out infinite;
+      color: white;
+    }
+  }
+
+  // Sparkle effect for premium feel
+  .sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: sparkle 3s infinite ease-in-out;
+  }
+
+  .sparkle:nth-child(1) {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+  }
+
+  .sparkle:nth-child(2) {
+    top: 20%;
+    right: 20%;
+    animation-delay: 0.5s;
+  }
+
+  .sparkle:nth-child(3) {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 1s;
+  }
+
+  .sparkle:nth-child(4) {
+    bottom: 20%;
+    right: 20%;
+    animation-delay: 1.5s;
   }
 }
 
-.addToFav.active:focus-visible svg {
-  fill: var(--orange-degree2);
+// Animations
+@keyframes favoritePulse {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(255, 71, 87, 0.7),
+      0 4px 20px rgba(255, 71, 87, 0.3);
+  }
+  70% {
+    box-shadow:
+      0 0 0 10px rgba(255, 71, 87, 0),
+      0 4px 20px rgba(255, 71, 87, 0.3);
+  }
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(255, 71, 87, 0),
+      0 4px 20px rgba(255, 71, 87, 0.3);
+  }
 }
 
-.addToFav .heartBackground {
-  --heart-color: var(--tomato);
-
-  position: absolute;
-  top: calc(50% + 8px);
-  left: 50%;
-  translate: -50% -50%;
-  border-style: solid;
-  border-color: var(--heart-color) transparent transparent transparent;
-  border-width: 10px;
-  opacity: 0;
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.3);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-.addToFav.active .heartBackground {
-  opacity: 1;
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-.addToFav.active:focus-visible .heartBackground {
-  border-top-color: var(--orange-degree2);
+// Enhanced active state styling
+.addToFav.active {
+  &::before {
+    left: 100%;
+  }
+
+  &::after {
+    width: 200px;
+    height: 200px;
+  }
 }
 
-.addToFav .heartBackground::before,
-.addToFav .heartBackground::after {
-  content: '';
-  position: absolute;
-  top: -15px;
-  background-color: var(--heart-color);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.addToFav.active:focus-visible .heartBackground::before,
-.addToFav.active:focus-visible .heartBackground::after {
-  background-color: var(--orange-degree2);
-}
-
-.addToFav .heartBackground::before {
-  left: -9px;
-}
-
-.addToFav .heartBackground::after {
-  right: -9px;
-}
-
-.addToFav>svg {
-  width: 20px;
-  height: 20px;
+// Focus state for accessibility
+.addToFav:focus-visible {
+  outline: 3px solid rgba(255, 107, 157, 0.5);
+  outline-offset: 2px;
 }

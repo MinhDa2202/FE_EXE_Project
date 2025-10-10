@@ -1,13 +1,12 @@
 import { useEffect, useRef, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { updateProductsState } from "src/Features/productsSlice";
 import useOnlineStatus from "src/Hooks/Helper/useOnlineStatus";
 import SkeletonProductDetails from "../../Shared/SkeletonLoaders/DetailsPage/SkeletonProductDetails";
 import ProductPreview from "../ProductPreview/ProductPreview";
 import ProductColorsSection from "./ProductColorsSection/ProductColorsSection";
-import ProductDealingControls from "./ProductDealingControls/ProductDealingControls";
-import ProductReviews from "../ProductReviews/ProductReviews";
+import AddToFavButton from "./ProductDealingControls/AddToFavButton/AddToFavButton";
 import s from "./ProductDetails.module.scss";
 import ProductFirstInfos from "./ProductFirstInfos/ProductFirstInfos";
 import ProductSizes from "./ProductSizes/ProductSizes";
@@ -45,6 +44,36 @@ const ProductDetails = ({
 
     zoomInImgRef.current.style.transform = `translate(${positions})`;
   }
+
+  const handleMessageSeller = () => {
+    navigate('/chat', {
+      state: {
+        productData: productData,
+        sellerId: productData.sellerId || productData.SellerId,
+        sellerName: productData.sellerName || "Người bán"
+      }
+    });
+  };
+
+  const handleCallSeller = () => {
+    // Logic để gọi điện cho người bán
+    console.log("Call seller clicked");
+  };
+
+  const handleShareProduct = () => {
+    // Logic để chia sẻ sản phẩm
+    if (navigator.share) {
+      navigator.share({
+        title: productData.Title,
+        text: `Xem sản phẩm: ${productData.Title}`,
+        url: window.location.href,
+      });
+    } else {
+      // Fallback cho các trình duyệt không hỗ trợ Web Share API
+      navigator.clipboard.writeText(window.location.href);
+      alert("Đã copy link sản phẩm!");
+    }
+  };
 
   useEffect(() => {
     dispatch(
@@ -86,32 +115,78 @@ const ProductDetails = ({
               </div>
             </div>
 
-            {/* Right: Product Info & Quick Actions */}
+            {/* Right: Product Info & Seller Actions */}
             <div className={s.productInfoSection}>
               <ProductFirstInfos productData={productData} />
-              
-              {/* Action Buttons */}
-              <div className={s.actionButtons}>
-                <button className={s.wishlistBtn}>
-                  <span className={s.btnIcon}>❤️</span>
-                </button>
+
+              {/* Seller Actions & Info */}
+              <div className={s.sellerActions}>
+                <div className={s.primaryActions}>
+                  <button
+                    className={s.messageSellerButton}
+                    onClick={handleMessageSeller}
+                  >
+                    <span className={s.buttonIcon}>💬</span>
+                    <span className={s.buttonText}>Nhắn tin</span>
+                  </button>
+
+                  <button
+                    className={s.callSellerButton}
+                    onClick={handleCallSeller}
+                  >
+                    <span className={s.buttonIcon}>📞</span>
+                    <span className={s.buttonText}>Gọi điện</span>
+                  </button>
+                </div>
+
+                <div className={s.secondaryActions}>
+                  <AddToFavButton productData={productData} />
+
+                  <button
+                    className={s.shareButton}
+                    onClick={handleShareProduct}
+                  >
+                    <span className={s.buttonIcon}>🔗</span>
+                    <span className={s.buttonText}>Chia sẻ</span>
+                  </button>
+
+                  <button
+                    className={s.reportButton}
+                    onClick={onReportProduct}
+                  >
+                    <span className={s.buttonIcon}>⚠️</span>
+                    <span className={s.buttonText}>Báo cáo</span>
+                  </button>
+                </div>
+
+                <div className={s.sellerInfo}>
+                  <div className={s.sellerHeader}>
+                    <span className={s.sellerIcon}>👤</span>
+                    <h4>Thông tin người bán</h4>
+                  </div>
+                  <div className={s.sellerDetails}>
+                    <div className={s.sellerItem}>
+                      <span className={s.sellerLabel}>Tên:</span>
+                      <span className={s.sellerValue}>
+                        {productData.sellerName || "Chưa có thông tin"}
+                      </span>
+                    </div>
+                    <div className={s.sellerItem}>
+                      <span className={s.sellerLabel}>Đánh giá:</span>
+                      <span className={s.sellerValue}>
+                        ⭐ {productData.sellerRating || "Chưa có đánh giá"}
+                      </span>
+                    </div>
+                    <div className={s.sellerItem}>
+                      <span className={s.sellerLabel}>Đã bán:</span>
+                      <span className={s.sellerValue}>
+                        {productData.sellerSoldCount || "0"} sản phẩm
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* Product Highlights */}
-              <div className={s.productHighlights}>
-                <div className={s.highlightItem}>
-                  <span className={s.highlightIcon}>🚚</span>
-                  <span>Miễn phí vận chuyển</span>
-                </div>
-                <div className={s.highlightItem}>
-                  <span className={s.highlightIcon}>🔄</span>
-                  <span>Đổi trả 30 ngày</span>
-                </div>
-                <div className={s.highlightItem}>
-                  <span className={s.highlightIcon}>🛡️</span>
-                  <span>Bảo hành chính hãng</span>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -153,65 +228,10 @@ const ProductDetails = ({
             </div>
 
             <div className={s.tabContent}>
-              {activeTab === "description" && (
-                <div className={s.descriptionTab}>
-                  <ProductColorsSection productData={productData} />
-                  {productData?.sizes && (
-                    <ProductSizes productData={productData} />
-                  )}
-                  <ProductDealingControls
-                    productData={productData}
-                    onReportProduct={onReportProduct}
-                  />
-                </div>
-              )}
-
-              {/* Chỉ hiển thị nội dung reviews cho sản phẩm đã duyệt */}
-              {activeTab === "reviews" && productData?.isApproved && (
-                <div className={s.reviewsTab}>
-                  <ProductReviews productId={productData?.id} />
-                </div>
-              )}
-
-              {activeTab === "specifications" && (
-                <div className={s.specificationsTab}>
-                  <div className={s.specifications}>
-                    <h3>Thông số kỹ thuật</h3>
-                    <div className={s.specTable}>
-                      <div className={s.specRow}>
-                        <span className={s.specLabel}>Thương hiệu:</span>
-                        <span className={s.specValue}>
-                          {productData?.brand || "Đang cập nhật"}
-                        </span>
-                      </div>
-                      <div className={s.specRow}>
-                        <span className={s.specLabel}>Danh mục:</span>
-                        <span className={s.specValue}>
-                          {productData?.category || "Đang cập nhật"}
-                        </span>
-                      </div>
-                      <div className={s.specRow}>
-                        <span className={s.specLabel}>Xuất xứ:</span>
-                        <span className={s.specValue}>
-                          {productData?.origin || "Đang cập nhật"}
-                        </span>
-                      </div>
-                      <div className={s.specRow}>
-                        <span className={s.specLabel}>Bảo hành:</span>
-                        <span className={s.specValue}>
-                          {productData?.warranty || "12 tháng"}
-                        </span>
-                      </div>
-                      <div className={s.specRow}>
-                        <span className={s.specLabel}>Trọng lượng:</span>
-                        <span className={s.specValue}>
-                          {productData?.weight || "Đang cập nhật"}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+              <div className={s.descriptionTab}>
+                <ProductColorsSection productData={productData} />
+                {productData?.sizes && <ProductSizes productData={productData} />}
+              </div>
             </div>
           </div>
         </section>
